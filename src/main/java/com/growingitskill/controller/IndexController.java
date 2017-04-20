@@ -13,14 +13,19 @@ public class IndexController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/about", method = RequestMethod.GET)
+	@RequestMapping(value = "about", method = RequestMethod.GET)
 	public String about() {
 		return "about";
 	}
 	
-	@RequestMapping(value = "/details", method = RequestMethod.GET)
+	@RequestMapping(value = "details", method = RequestMethod.GET)
 	public String details() {
 		return "details";
+	}
+	
+	@RequestMapping(value = "login", method = RequestMethod.GET)
+	public String login() {
+		return "login";
 	}
 
 }

@@ -26,4 +26,20 @@ public class ControllerTest {
 			
 			mockMvc.perform(get("/about")).andExpect(view().name("about")); // url과 name이 같은 경우 테스트 실패
 		}*/
+		
+		@Test
+		public void testAdminPage() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin")).andExpect(view().name("admin/main"));
+		}
+		
+		/*@Test
+		public void testLoginPage() throws Exception {
+			IndexController controller = new IndexController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/login")).andExpect(view().name("admin/login"));
+		}*/
 }
