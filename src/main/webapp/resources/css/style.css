@@ -958,7 +958,7 @@ p.para{
 /* start pagination */
 .pagination {
 	float: left;
-	top: -50px;
+	/* top: -50px; */
 	position: relative;
 	clear: both;
 }
