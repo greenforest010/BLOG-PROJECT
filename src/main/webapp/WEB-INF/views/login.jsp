@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentallela Alela! | </title>
+    <title>GrowingITSkill</title>
 
     <!-- Bootstrap -->
     <link href="resources/admin/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -53,8 +53,9 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                  <h1><i class="fa fa-paw"></i> GrowingITSkill</h1>
+                  &copy; <a href="/">www.growingitskill.com</a> All Rights Reserved.
+                  <p>Gentelella Alela! is a Bootstrap 3 template.</p>
                 </div>
               </div>
             </form>
@@ -89,8 +90,9 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                  <h1><i class="fa fa-paw"></i> GrowingITSkill</h1>
+                  &copy; <a href="/">www.growingitskill.com</a> All Rights Reserved.
+                  <p>Gentelella Alela! is a Bootstrap 3 template.</p>
                 </div>
               </div>
             </form>

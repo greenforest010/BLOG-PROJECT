@@ -50,11 +50,11 @@
               <div class="menu_section">
                 <h3>메뉴</h3>
                 <ul class="nav side-menu">
-                  <li><a href="admin/post-list"><i class="fa fa-home"></i>글</a></li>
+                  <li><a href="post-list"><i class="fa fa-home"></i>글</a></li>
                   <li><a href="#"><i class="fa fa-home"></i>댓글</a></li>
-                  <li><a href="admin/category"><i class="fa fa-home"></i>카테고리</a></li>
-                  <li><a href="admin/tag"><i class="fa fa-home"></i>태그</a></li>
-                  <li><a href="admin/media"><i class="fa fa-home"></i>미디어 리소스</a></li>
+                  <li><a href="category"><i class="fa fa-home"></i>카테고리</a></li>
+                  <li><a href="tag"><i class="fa fa-home"></i>태그</a></li>
+                  <li><a href="media"><i class="fa fa-home"></i>미디어 리소스</a></li>
                 </ul>
               </div>
             </div>
@@ -164,7 +164,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>메인</h3>
+                <h3>카테고리</h3>
               </div>
 
               <div class="title_right">

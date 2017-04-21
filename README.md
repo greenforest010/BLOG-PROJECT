@@ -13,3 +13,4 @@
 
 - #### 2017.4.21
   - Gentelella - Web Layout 추가(Main, Login 페이지)
+  - Gentelella - 초기 커스터마이즈

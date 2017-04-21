@@ -12,5 +12,25 @@ public class AdminController {
 	public String index() {
 		return "admin/main";
 	}
+	
+	@RequestMapping(value = "post-list", method = RequestMethod.GET)
+	public String postList() {
+		return "admin/postList";
+	}
+	
+	@RequestMapping(value = "category", method = RequestMethod.GET)
+	public String category() {
+		return "admin/category";
+	}
+	
+	@RequestMapping(value = "tag", method = RequestMethod.GET)
+	public String tag() {
+		return "admin/tag";
+	}
+	
+	@RequestMapping(value = "media", method = RequestMethod.GET)
+	public String media() {
+		return "admin/media";
+	}
 
 }

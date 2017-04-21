@@ -42,4 +42,36 @@ public class ControllerTest {
 			
 			mockMvc.perform(get("/login")).andExpect(view().name("admin/login"));
 		}*/
+		
+		@Test
+		public void testPostListPage() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/post-list")).andExpect(view().name("admin/postList"));
+		}
+		
+		@Test
+		public void testCategory() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/category")).andExpect(view().name("admin/category"));
+		}
+		
+		@Test
+		public void testTag() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/tag")).andExpect(view().name("admin/tag"));
+		}
+		
+		@Test
+		public void testMedia() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/media")).andExpect(view().name("admin/media"));
+		}
 }
