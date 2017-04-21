@@ -106,7 +106,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<div class="footer">
 		<div class="footer_top">
 			<div class="copy">
-				<p class="link"><span>© <a href="/">www.growingitskill.com</a> All rights reserved | Template by&nbsp;<a href="http://w3layouts.com/"> W3Layouts</a></span></p>
+				<p class="link"><span>&copy; <a href="/">www.growingitskill.com</a> All rights reserved | Template by&nbsp;<a href="http://w3layouts.com/"> W3Layouts</a></span></p>
 			</div>
 			<div class="clear"></div>
 		</div>

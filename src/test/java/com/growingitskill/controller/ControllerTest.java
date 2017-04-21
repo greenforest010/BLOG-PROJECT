@@ -26,4 +26,52 @@ public class ControllerTest {
 			
 			mockMvc.perform(get("/about")).andExpect(view().name("about")); // url과 name이 같은 경우 테스트 실패
 		}*/
+		
+		@Test
+		public void testAdminPage() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin")).andExpect(view().name("admin/main"));
+		}
+		
+		/*@Test
+		public void testLoginPage() throws Exception {
+			IndexController controller = new IndexController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/login")).andExpect(view().name("admin/login"));
+		}*/
+		
+		@Test
+		public void testPostListPage() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/post-list")).andExpect(view().name("admin/postList"));
+		}
+		
+		@Test
+		public void testCategory() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/category")).andExpect(view().name("admin/category"));
+		}
+		
+		@Test
+		public void testTag() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/tag")).andExpect(view().name("admin/tag"));
+		}
+		
+		@Test
+		public void testMedia() throws Exception {
+			AdminController controller = new AdminController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/media")).andExpect(view().name("admin/media"));
+		}
 }
