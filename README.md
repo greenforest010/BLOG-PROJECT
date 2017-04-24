@@ -17,3 +17,6 @@
 
 - #### 2017.4.24
   - DB(MySQL Server)와 애플리케이션 연동을 위한 mysql-connector-java 추가 및 DB연결 테스트
+
+- #### 2017.4.25
+  - JDBC 추가 및 DB연결 테스트(Config Using JDBC Driver DataSource)

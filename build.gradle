@@ -49,5 +49,6 @@ dependencies {
     compile "org.springframework:spring-test:$springVersion"
     compile "org.mockito:mockito-core:$mockitoVersion"
     compile "mysql:mysql-connector-java:$mysqlConnectorVersion"
+    compile "org.springframework:spring-jdbc:$springVersion"
     testImplementation "junit:junit:$junitVersion"
 }

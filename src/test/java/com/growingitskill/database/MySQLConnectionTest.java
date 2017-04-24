@@ -1,5 +1,4 @@
-package com.growingitskill.controller;
-
+package com.growingitskill.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
