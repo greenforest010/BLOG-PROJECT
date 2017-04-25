@@ -50,5 +50,7 @@ dependencies {
     compile "org.mockito:mockito-core:$mockitoVersion"
     compile "mysql:mysql-connector-java:$mysqlConnectorVersion"
     compile "org.springframework:spring-jdbc:$springVersion"
+    compile "org.mybatis:mybatis:$mybatisVersion"
+    compile "org.mybatis:mybatis-spring:$mybatisSpringVersion"
     testImplementation "junit:junit:$junitVersion"
 }
