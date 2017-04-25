@@ -13,7 +13,7 @@ import com.growingitskill.config.JdbcConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=JdbcConfig.class)
-public class DataSourceTest {
+public class JdbcDataSourceTest {
 	
 	@Autowired
 	private DataSource dataSource;
