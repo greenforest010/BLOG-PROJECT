@@ -21,3 +21,4 @@
 - #### 2017.4.25
   - JDBC 추가 및 DB연결 테스트(Config Using JDBC Driver DataSource)
   - JNDI 추가 및 DB연결 테스트(Config Using JNDI Driver DataSource)
+  - MyBatis 추가 및 DB연결 테스트(Config Using JNDI Driver DataSource)
