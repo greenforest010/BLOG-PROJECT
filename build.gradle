@@ -52,5 +52,9 @@ dependencies {
     compile "org.springframework:spring-jdbc:$springVersion"
     compile "org.mybatis:mybatis:$mybatisVersion"
     compile "org.mybatis:mybatis-spring:$mybatisSpringVersion"
+    compile "org.springframework.security:spring-security-web:$springSecurityVersion"
+    compile "org.springframework.security:spring-security-config:$springSecurityVersion"
+    compile "org.springframework.security:spring-security-test:$springSecurityVersion"
+    compile "org.easytesting:fest-assert:$festAssertVersion"
     testImplementation "junit:junit:$junitVersion"
 }
