@@ -22,10 +22,5 @@ public class IndexController {
 	public String details() {
 		return "details";
 	}
-	
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login() {
-		return "login";
-	}
 
 }

@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!DOCTYPE html>
 <html>
@@ -32,15 +33,21 @@
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
-            <div class="profile">
-              <div class="profile_pic">
-                <img src="/resources/admin/images/img.jpg" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>green010</h2>
-              </div>
-            </div>
+            <sec:authorize access="hasRole('ROLE_ADMIN')" >
+              <sec:authentication property="principal.username" var="loginId"/>
+                <div class="profile">
+                   <div class="profile_pic">
+                     <img src="/resources/admin/images/img.jpg" alt="..." class="img-circle profile_img">
+                   </div>
+                   
+                   <div class="profile_info">
+                     <span>Welcome,</span>
+                     <h2>${loginId}</h2>
+                   </div>
+                </div>
+            </sec:authorize>
+            
+            
             <!-- /menu profile quick info -->
 
             <br />
