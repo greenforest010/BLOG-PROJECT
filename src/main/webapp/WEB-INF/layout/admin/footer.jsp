@@ -1,4 +1,4 @@
-<!-- footer content -->
+		<!-- footer content -->
         <footer>
           <div class="pull-right">
             &copy; <a href="/">www.growingitskill.com</a> All right reserved. Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
@@ -15,6 +15,3 @@
     <script src="/resources/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="/resources/admin/build/js/custom.min.js"></script>
-
-  </body>
-</html>

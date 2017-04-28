@@ -19,29 +19,30 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 
 @Configuration
-@ComponentScan(basePackages={"com.growingitskill"}, excludeFilters={@Filter(type=FilterType.ANNOTATION, value=EnableWebMvc.class)})
+@ComponentScan(basePackages = { "com.growingitskill" }, excludeFilters = {
+		@Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class) })
 public class RootConfig {
-	
+
 	@Autowired
 	private ApplicationContext applicationContext;
-	
+
 	@Bean
 	public JndiObjectFactoryBean dataSource() {
 		JndiObjectFactoryBean jndiObjectFB = new JndiObjectFactoryBean();
 		jndiObjectFB.setJndiName("jdbc/blop");
 		jndiObjectFB.setResourceRef(true);
 		jndiObjectFB.setProxyInterface(DataSource.class);
-		
+
 		return jndiObjectFB;
 	}
-	
+
 	@Bean
 	public SqlSessionFactory sessionFactory() throws Exception {
 		SqlSessionFactoryBean sqlSessionFB = new SqlSessionFactoryBean();
 		sqlSessionFB.setDataSource((DataSource) dataSource().getObject());
 		sqlSessionFB.setConfigLocation(applicationContext.getResource("classpath:/mybatis-config.xml"));
-		
+
 		return sqlSessionFB.getObject();
 	}
-	
+
 }

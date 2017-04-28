@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<!-- 블로그 영역 템플릿 설정 -->
+	<definition name="base" template="/WEB-INF/layout/default.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+	</definition>
+
+	<definition name="index" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/index.jsp" />
+	</definition>
+
+	<definition name="about" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/about.jsp" />
+	</definition>
+
+	<!-- 로그인 영역 템플릿 설정 -->
+	<definition name="login" template="/WEB-INF/views/login.jsp" />
+
+	<!-- 관리자 영역 템플릿 설정 -->
+	<definition name="adminBase" template="/WEB-INF/layout/admin/default.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/admin/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layout/admin/footer.jsp" />
+	</definition>
+
+	<definition name="admin/main" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/main.jsp" />
+	</definition>
+	
+	<definition name="admin/category" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/category.jsp" />
+	</definition>
+	
+	<definition name="admin/media" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/media.jsp" />
+	</definition>
+	
+	<definition name="admin/postList" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/postList.jsp" />
+	</definition>
+	
+	<definition name="admin/tag" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/tag.jsp" />
+	</definition>
+
+</tiles-definitions>
