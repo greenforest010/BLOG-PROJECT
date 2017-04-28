@@ -57,5 +57,7 @@ dependencies {
     compile "org.springframework.security:spring-security-test:$springSecurityVersion"
     compile "org.springframework.security:spring-security-taglibs:$springSecurityVersion"
     compile "org.easytesting:fest-assert:$festAssertVersion"
+    compile "org.apache.tiles:tiles-core:$tilesVersion"
+    compile "org.apache.tiles:tiles-jsp:$tilesVersion"
     testImplementation "junit:junit:$junitVersion"
 }
