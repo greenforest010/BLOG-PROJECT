@@ -39,9 +39,13 @@ repositories {
     jcenter()
 }
 
+configurations.all {
+	exclude group: "commons-logging", module: "commons-logging"
+}
+
 // 의존 라이브러리 지정
 dependencies {
-    providedCompile "javax.servlet:javax.servlet-api:$servletApiVersion"
+	providedCompile "javax.servlet:javax.servlet-api:$servletApiVersion"
     compile "javax.servlet.jsp:javax.servlet.jsp-api:$jspApiVersion"
     compile "jstl:jstl:$jstlVersion"
     compile "org.slf4j:slf4j-api:$slf4jVersion"
@@ -59,5 +63,9 @@ dependencies {
     compile "org.easytesting:fest-assert:$festAssertVersion"
     compile "org.apache.tiles:tiles-core:$tilesVersion"
     compile "org.apache.tiles:tiles-jsp:$tilesVersion"
+    compile "org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:$log4jdbcLog4j2Version"
+    compile "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+    compile "log4j:log4j:$log4jVersion"
+    compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
     testImplementation "junit:junit:$junitVersion"
 }

@@ -9,21 +9,21 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
-	
+
 	<!-- Application Loggers -->
 	<logger name="com.test.app">
 		<level value="info" />
 	</logger>
-	
+
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.springframework.beans">
 		<level value="info" />
 	</logger>
-	
+
 	<logger name="org.springframework.context">
 		<level value="info" />
 	</logger>
@@ -32,10 +32,35 @@
 		<level value="info" />
 	</logger>
 
+	<!-- log4jdbc-log4j -->
+	<logger name="jdbc.sqlonly">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="jdbc.sqltiming">
+		<level value="INFO" />
+	</logger>
+
+	<logger name="jdbc.audit">
+		<level value="WARN" />
+	</logger>
+
+	<logger name="jdbc.resultset">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="jdbc.resultsettable">
+		<level value="ERROR" />
+	</logger>
+
+	<logger name="jdbc.connection">
+		<level value="INFO" />
+	</logger>
+
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="console" />
 	</root>
-	
+
 </log4j:configuration>

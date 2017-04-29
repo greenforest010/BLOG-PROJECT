@@ -18,12 +18,23 @@ import com.growingitskill.mapper.UserMapper;
 @ContextConfiguration(classes=MybatisJndiConfig.class)
 public class UserDAOTest {
 	
-	@BeforeClass
+	/*@BeforeClass
 	public static void jndiBind() throws NamingException {
 		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost/test");
+		dataSource.setUsername("test");
+		dataSource.setPassword("test");
+		builder.bind("jdbc/test", dataSource);
+	}*/
+	
+	@BeforeClass
+	public static void jndiBind() throws NamingException {
+		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
+		dataSource.setUrl("jdbc:log4jdbc:mysql://localhost/test");
 		dataSource.setUsername("test");
 		dataSource.setPassword("test");
 		builder.bind("jdbc/test", dataSource);
