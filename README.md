@@ -34,3 +34,4 @@
 - #### 2017.4.29
   - Mybatis Mapper 테스트
   - JDBC 로깅 추가
+  - CharacterEncodingFilter 추가(UTF-8)
