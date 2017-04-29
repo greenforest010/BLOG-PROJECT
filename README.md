@@ -30,3 +30,6 @@
 - #### 2017.4.28
   - 블로그, 관리자 영역 Header, Footer 뷰로 나눔.
   - ViewResolver를 Apache Tiles 로 바꿈(Header, Footer 뷰의 관리 수월의 이유)
+  
+- #### 2017.4.29
+  - Mybatis Mapper 테스트
