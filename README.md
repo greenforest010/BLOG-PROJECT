@@ -35,3 +35,6 @@
   - Mybatis Mapper 테스트
   - JDBC 로깅 추가
   - CharacterEncodingFilter 추가(UTF-8)
+  
+- #### 2017.4.30
+  - Post 추가(VO, Mapper(DAO), Service, Controller, View)

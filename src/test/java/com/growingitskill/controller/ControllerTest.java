@@ -45,10 +45,26 @@ public class ControllerTest {
 		
 		@Test
 		public void testPostListPage() throws Exception {
-			AdminController controller = new AdminController();
+			PostController controller = new PostController();
 			MockMvc mockMvc = standaloneSetup(controller).build();
 			
-			mockMvc.perform(get("/admin/post-list")).andExpect(view().name("admin/postList"));
+			mockMvc.perform(get("/admin/post")).andExpect(view().name("admin/post/list"));
+		}
+		
+		@Test
+		public void testPostNewPage() throws Exception {
+			PostController controller = new PostController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/post/new")).andExpect(view().name("admin/post/new"));
+		}
+		
+		@Test
+		public void testPostEditPage() throws Exception {
+			PostController controller = new PostController();
+			MockMvc mockMvc = standaloneSetup(controller).build();
+			
+			mockMvc.perform(get("/admin/post/edit")).andExpect(view().name("admin/post/edit"));
 		}
 		
 		@Test
