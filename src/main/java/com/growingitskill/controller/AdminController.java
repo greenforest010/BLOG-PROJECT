@@ -13,11 +13,6 @@ public class AdminController {
 		return "admin/main";
 	}
 	
-	@RequestMapping(value = "post-list", method = RequestMethod.GET)
-	public String postList() {
-		return "admin/postList";
-	}
-	
 	@RequestMapping(value = "category", method = RequestMethod.GET)
 	public String category() {
 		return "admin/category";

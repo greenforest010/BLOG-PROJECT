@@ -31,16 +31,24 @@
 		<put-attribute name="content" value="/WEB-INF/views/admin/main.jsp" />
 	</definition>
 	
+	<definition name="admin/post/list" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/post/list.jsp" />
+	</definition>
+	
+	<definition name="admin/post/new" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/post/new.jsp" />
+	</definition>
+	
+	<definition name="admin/post/edit" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/post/edit.jsp" />
+	</definition>
+	
 	<definition name="admin/category" extends="adminBase">
 		<put-attribute name="content" value="/WEB-INF/views/admin/category.jsp" />
 	</definition>
 	
 	<definition name="admin/media" extends="adminBase">
 		<put-attribute name="content" value="/WEB-INF/views/admin/media.jsp" />
-	</definition>
-	
-	<definition name="admin/postList" extends="adminBase">
-		<put-attribute name="content" value="/WEB-INF/views/admin/postList.jsp" />
 	</definition>
 	
 	<definition name="admin/tag" extends="adminBase">
