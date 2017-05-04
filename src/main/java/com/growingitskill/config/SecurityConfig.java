@@ -14,20 +14,23 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	private final String USERNAME_QUERY = "SELECT login_id, login_password, enabled FROM member WHERE login_id = ?";
 	private final String AUTHORITIES_BY_USERNAME_QUERY = "SELECT login_id, role FROM member WHERE  login_id = ?";
-	
+
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").and().authorizeRequests().antMatchers("/admin/**").authenticated().and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
+		http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").and()
+				.authorizeRequests().antMatchers("/admin/**").authenticated().and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(USERNAME_QUERY).authoritiesByUsernameQuery(AUTHORITIES_BY_USERNAME_QUERY).passwordEncoder(new BCryptPasswordEncoder());
+		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(USERNAME_QUERY)
+				.authoritiesByUsernameQuery(AUTHORITIES_BY_USERNAME_QUERY).passwordEncoder(new BCryptPasswordEncoder());
 	}
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -71,33 +73,21 @@
 							</thead>
 
 							<tbody>
-								<tr class="even pointer">
-									<td class="a-center "><input type="checkbox" class="flat"
-										name="table_records"></td>
-									<td class=" ">121000040</td>
-									<td class=" ">May 23, 2014 11:47:56 PM</td>
-									<td class=" ">121000210 <i
-										class="success fa fa-long-arrow-up"></i></td>
-									<td class=" ">John Blank L</td>
-									<td class=" ">Paid</td>
-									<td class=" ">Paid</td>
-									<td class="a-right a-right ">$7.45</td>
-									<td class=" last"><a href="#">View</a></td>
-								</tr>
-								<tr class="odd pointer">
-									<td class="a-center "><input type="checkbox" class="flat"
-										name="table_records"></td>
-									<td class=" ">121000039</td>
-									<td class=" ">May 23, 2014 11:30:12 PM</td>
-									<td class=" ">121000208 <i
-										class="success fa fa-long-arrow-up"></i>
-									</td>
-									<td class=" ">John Blank L</td>
-									<td class=" ">Paid</td>
-									<td class=" ">Paid</td>
-									<td class="a-right a-right ">$741.20</td>
-									<td class=" last"><a href="#">View</a></td>
-								</tr>
+								<c:forEach items="${list}" var="postVO">
+									<tr>
+										<td class="a-center "><input type="checkbox" class="flat"
+											name="table_records"></td>
+										<td>${postVO.id}</td>
+										<td>${postVO.title}</td>
+										<td>${postVO.author}</td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${postVO.published}" /></td>
+										<td>Paid</td>
+										<td>Paid</td>
+										<td>$7.45</td>
+										<td><a href="#">View</a></td>
+									</tr>
+								</c:forEach>
+
 							</tbody>
 						</table>
 					</div>

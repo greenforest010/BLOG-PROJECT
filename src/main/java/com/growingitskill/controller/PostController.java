@@ -2,6 +2,7 @@ package com.growingitskill.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -17,7 +18,9 @@ public class PostController {
 	private PostService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String listPage() throws Exception {
+	public String listPage(Model model) throws Exception {
+		model.addAttribute("list", service.listAll());
+		
 		return "admin/post/list";
 	}
 	
