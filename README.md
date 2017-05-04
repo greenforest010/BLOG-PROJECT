@@ -41,3 +41,4 @@
   
 - #### 2017.5.4
   - Post View 편집(list, new, edit)
+  - Post 생성(Create)

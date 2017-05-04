@@ -106,4 +106,11 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	var result = '${msg}';
+	if (result == 'success') {
+		alert("처리가 완료되었습니다.");
+	}
+</script>
 <!-- /page content -->

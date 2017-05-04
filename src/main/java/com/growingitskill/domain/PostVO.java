@@ -9,7 +9,7 @@ public class PostVO {
 	private Date datetime;
 	private long author;
 	private String content;
-	private String slug_title;
+	private String slugTitle;
 	private Date published;
 
 	public long getId() {
@@ -52,12 +52,12 @@ public class PostVO {
 		this.content = content;
 	}
 
-	public String getSlug_title() {
-		return slug_title;
+	public String getSlugTitle() {
+		return slugTitle;
 	}
-
-	public void setSlug_title(String slug_title) {
-		this.slug_title = slug_title;
+	
+	public void setSlugTitle(String slugTitle) {
+		this.slugTitle = slugTitle;
 	}
 
 	public Date getPublished() {
