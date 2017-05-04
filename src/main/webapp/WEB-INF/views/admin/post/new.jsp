@@ -32,45 +32,26 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form action="post/new" method="post">
+						<form role="form" method="post">
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" /> <input type="hidden" name="author"
+								value="2">
 							<div class="form-group">
 								<label for="title">제목*</label> <input type="text"
-									class="form-control" placeholder="제목을 입력해주세요." required />
+									class="form-control" name="title" placeholder="제목을 입력해주세요."
+									required />
 							</div>
 
 							<div class="form-group">
 								<label for="content">내용*</label>
-								<textarea class="form-control" required></textarea>
-							</div>
-
-							<div class="form-group">
-								<label for="category">카테고리*</label>
-								<div class="row">
-									<div class="col-md-5 col-sm-5 col-xs-12">
-										<select class="form-control">
-											<option value="n">카테고리를 선택해 주세요.</option>
-										</select>
-									</div>
-									<div class="col-md-7 col-sm-7"></div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label for="tag">태그</label>
-								<div class="row">
-									<div class="col-md-5">
-										<input type="text" class="form-control"
-											placeholder="태그를 입력해주세요." />
-									</div>
-									<div class="col-md-7"></div>
-								</div>
+								<textarea class="form-control" name="content" required></textarea>
 							</div>
 
 							<div class="form-group">
 								<label for="permalink">고유주소*</label>
 								<div class="row">
 									<div class="col-md-5">
-										<input type="text" class="form-control"
+										<input type="text" class="form-control" name="slugTitle"
 											placeholder="고유주소를 입력해주세요." required />
 									</div>
 									<div class="col-md-7"></div>
@@ -79,7 +60,8 @@
 
 							<div class="form-group">
 								<input type="submit" class="btn btn-success" value="확인">
-								<input type="button" class="btn btn-danger pull-right" value="취소">
+								<input type="button" class="btn btn-danger pull-right"
+									value="취소">
 							</div>
 						</form>
 					</div>
@@ -87,6 +69,5 @@
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!-- /page content -->

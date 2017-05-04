@@ -12,7 +12,7 @@ import com.growingitskill.domain.PostVO;
 
 public interface PostMapper {
 
-	@Insert("INSERT INTO post(title, author, content, slug_title) VALUES(#{title}, #{author}, #{content}, #{slug_title})")
+	@Insert("INSERT INTO post(title, author, content, slug_title) VALUES(#{title}, #{author}, #{content}, #{slugTitle})")
 	void create(PostVO vo) throws Exception;
 
 	@Select("SELECT * FROM post WHERE id = #{id}")
@@ -24,6 +24,7 @@ public interface PostMapper {
 	@Delete("DELETE FROM post WHERE id = #{id}")
 	void delete(@Param("id") long id) throws Exception;
 
+	
 	List<PostVO> listAll() throws Exception;
 
 }
