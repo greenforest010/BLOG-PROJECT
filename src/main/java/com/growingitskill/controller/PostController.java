@@ -26,7 +26,6 @@ public class PostController {
 	
 	@RequestMapping(value = "new", method = RequestMethod.GET)
 	public void newPage() throws Exception {
-		
 	}
 	
 	@RequestMapping(value = "new", method = RequestMethod.POST)
