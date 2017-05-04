@@ -24,7 +24,7 @@ public interface PostMapper {
 	@Delete("DELETE FROM post WHERE id = #{id}")
 	void delete(@Param("id") long id) throws Exception;
 
-	
+	@Select("SELECT * FROM post WHERE id > 0 order by id desc")
 	List<PostVO> listAll() throws Exception;
 
 }
