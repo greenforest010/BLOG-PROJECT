@@ -1,5 +1,7 @@
 package com.growingitskill.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import com.growingitskill.service.PostService;
 @RequestMapping("/admin/post")
 public class PostController {
 	
+	public static final Logger logger = LoggerFactory.getLogger(PostController.class);
+	
 	@Autowired
 	private PostService service;
 	
@@ -26,6 +30,7 @@ public class PostController {
 	
 	@RequestMapping(value = "new", method = RequestMethod.GET)
 	public void newPage() throws Exception {
+		logger.info("newPage get ......");
 	}
 	
 	@RequestMapping(value = "new", method = RequestMethod.POST)
@@ -39,6 +44,7 @@ public class PostController {
 	
 	@RequestMapping(value = "edit", method = RequestMethod.GET)
 	public void editPage() throws Exception {
+		logger.info("editPage get ......");
 	}
 
 }

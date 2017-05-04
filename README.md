@@ -44,3 +44,6 @@
   - Post 생성(Create)
   - Post 전체 목록 보이기(list)
   - Csrf 토큰을 포함한  POST 요청시 CharacterEncodingFilter 추가(기존 필터 삭제)
+  
+- #### 2017.5.5
+  - 로깅 변경(log4j -> logback)
