@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<!-- Application Loggers -->
+	<logger name="com.growingitskill" level="TRACE" />
+
+	<!-- 3rdparty Loggers -->
+	<logger name="org.springframework.core" level="info" />
+	<logger name="org.springframework.beans" level="info" />
+	<logger name="org.springframework.context" level="info" />
+	<logger name="org.springframework.web" level="info" />
+
+	<!-- log4jdbc-log4j -->
+	<logger name="jdbc.sqlonly" level="debug" />
+	<logger name="jdbc.sqltiming" level="info" />
+	<logger name="jdbc.audit" level="warn" />
+	<logger name="jdbc.resultset" level="error" />
+	<logger name="jdbc.resultsettable" level="error" />
+	<logger name="jdbc.connection" level="info" />
+
+
+	<!-- Root Logger -->
+	<root level="warn">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
