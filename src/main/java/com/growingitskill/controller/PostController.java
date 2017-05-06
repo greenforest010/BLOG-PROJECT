@@ -43,8 +43,21 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "edit", method = RequestMethod.GET)
-	public void editPage() throws Exception {
+	public void editPage(long id, Model model) throws Exception {
 		logger.info("editPage get ......");
+		
+		model.addAttribute(service.read(id));
+	}
+	
+	@RequestMapping(value = "edit", method = RequestMethod.POST)
+	public String editPagePOST(PostVO vo, RedirectAttributes redirectAttributes) throws Exception {
+		logger.info("edit post ......");
+		
+		service.modify(vo);
+		
+		redirectAttributes.addFlashAttribute("msg", "success");
+		
+		return "redirect:/admin/post";
 	}
 
 }

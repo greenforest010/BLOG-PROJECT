@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -32,10 +33,8 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form role="form" method="post">
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" /> <input type="hidden" name="author"
-								value="2">
+						<sf:form method="post">
+							<input type="hidden" name="author" value="2">
 							<div class="form-group">
 								<label for="title">제목*</label> <input type="text"
 									class="form-control" name="title" placeholder="제목을 입력해주세요."
@@ -63,7 +62,7 @@
 								<input type="button" class="btn btn-danger pull-right"
 									value="취소">
 							</div>
-						</form>
+						</sf:form>
 					</div>
 				</div>
 			</div>
