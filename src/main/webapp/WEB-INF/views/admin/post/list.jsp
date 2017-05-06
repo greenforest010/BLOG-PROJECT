@@ -76,9 +76,9 @@
 								<c:forEach items="${list}" var="postVO">
 									<tr>
 										<td class="a-center "><input type="checkbox" class="flat"
-											name="table_records"></td>
+											name="table_records" value="${postVO.id}"></td>
 										<td>${postVO.id}</td>
-										<td>${postVO.title}</td>
+										<td><a href="post/edit?id=${postVO.id}">${postVO.title}</a></td>
 										<td>${postVO.author}</td>
 										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${postVO.published}" /></td>
 										<td>Paid</td>
@@ -87,7 +87,6 @@
 										<td><a href="#">View</a></td>
 									</tr>
 								</c:forEach>
-
 							</tbody>
 						</table>
 					</div>
