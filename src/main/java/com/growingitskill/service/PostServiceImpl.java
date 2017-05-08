@@ -20,7 +20,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public PostVO read(Long id) throws Exception {
+	public PostVO read(long id) throws Exception {
 		return postMapper.read(id);
 	}
 
@@ -30,8 +30,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void remove(Long id) throws Exception {
-		postMapper.delete(id);
+	public void remove(long[] postId) throws Exception {
+		postMapper.delete(postId);
 	}
 
 	@Override

@@ -21,8 +21,13 @@ public interface PostMapper {
 	@Update("UPDATE post SET title = #{title}, content = #{content} where id = #{id}")
 	void update(PostVO vo) throws Exception;
 
-	@Delete("DELETE FROM post WHERE id = #{id}")
-	void delete(@Param("id") long id) throws Exception;
+	@Delete({"<script>",
+		"DELETE FROM post WHERE id IN",
+		"<foreach item='item' index='index' collection='postId' open='(' separator=',' close=')'>",
+		"#{item}",
+		"</foreach>",
+		"</script>"})
+	void delete(@Param("postId") long[] postId) throws Exception;
 
 	@Select("SELECT * FROM post WHERE id > 0 order by id desc")
 	List<PostVO> listAll() throws Exception;
