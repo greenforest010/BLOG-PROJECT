@@ -8,11 +8,11 @@ public interface PostService {
 
 	void regist(PostVO vo) throws Exception;
 
-	PostVO read(Long id) throws Exception;
+	PostVO read(long id) throws Exception;
 
 	void modify(PostVO vo) throws Exception;
 
-	void remove(Long id) throws Exception;
+	void remove(long[] postId) throws Exception;
 
 	List<PostVO> listAll() throws Exception;
 

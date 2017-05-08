@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.growingitskill.domain.PostVO;
@@ -54,6 +55,15 @@ public class PostController {
 		logger.info("edit post ......");
 		
 		service.modify(vo);
+		
+		redirectAttributes.addFlashAttribute("msg", "success");
+		
+		return "redirect:/admin/post";
+	}
+	
+	@RequestMapping(value = "remove", method = RequestMethod.POST)
+	public String remove(@RequestParam("postId") long[] postId, RedirectAttributes redirectAttributes) throws Exception {
+		service.remove(postId);
 		
 		redirectAttributes.addFlashAttribute("msg", "success");
 		

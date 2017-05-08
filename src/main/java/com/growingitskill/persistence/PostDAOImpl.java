@@ -27,8 +27,8 @@ public class PostDAOImpl extends SqlSessionDaoSupport implements PostMapper {
 	}
 
 	@Override
-	public void delete(long id) throws Exception {
-		getSqlSession().delete(namespace + ".delete", id);
+	public void delete(long[] postId) throws Exception {
+		getSqlSession().delete(namespace + ".delete", postId);
 	}
 
 	@Override

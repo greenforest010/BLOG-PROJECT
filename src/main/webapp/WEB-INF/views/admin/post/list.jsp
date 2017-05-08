@@ -2,6 +2,7 @@
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -14,9 +15,8 @@
 
 	<div class="row">
 		<div class="col-md-1 col-sm-1 col-xs-1">
-			<a class="btn btn-primary" href="post/new" role="button">글 쓰기</a>
+			<a class="btn btn-primary" href="/admin/post/new" role="button">글 쓰기</a>
 		</div>
-
 
 		<div
 			class="col-md-5 col-sm-5 col-xs-8 form-group pull-right top_search">
@@ -28,7 +28,6 @@
 			</div>
 		</div>
 	</div>
-
 
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
@@ -67,8 +66,7 @@
 									</th>
 									<th class="bulk-actions" colspan="8"><a class="antoo"
 										style="color: #fff; font-weight: 500;">Bulk Actions ( <span
-											class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-									</th>
+											class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a></th>
 								</tr>
 							</thead>
 
@@ -80,7 +78,8 @@
 										<td>${postVO.id}</td>
 										<td><a href="post/edit?id=${postVO.id}">${postVO.title}</a></td>
 										<td>${postVO.author}</td>
-										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${postVO.published}" /></td>
+										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
+												value="${postVO.published}" /></td>
 										<td>Paid</td>
 										<td>Paid</td>
 										<td>$7.45</td>
@@ -90,16 +89,44 @@
 							</tbody>
 						</table>
 					</div>
+
+					<sf:form id="deletePostForm" action="/admin/post/remove" method="post">
+						<input type="submit" class="btn btn-danger" />
+					</sf:form>
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
+
 <script type="text/javascript">
 	var result = '${msg}';
+	
 	if (result == 'success') {
 		alert("처리가 완료되었습니다.");
 	}
+</script>
+
+<script type="text/javascript">
+	$("#deletePostForm").submit(function(event) {
+		var postId = [];
+
+		$("input[name='table_records']:checked").each(function() {
+				postId.push($(this).val()); // this -> input(checkbox)
+		});
+
+		if (postId == '') {
+			alert("삭제할 대상을 선택하세요.");
+			
+			return false;
+		} else {
+			var postIdInput = "<input type='hidden' name='postId' value=" + postId +" />";
+
+			$(this).append(postIdInput);  // this -> deletePostForm
+		}
+	});
 </script>
 <!-- /page content -->
