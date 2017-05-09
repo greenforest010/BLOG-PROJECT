@@ -91,7 +91,7 @@
 					</div>
 
 					<sf:form id="deletePostForm" action="/admin/post/remove" method="post">
-						<input type="submit" class="btn btn-danger" />
+						<input type="submit" class="btn btn-danger" value="삭제" />
 					</sf:form>
 
 				</div>
