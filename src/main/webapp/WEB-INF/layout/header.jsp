@@ -5,13 +5,13 @@
 <div class="wrap">
 	<div class="header">
 		<div class="logo">
-			<h1><a href="/"><img src="resources/images/logo.png" alt=""/></a></h1>
+			<h1><a href="/"><img src="/resources/images/logo.png" alt=""/></a></h1>
 		</div>
 		<div class="h_right">
 			<ul class="menu">
 				<li><a href="/">home</a></li>
-				<li><a href="about">about</a></li>
-				<li><a href="login">login</a></li>
+				<li><a href="/about">about</a></li>
+				<li><a href="/login">login</a></li>
 			</ul>
 			<div id="sb-search" class="sb-search">
 				<form>
@@ -20,8 +20,8 @@
 					<span class="sb-icon-search"></span>
 				</form>
 			</div>
-			<script src="resources/js/classie.js"></script>
-			<script src="resources/js/uisearch.js"></script>
+			<script src="/resources/js/classie.js"></script>
+			<script src="/resources/js/uisearch.js"></script>
 			<script>
 				new UISearch( document.getElementById( 'sb-search' ) );
 			</script>
@@ -34,7 +34,7 @@
 	                <div class="clear"></div>
 	            </ul>
 	        </nav>
-	        <script type="text/javascript" src="resources/js/responsive.menu.js"></script>
+	        <script type="text/javascript" src="/resources/js/responsive.menu.js"></script>
 			<!-- end smart_nav * -->
 		</div>
 		<div class="clear"></div>

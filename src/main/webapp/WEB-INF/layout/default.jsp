@@ -18,10 +18,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600'
 	rel='stylesheet' type='text/css'>
-<link href="resources/css/style.css" rel="stylesheet" type="text/css"
+<link href="/resources/css/style.css" rel="stylesheet" type="text/css"
 	media="all" />
 <!--  jquery plguin -->
-<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.min.js"></script>
 </head>
 <body>
 	<tiles:insertAttribute name="header" />

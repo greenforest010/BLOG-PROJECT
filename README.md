@@ -56,3 +56,4 @@
   
 - #### 2017.5.9
   - Blog Post 전체 목록 보이기(list)
+  - Blog Post 읽기(read)

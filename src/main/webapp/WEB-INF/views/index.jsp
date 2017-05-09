@@ -29,7 +29,8 @@
 								</h4>
 							</div>
 							<div class="b_right">
-								<h4><a href="${postVO.slugTitle}">${postVO.title}</a></h4>
+								<%-- <h4><a href="${postVO.slugTitle}">${postVO.title}</a></h4> --%>
+								<h4><a href="/post/${postVO.id}">${postVO.title}</a></h4>
 								<div class="blog_list">
 									<ul>
 										<li><a href="#"> <i class="date"> </i><span><fmt:formatDate
