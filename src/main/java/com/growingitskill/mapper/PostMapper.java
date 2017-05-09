@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -30,6 +32,7 @@ public interface PostMapper {
 	void delete(@Param("postId") long[] postId) throws Exception;
 
 	@Select("SELECT * FROM post WHERE id > 0 order by id desc")
+	@Results(@Result(property="slugTitle", column="slug_title")) // DB 컬럼과 JAVA 필드의 이름이 다른 경우 사용
 	List<PostVO> listAll() throws Exception;
 
 }

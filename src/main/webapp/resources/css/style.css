@@ -957,7 +957,7 @@ p.para{
 }
 /* start pagination */
 .pagination {
-	float: left;
+	float: right;
 	/* top: -50px; */
 	position: relative;
 	clear: both;
@@ -1593,6 +1593,7 @@ span.tab-img{
 		float: none;
 		width: 100%;
 		margin-left: 0%;
+		margin-top: 20%;
 	}
 	.social_network_likes {
 		clear: both;
@@ -1741,9 +1742,9 @@ span.tab-img{
 		top: 85%;
 		left: 77%;
 	}
-	.pagination {
+	/* .pagination {
 		top: -40px;
-	}
+	} */
 	.ca-container {
 		height: 180px;
 	}
@@ -1793,9 +1794,9 @@ span.tab-img{
 		top: 75%;
 		left: 65%;
 	}
-	.pagination {
+	/* .pagination {
 		top: -15px;
-	}
+	} */
 	.resp-tab-item {
 		font-size: 0.8125em;
 	}
