@@ -77,7 +77,7 @@
 											name="table_records" value="${postVO.id}"></td>
 										<td>${postVO.id}</td>
 										<td><a href="post/edit?id=${postVO.id}">${postVO.title}</a></td>
-										<td>${postVO.author}</td>
+										<td>${postVO.loginId}</td>
 										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 												value="${postVO.published}" /></td>
 										<td>Paid</td>

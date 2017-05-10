@@ -1,6 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -34,7 +36,11 @@
 					</div>
 					<div class="x_content">
 						<sf:form method="post">
-							<input type="hidden" name="author" value="2">
+							<sec:authorize access="isAuthenticated()">
+								<sec:authentication property="principal.username" var="loginId" />
+								<input type="hidden" name="loginId" value="${loginId}">
+							</sec:authorize>
+
 							<div class="form-group">
 								<label for="title">제목*</label> <input type="text"
 									class="form-control" name="title" placeholder="제목을 입력해주세요."

@@ -57,3 +57,6 @@
 - #### 2017.5.9
   - Blog Post 전체 목록 보이기(list)
   - Blog Post 읽기(read)
+  
+- #### 2017.5.11
+  - 저자(author)의 텍스트 변환(View에 보임)

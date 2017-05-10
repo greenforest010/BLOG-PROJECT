@@ -11,6 +11,8 @@ public class PostVO {
 	private String content;
 	private String slugTitle;
 	private Date published;
+	
+	private String loginId;
 
 	public long getId() {
 		return id;
@@ -66,6 +68,14 @@ public class PostVO {
 
 	public void setPublished(Date published) {
 		this.published = published;
+	}
+	
+	public String getLoginId() {
+		return loginId;
+	}
+	
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 
 }
