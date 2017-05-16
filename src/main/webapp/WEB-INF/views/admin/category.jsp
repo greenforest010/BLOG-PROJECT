@@ -54,7 +54,8 @@
 
 							<div class="row">
 								<div class="col-md-10 col-sm-10 col-xs-10">
-									<input type="text" class="form-control">
+									<input id="categoryPermalinkInput" type="text"
+										class="form-control">
 								</div>
 
 								<div class="col-md-2 col-sm-2 col-xs-2">
@@ -76,30 +77,51 @@
 <script src="/resources/admin/vendors/jsTree/dist/jstree.min.js"></script>
 
 <script type="text/javascript">
+	var categoryData = [];
+
+	$.ajax({
+		async : false,
+		url : "/categorys",
+		dataType : "json",
+		success : function(data) {
+			$.each(data, function(key, val) {
+				var items = new Object();
+
+				if (val.parent == 0) {
+					val.parent = "#";
+				}
+
+				items.id = val.id.toString();
+				items.text = val.term;
+				items.parent = val.parent.toString();
+				items.slugTerm = val.slugTerm;
+
+				console.log("id: " + items.id + ", text: " + items.text
+						+ ", parent: " + items.parent + ", slugTerm: "
+						+ items.slugTerm);
+
+				categoryData.push(items);
+			});
+		}
+	});
+
+	for (i in categoryData) {
+		console.log(categoryData[i]);
+	}
+
 	$('#category').on('changed.jstree', function(e, data) {
-		console.log("The selected nodes are: " + data.selected);
+		var i, j, r = [];
+		for (i = 0, j = data.selected.length; i < j; i++) {
+			r.push(data.instance.get_node(data.selected[i]).original.slugTerm);
+		}
+
+		$('#categoryPermalinkInput').val(r.join(', '));
 	}).jstree({
 		'core' : {
-			'data' : [ {
-				"id" : "ajson1",
-				"parent" : "#",
-				"text" : "Simple root node"
-			}, {
-				"id" : "ajson2",
-				"parent" : "#",
-				"text" : "Root node 2"
-			}, {
-				"id" : "ajson3",
-				"parent" : "ajson2",
-				"text" : "Child 1"
-			}, {
-				"id" : "ajson4",
-				"parent" : "ajson2",
-				"text" : "Child 2"
-			} ],
+			'data' : categoryData,
 			'check_callback' : true
 		},
-		'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd' ]
+		'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd', 'changed' ]
 	});
 </script>
 <!-- /page content -->
