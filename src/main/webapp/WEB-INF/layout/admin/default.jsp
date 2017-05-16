@@ -25,6 +25,10 @@
 <!-- iCheck -->
 <link href="/resources/admin/vendors/iCheck/skins/flat/green.css"
 	rel="stylesheet">
+	
+<!-- jsTree  -->
+<link rel="stylesheet"
+	href="/resources/admin/vendors/jsTree/dist/themes/default/style.min.css" />
 
 <!-- Custom Theme Style -->
 <link href="/resources/admin/build/css/custom.min.css" rel="stylesheet">

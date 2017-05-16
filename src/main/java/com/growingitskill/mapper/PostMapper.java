@@ -25,7 +25,7 @@ public interface PostMapper {
 
 	@Delete({"<script>",
 		"DELETE FROM post WHERE id IN",
-		"<foreach item='item' index='index' collection='postId' open='(' separator=',' close=')'>",
+		"<foreach item='item' index='index' collection='array' open='(' separator=',' close=')'>",
 		"#{item}",
 		"</foreach>",
 		"</script>"})
