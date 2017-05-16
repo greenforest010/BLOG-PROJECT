@@ -66,5 +66,6 @@ dependencies {
     compile "org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:$log4jdbcLog4j2Version"
     compile "org.slf4j:jcl-over-slf4j:$slf4jVersion"
     compile "ch.qos.logback:logback-classic:$logbackVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
     testImplementation "junit:junit:$junitVersion"
 }
