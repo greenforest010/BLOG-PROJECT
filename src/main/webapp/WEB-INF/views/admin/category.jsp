@@ -159,6 +159,24 @@
 		}).fail(function() {
 			data.instance.refresh();
 		});
+	}).on('delete_node.jstree', function(e, data) {
+		console.log("delete: " + data.node.id);
+		
+		if (data.node.parent == '#') {
+			alert("이 카테고리는 삭제 할 수 없습니다.");
+			
+			return false;
+		}
+		
+		$.ajax({
+			method : 'DELETE',
+			url : '/categories/' + data.node.id
+		}).done(function() {
+			alert("삭제 하였습니다.");
+		}).fail(function() {
+			data.instance.refresh();
+		});
+		
 	}).jstree({
 		'core' : {
 			'data' : categoryData,

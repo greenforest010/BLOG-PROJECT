@@ -30,5 +30,10 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	public void updateSlugTerm(CategoryVO categoryVO) throws Exception {
 		getSqlSession().update(namespace + ".updateSlugTerm", categoryVO);
 	}
+	
+	@Override
+	public void delete(long id) throws Exception {
+		getSqlSession().delete(namespace + ".delete", id);
+	}
 
 }
