@@ -24,4 +24,14 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryMapper.create(categoryVO);
 	}
 
+	@Override
+	public void renameCategory(CategoryVO categoryVO) throws Exception {
+		categoryMapper.updateTerm(categoryVO);
+	}
+
+	@Override
+	public void modifyCategorySlugTerm(CategoryVO categoryVO) throws Exception {
+		categoryMapper.updateSlugTerm(categoryVO);
+	}
+
 }

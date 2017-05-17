@@ -2,7 +2,9 @@ package com.growingitskill.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +32,17 @@ public class CategoryController {
 		categoryService.addCategory(categoryVO);
 		
 		return categoryVO;
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public void rename(@PathVariable long id,  @RequestBody CategoryVO categoryVO) throws Exception {
+		if (categoryVO.getTerm() != null) {
+			categoryService.renameCategory(categoryVO);
+		}
+		
+		if (categoryVO.getSlugTerm() != null) {
+			categoryService.modifyCategorySlugTerm(categoryVO);
+		}
 	}
 
 }

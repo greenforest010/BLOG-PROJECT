@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.Update;
 
 import com.growingitskill.domain.CategoryVO;
 
@@ -20,5 +21,12 @@ public interface CategoryMapper {
 	@Results(@Result(property = "slugTerm", column = "slug_term"))
 	@SelectKey(statement = { "SELECT LAST_INSERT_ID()" }, keyProperty = "id", before = false, resultType = long.class)
 	void create(CategoryVO categoryVO) throws Exception;
+	
+	@Update("UPDATE category SET term = #{term} WHERE id = #{id}")
+	void updateTerm(CategoryVO categoryVO) throws Exception;
+	
+	@Update("UPDATE category SET slug_term = #{slugTerm} WHERE id = #{id}")
+	@Results(@Result(property = "slugTerm", column = "slug_term"))
+	void updateSlugTerm(CategoryVO categoryVO) throws Exception;
 
 }

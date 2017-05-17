@@ -21,4 +21,14 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 		getSqlSession().insert(namespace + ".create", categoryVO);
 	}
 
+	@Override
+	public void updateTerm(CategoryVO categoryVO) throws Exception {
+		getSqlSession().update(namespace + ".updateTerm", categoryVO);
+	}
+
+	@Override
+	public void updateSlugTerm(CategoryVO categoryVO) throws Exception {
+		getSqlSession().update(namespace + ".updateSlugTerm", categoryVO);
+	}
+
 }
