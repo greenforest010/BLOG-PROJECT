@@ -84,7 +84,7 @@
 			xhr.setRequestHeader(header, token);
 		});
 	});
-	
+
 	var categoryData = [];
 
 	$.ajax({
@@ -116,8 +116,12 @@
 	for (i in categoryData) {
 		console.log(categoryData[i]);
 	}
+	
+	var selectCategory = new Object();
 
 	$('#category').on('changed.jstree', function(e, data) {
+		selectCategory.id = data.instance.get_node(data.selected[0]).id;
+		
 		var i, j, r = [];
 
 		for (i = 0, j = data.selected.length; i < j; i++) {
@@ -125,15 +129,33 @@
 		}
 
 		$('#categoryPermalinkInput').val(r.join(', '));
-	}).on('create_node.jstree', function(e, data) {
-		$.post('/categories', {
-			'term' : data.node.text,
-			'parent' : data.node.parent,
-			'slugTerm' : data.node.text
-		}).done(function(d) {
-			console.log("d: " + d + ", d.term: " + d.term + ", d.parent " + d.parent + ", d.slugTerm" + d.slugTerm);
-			
-			data.instance.set_id(data.node, d.id);
+	}).on(
+			'create_node.jstree',
+			function(e, data) {
+				$.post('/categories', {
+					'term' : data.node.text,
+					'parent' : data.node.parent,
+					'slugTerm' : data.node.text
+				}).done(
+						function(d) {
+							console.log("d: " + d + ", d.term: " + d.term
+									+ ", d.parent " + d.parent + ", d.slugTerm"
+									+ d.slugTerm);
+
+							data.instance.set_id(data.node, d.id);
+						}).fail(function() {
+					data.instance.refresh();
+				});
+			}).on('rename_node.jstree', function(e, data) {
+		console.log("rename: " + data.node.text);
+		$.ajax({
+			method : 'PUT',
+			url : '/categories/' + data.node.id,
+			contentType : 'application/json',
+			data : JSON.stringify({
+				id : data.node.id,
+				term : data.node.text
+			})
 		}).fail(function() {
 			data.instance.refresh();
 		});
@@ -143,6 +165,24 @@
 			'check_callback' : true
 		},
 		'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd', 'changed' ]
+	});
+	
+	$('#changeCategoryPermalink').on('click', function() {
+		var value = $('#categoryPermalinkInput').val();
+		
+		Number(selectCategory.id);
+		
+		$.ajax({
+			method : 'PUT',
+			url : '/categories/' + selectCategory.id,
+			contentType : 'application/json',
+			data : JSON.stringify({
+				id : selectCategory.id,
+				slugTerm : value
+			})
+		}).done(function() {
+			alert("성공 했습니다.");
+		});
 	});
 </script>
 <!-- /page content -->
