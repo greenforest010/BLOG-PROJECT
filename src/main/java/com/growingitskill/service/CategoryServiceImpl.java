@@ -33,5 +33,10 @@ public class CategoryServiceImpl implements CategoryService {
 	public void modifyCategorySlugTerm(CategoryVO categoryVO) throws Exception {
 		categoryMapper.updateSlugTerm(categoryVO);
 	}
+	
+	@Override
+	public void removeCategory(long id) throws Exception {
+		categoryMapper.delete(id);
+	}
 
 }

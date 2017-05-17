@@ -2,7 +2,6 @@ package com.growingitskill.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +42,11 @@ public class CategoryController {
 		if (categoryVO.getSlugTerm() != null) {
 			categoryService.modifyCategorySlugTerm(categoryVO);
 		}
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public void remove(@PathVariable long id) throws Exception {
+		categoryService.removeCategory(id);
 	}
 
 }

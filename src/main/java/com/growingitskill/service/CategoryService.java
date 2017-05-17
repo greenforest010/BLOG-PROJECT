@@ -13,5 +13,7 @@ public interface CategoryService {
 	void renameCategory(CategoryVO categoryVO) throws Exception;
 	
 	void modifyCategorySlugTerm(CategoryVO categoryVO) throws Exception;
+	
+	void removeCategory(long id) throws Exception;
 
 }
