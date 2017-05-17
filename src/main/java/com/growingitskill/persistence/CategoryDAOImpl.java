@@ -16,4 +16,9 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 		return getSqlSession().selectList(namespace + ".listAll");
 	}
 
+	@Override
+	public void create(CategoryVO categoryVO) throws Exception {
+		getSqlSession().insert(namespace + ".create", categoryVO);
+	}
+
 }

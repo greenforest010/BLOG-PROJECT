@@ -19,6 +19,9 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryMapper.listAll();
 	}
 	
-	
+	@Override
+	public void addCategory(CategoryVO categoryVO) throws Exception {
+		categoryMapper.create(categoryVO);
+	}
 
 }
