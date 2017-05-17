@@ -77,11 +77,19 @@
 <script src="/resources/admin/vendors/jsTree/dist/jstree.min.js"></script>
 
 <script type="text/javascript">
+	$(function() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	});
+	
 	var categoryData = [];
 
 	$.ajax({
 		async : false,
-		url : "/categorys",
+		url : "/categories",
 		dataType : "json",
 		success : function(data) {
 			$.each(data, function(key, val) {
@@ -111,11 +119,24 @@
 
 	$('#category').on('changed.jstree', function(e, data) {
 		var i, j, r = [];
+
 		for (i = 0, j = data.selected.length; i < j; i++) {
 			r.push(data.instance.get_node(data.selected[i]).original.slugTerm);
 		}
 
 		$('#categoryPermalinkInput').val(r.join(', '));
+	}).on('create_node.jstree', function(e, data) {
+		$.post('/categories', {
+			'term' : data.node.text,
+			'parent' : data.node.parent,
+			'slugTerm' : data.node.text
+		}).done(function(d) {
+			console.log("d: " + d + ", d.term: " + d.term + ", d.parent " + d.parent + ", d.slugTerm" + d.slugTerm);
+			
+			data.instance.set_id(data.node, d.id);
+		}).fail(function() {
+			data.instance.refresh();
+		});
 	}).jstree({
 		'core' : {
 			'data' : categoryData,
