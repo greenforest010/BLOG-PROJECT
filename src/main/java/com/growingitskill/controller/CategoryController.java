@@ -2,6 +2,8 @@ package com.growingitskill.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,8 @@ import com.growingitskill.service.CategoryService;
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
+	
+	public static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 	
 	@Autowired
 	private CategoryService categoryService;
@@ -35,12 +39,20 @@ public class CategoryController {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public void rename(@PathVariable long id,  @RequestBody CategoryVO categoryVO) throws Exception {
+		categoryVO.setId(id);
+		
+		logger.info(categoryVO.toString());
+		
 		if (categoryVO.getTerm() != null) {
 			categoryService.renameCategory(categoryVO);
 		}
 		
 		if (categoryVO.getSlugTerm() != null) {
 			categoryService.modifyCategorySlugTerm(categoryVO);
+		}
+		
+		if (categoryVO.getParent() != 0) {
+			categoryService.moveCategory(categoryVO);
 		}
 	}
 	

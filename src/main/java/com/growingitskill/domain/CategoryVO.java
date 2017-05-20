@@ -57,4 +57,10 @@ public class CategoryVO {
 		this.parent = parent;
 	}
 
+	@Override
+	public String toString() {
+		return "category " + "id: " + getId() + ", term: " + getTerm() + ", scheme: " + getScheme() + ", label: "
+				+ getLabel() + ", slugTerm: " + getSlugTerm() + ", parent: " + getParent();
+	}
+
 }

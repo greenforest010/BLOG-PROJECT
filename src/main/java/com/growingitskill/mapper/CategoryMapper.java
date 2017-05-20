@@ -29,6 +29,9 @@ public interface CategoryMapper {
 	@Update("UPDATE category SET slug_term = #{slugTerm} WHERE id = #{id}")
 	@Results(@Result(property = "slugTerm", column = "slug_term"))
 	void updateSlugTerm(CategoryVO categoryVO) throws Exception;
+	
+	@Update("UPDATE category SET parent = #{parent} WHERE id = #{id}")
+	void updateParent(CategoryVO categoryVO) throws Exception;
 
 	@Delete("DELETE FROM category WHERE id IN " + "(SELECT id FROM "
 			+ "(SELECT * FROM category WHERE id = #{id} OR id IN "
