@@ -116,12 +116,12 @@
 	for (i in categoryData) {
 		console.log(categoryData[i]);
 	}
-	
+
 	var selectCategory = new Object();
 
 	$('#category').on('changed.jstree', function(e, data) {
 		selectCategory.id = data.instance.get_node(data.selected[0]).id;
-		
+
 		var i, j, r = [];
 
 		for (i = 0, j = data.selected.length; i < j; i++) {
@@ -153,21 +153,29 @@
 			url : '/categories/' + data.node.id,
 			contentType : 'application/json',
 			data : JSON.stringify({
-				id : data.node.id,
 				term : data.node.text
 			})
 		}).fail(function() {
 			data.instance.refresh();
 		});
+	}).on('move_node.jstree', function(e, data) {
+		$.ajax({
+			method : 'PUT',
+			url : '/categories/' + data.node.id,
+			contentType : 'application/json',
+			data : JSON.stringify({
+				parent : data.node.parent
+			})
+		});
 	}).on('delete_node.jstree', function(e, data) {
 		console.log("delete: " + data.node.id);
-		
+
 		if (data.node.parent == '#') {
 			alert("이 카테고리는 삭제 할 수 없습니다.");
-			
+
 			return false;
 		}
-		
+
 		$.ajax({
 			method : 'DELETE',
 			url : '/categories/' + data.node.id
@@ -176,7 +184,7 @@
 		}).fail(function() {
 			data.instance.refresh();
 		});
-		
+
 	}).jstree({
 		'core' : {
 			'data' : categoryData,
@@ -184,18 +192,17 @@
 		},
 		'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd', 'changed' ]
 	});
-	
+
 	$('#changeCategoryPermalink').on('click', function() {
 		var value = $('#categoryPermalinkInput').val();
-		
+
 		Number(selectCategory.id);
-		
+
 		$.ajax({
 			method : 'PUT',
 			url : '/categories/' + selectCategory.id,
 			contentType : 'application/json',
 			data : JSON.stringify({
-				id : selectCategory.id,
 				slugTerm : value
 			})
 		}).done(function() {

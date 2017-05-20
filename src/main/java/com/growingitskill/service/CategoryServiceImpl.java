@@ -35,6 +35,11 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
+	public void moveCategory(CategoryVO categoryVO) throws Exception {
+		categoryMapper.updateParent(categoryVO);
+	}
+	
+	@Override
 	public void removeCategory(long id) throws Exception {
 		categoryMapper.delete(id);
 	}

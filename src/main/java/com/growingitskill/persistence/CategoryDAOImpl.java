@@ -32,6 +32,11 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	}
 	
 	@Override
+	public void updateParent(CategoryVO categoryVO) throws Exception {
+		getSqlSession().update(namespace + ".updateParent", categoryVO);
+	}
+	
+	@Override
 	public void delete(long id) throws Exception {
 		getSqlSession().delete(namespace + ".delete", id);
 	}
