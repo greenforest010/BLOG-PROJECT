@@ -6,13 +6,15 @@ public class PostVO {
 
 	private long id;
 	private String title;
-	private Date datetime;
+	private Date updated;
 	private long author;
 	private String content;
 	private String slugTitle;
 	private Date published;
-	
+
 	private String loginId;
+
+	private CategoryVO categoryVO;
 
 	public long getId() {
 		return id;
@@ -30,12 +32,12 @@ public class PostVO {
 		this.title = title;
 	}
 
-	public Date getDatetime() {
-		return datetime;
+	public Date getUpdated() {
+		return updated;
 	}
 
-	public void setDatetime(Date datetime) {
-		this.datetime = datetime;
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 
 	public long getAuthor() {
@@ -57,7 +59,7 @@ public class PostVO {
 	public String getSlugTitle() {
 		return slugTitle;
 	}
-	
+
 	public void setSlugTitle(String slugTitle) {
 		this.slugTitle = slugTitle;
 	}
@@ -69,13 +71,28 @@ public class PostVO {
 	public void setPublished(Date published) {
 		this.published = published;
 	}
-	
+
 	public String getLoginId() {
 		return loginId;
 	}
-	
+
 	public void setLoginId(String loginId) {
 		this.loginId = loginId;
+	}
+
+	public CategoryVO getCategoryVO() {
+		return categoryVO;
+	}
+
+	public void setCategoryVO(CategoryVO categoryVO) {
+		this.categoryVO = categoryVO;
+	}
+
+	@Override
+	public String toString() {
+		return "post id: " + getId() + ", title" + getTitle() + ", updated" + getUpdated() + ", author" + getAuthor()
+				+ ", content" + getContent() + ", slugTerm" + getSlugTitle() + ", published" + getPublished()
+				+ ", category id: " + categoryVO.getId();
 	}
 
 }

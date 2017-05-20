@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
 import com.growingitskill.domain.PostVO;
@@ -14,6 +15,7 @@ import com.growingitskill.domain.PostVO;
 public interface PostMapper {
 
 	@Insert("INSERT INTO post(title, author, content, slug_title) VALUES(#{title}, #{author}, #{content}, #{slugTitle})")
+	@SelectKey(statement = { "SELECT LAST_INSERT_ID()" }, keyProperty = "id", before = false, resultType = long.class)
 	void create(PostVO vo) throws Exception;
 
 	@Select("SELECT title, login_id, content, published FROM post p LEFT JOIN member m ON p.author = m.id WHERE p.id = #{id} ORDER BY p.id DESC")
