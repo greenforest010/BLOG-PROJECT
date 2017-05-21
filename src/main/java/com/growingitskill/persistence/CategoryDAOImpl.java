@@ -12,6 +12,11 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	private static final String namespace = "com.growingitskill.mapper.CategoryMapper";
 	
 	@Override
+	public CategoryVO selectCategory(long id) throws Exception {
+		return getSqlSession().selectOne(namespace + ".findCategory", id);
+	}
+	
+	@Override
 	public List<CategoryVO> listAll() throws Exception {
 		return getSqlSession().selectList(namespace + ".listAll");
 	}

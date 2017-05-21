@@ -13,6 +13,9 @@ import org.apache.ibatis.annotations.Update;
 import com.growingitskill.domain.CategoryVO;
 
 public interface CategoryMapper {
+	
+	@Select("SELECT * FROM category WHERE id = #{id}")
+	CategoryVO selectCategory(long id) throws Exception;
 
 	@Select("SELECT * FROM category")
 	@Results(@Result(property = "slugTerm", column = "slug_term"))

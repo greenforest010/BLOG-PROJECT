@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.growingitskill.domain.PostVO;
+import com.growingitskill.mapper.CategoryRelationMapper;
 import com.growingitskill.mapper.PostMapper;
 
 @Service
@@ -13,10 +14,17 @@ public class PostServiceImpl implements PostService {
 	
 	@Autowired
 	private PostMapper postMapper;
+	
+	@Autowired
+	private CategoryRelationMapper categoryRelationMapper;
 
 	@Override
-	public void regist(PostVO vo) throws Exception {
-		postMapper.create(vo);
+	public void regist(PostVO postVO) throws Exception {
+		postMapper.create(postVO);
+		
+		System.out.println("post getID: " + postVO.getId() + ", category getID: " + postVO.getCategoryVO().getId());
+		
+		categoryRelationMapper.create(postVO);
 	}
 
 	@Override

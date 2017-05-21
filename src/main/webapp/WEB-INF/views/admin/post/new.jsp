@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
@@ -50,6 +51,15 @@
 							<div class="form-group">
 								<label for="content">내용*</label>
 								<textarea class="form-control" name="content" required></textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="category">카테고리*</label> <select class="form-control" name="categoryId" required>
+									<option value="">카테고리를 선택해 주세요.</option>
+									<c:forEach items="${categoryList}" var="categoryVO">
+										<option  value="${categoryVO.id}">${categoryVO.term}</option>
+									</c:forEach>
+								</select>
 							</div>
 
 							<div class="form-group">
