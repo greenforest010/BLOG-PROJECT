@@ -1,5 +1,7 @@
 package com.growingitskill.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,13 @@ public class PostController {
 	private CategoryService categoryService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String listPage(Model model) throws Exception {
+	public String listPage(Model model) throws Exception {	
+		List<PostVO> list = postService.listAll();
+		
+		for (PostVO postVO : list) {
+			logger.info("post -> " + postVO.toString());
+		}
+		
 		model.addAttribute("list", postService.listAll());
 
 		return "admin/post/list";

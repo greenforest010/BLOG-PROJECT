@@ -15,7 +15,8 @@
 
 	<div class="row">
 		<div class="col-md-1 col-sm-1 col-xs-1">
-			<a class="btn btn-primary" href="/admin/post/new" role="button">글 쓰기</a>
+			<a class="btn btn-primary" href="/admin/post/new" role="button">글
+				쓰기</a>
 		</div>
 
 		<div
@@ -82,7 +83,7 @@
 												value="${postVO.published}" /></td>
 										<td>Paid</td>
 										<td>Paid</td>
-										<td>$7.45</td>
+										<td>${postVO.categoryVO.term}</td>
 										<td><a href="#">View</a></td>
 									</tr>
 								</c:forEach>
@@ -90,7 +91,8 @@
 						</table>
 					</div>
 
-					<sf:form id="deletePostForm" action="/admin/post/remove" method="post">
+					<sf:form id="deletePostForm" action="/admin/post/remove"
+						method="post">
 						<input type="submit" class="btn btn-danger" value="삭제" />
 					</sf:form>
 
@@ -104,29 +106,32 @@
 
 <script type="text/javascript">
 	var result = '${msg}';
-	
+
 	if (result == 'success') {
 		alert("처리가 완료되었습니다.");
 	}
 </script>
 
 <script type="text/javascript">
-	$("#deletePostForm").submit(function(event) {
-		var postId = [];
+	$("#deletePostForm")
+			.submit(
+					function(event) {
+						var postId = [];
 
-		$("input[name='table_records']:checked").each(function() {
-				postId.push($(this).val()); // this -> input(checkbox)
-		});
+						$("input[name='table_records']:checked").each(
+								function() {
+									postId.push($(this).val()); // this -> input(checkbox)
+								});
 
-		if (postId == '') {
-			alert("삭제할 대상을 선택하세요.");
-			
-			return false;
-		} else {
-			var postIdInput = "<input type='hidden' name='postId' value=" + postId +" />";
+						if (postId == '') {
+							alert("삭제할 대상을 선택하세요.");
 
-			$(this).append(postIdInput);  // this -> deletePostForm
-		}
-	});
+							return false;
+						} else {
+							var postIdInput = "<input type='hidden' name='postId' value=" + postId +" />";
+
+							$(this).append(postIdInput); // this -> deletePostForm
+						}
+					});
 </script>
 <!-- /page content -->

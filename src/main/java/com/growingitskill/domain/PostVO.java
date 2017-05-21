@@ -90,9 +90,9 @@ public class PostVO {
 
 	@Override
 	public String toString() {
-		return "post id: " + getId() + ", title" + getTitle() + ", updated" + getUpdated() + ", author" + getAuthor()
-				+ ", content" + getContent() + ", slugTerm" + getSlugTitle() + ", published" + getPublished()
-				+ ", category id: " + categoryVO.getId();
+		return "post id: " + getId() + ", title: " + getTitle() + ", author: " + getAuthor() + ", published: "
+				+ getPublished() + ", loginId: " + getLoginId();
+
 	}
 
 }
