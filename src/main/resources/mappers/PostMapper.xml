@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.growingitskill.mapper.PostMapper">
+	<resultMap type="postVO" id="resultPost">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="author" column="author" />
+		<result property="published" column="published" />
+		<result property="loginId" column="login_id" />
+
+		<association property="categoryVO" column="c.id" javaType="categoryVO">
+			<id property="id" column="c.id" />
+			<result property="term" column="term" />
+		</association>
+	</resultMap>
+
+	<select id="listAll" resultMap="resultPost">
+		SELECT p.id, title, author, term,
+		published, login_id FROM post p LEFT JOIN category_relation cr ON p.id
+		= cr.post_id LEFT JOIN category c ON cr.category_id = c.id LEFT JOIN
+		member m ON p.author = m.id ORDER BY p.id DESC
+	</select>
+
+</mapper>

@@ -15,6 +15,7 @@ import com.growingitskill.domain.CategoryVO;
 public interface CategoryMapper {
 	
 	@Select("SELECT * FROM category WHERE id = #{id}")
+	@Results(@Result(property="term", column="term"))
 	CategoryVO selectCategory(long id) throws Exception;
 
 	@Select("SELECT * FROM category")
