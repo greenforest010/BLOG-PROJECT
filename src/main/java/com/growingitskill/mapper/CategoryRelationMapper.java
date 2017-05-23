@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Update;
 
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.domain.PostVO;
@@ -14,5 +15,8 @@ public interface CategoryRelationMapper {
 	@Results({ @Result(property = "id", column = "post_id"),
 			@Result(property = "categoryVO", column = "category_id", javaType = CategoryVO.class, one = @One(select = "selectCategory")) })
 	void create(PostVO postVO) throws Exception;
+	
+	@Update("UPDATE category_relation SET category_id = #{categoryVO.id} WHERE post_id = #{id}")
+	void update(PostVO postVO) throws Exception;
 
 }

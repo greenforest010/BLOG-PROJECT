@@ -76,13 +76,17 @@ public class PostController {
 		logger.info("editPage get ......");
 
 		model.addAttribute(postService.read(id));
+		model.addAttribute("categoryList", categoryService.listAll());
 	}
 
 	@RequestMapping(value = "edit", method = RequestMethod.POST)
-	public String editPagePOST(PostVO vo, RedirectAttributes redirectAttributes) throws Exception {
-		logger.info("edit post ......");
+	public String editPagePOST(PostVO postVO, @RequestParam("categoryId") long categoryId, RedirectAttributes redirectAttributes) throws Exception {
+		CategoryVO categoryVO = new CategoryVO();
+		categoryVO.setId(categoryId);
+		
+		postVO.setCategoryVO(categoryVO);
 
-		postService.modify(vo);
+		postService.modify(postVO);
 
 		redirectAttributes.addFlashAttribute("msg", "success");
 
