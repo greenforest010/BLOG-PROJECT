@@ -22,8 +22,6 @@ public class PostServiceImpl implements PostService {
 	public void regist(PostVO postVO) throws Exception {
 		postMapper.create(postVO);
 		
-		System.out.println("post getID: " + postVO.getId() + ", category getID: " + postVO.getCategoryVO().getId());
-		
 		categoryRelationMapper.create(postVO);
 	}
 
@@ -33,8 +31,10 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void modify(PostVO vo) throws Exception {
-		postMapper.update(vo);
+	public void modify(PostVO postVO) throws Exception {
+		postMapper.update(postVO);
+		
+		categoryRelationMapper.update(postVO);
 	}
 
 	@Override

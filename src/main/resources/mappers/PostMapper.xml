@@ -7,11 +7,13 @@
 		<id property="id" column="id" />
 		<result property="title" column="title" />
 		<result property="author" column="author" />
+		<result property="content" column="content" />
 		<result property="published" column="published" />
 		<result property="loginId" column="login_id" />
+		<result property="slugTitle" column="slug_title" />
 
-		<association property="categoryVO" column="c.id" javaType="categoryVO">
-			<id property="id" column="c.id" />
+		<association property="categoryVO" column="categoryId" javaType="categoryVO">
+			<id property="id" column="categoryId" />
 			<result property="term" column="term" />
 		</association>
 	</resultMap>
@@ -21,6 +23,15 @@
 		published, login_id FROM post p LEFT JOIN category_relation cr ON p.id
 		= cr.post_id LEFT JOIN category c ON cr.category_id = c.id LEFT JOIN
 		member m ON p.author = m.id ORDER BY p.id DESC
+	</select>
+
+	<select id="read" resultMap="resultPost">
+		SELECT p.id, title, author, content, term,
+		published, login_id, slug_title, c.id as categoryId FROM post p LEFT JOIN
+		category_relation cr ON p.id
+		= cr.post_id LEFT JOIN category c ON
+		cr.category_id = c.id LEFT JOIN
+		member m ON p.author = m.id WHERE p.id = #{id}
 	</select>
 
 </mapper>

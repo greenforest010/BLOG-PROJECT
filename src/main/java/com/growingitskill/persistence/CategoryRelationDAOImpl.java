@@ -14,4 +14,9 @@ public class CategoryRelationDAOImpl extends SqlSessionDaoSupport implements Cat
 		getSqlSession().insert(namespace + ".create", postVO);
 	}
 
+	@Override
+	public void update(PostVO postVO) throws Exception {
+		getSqlSession().update(namespace + ".update", postVO);
+	}
+
 }

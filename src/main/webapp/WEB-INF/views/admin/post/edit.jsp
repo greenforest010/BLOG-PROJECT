@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
 <!-- page content -->
@@ -45,6 +46,49 @@
 							<div class="form-group">
 								<label for="content">내용*</label>
 								<textarea class="form-control" name="content" required>${postVO.content}</textarea>
+							</div>
+
+							<div class="form-group">
+								<label for="category">카테고리*</label>
+
+								<div class="row">
+									<div class="col-md-5 col-sm-5 col-xs-12">
+										<select class="form-control" name="categoryId" required>
+											<option value="">카테고리를 선택해 주세요.</option>
+											<c:forEach items="${categoryList}" var="categoryVO">
+												<c:if test="${categoryVO.id == postVO.categoryVO.id}">
+													<option value="${categoryVO.id}" selected>${categoryVO.term}</option>
+												</c:if>
+
+												<c:if test="${categoryVO.id != postVO.categoryVO.id}">
+													<option value="${categoryVO.id}">${categoryVO.term}</option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</div>
+									<div
+										class="col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1 col-xs-12">
+										<div class="form-inline">
+											<label>현재 카테고리: </label> <input class="form-control"
+												value="${postVO.categoryVO.term}" readonly>
+										</div>
+									</div>
+
+								</div>
+
+
+							</div>
+
+							<div class="form-group">
+								<label for="permalink">고유주소*</label>
+								<div class="row">
+									<div class="col-md-5">
+										<input type="text" class="form-control" name="slugTitle"
+											value="${postVO.slugTitle}" placeholder="고유주소를 입력해주세요."
+											required />
+									</div>
+									<div class="col-md-7"></div>
+								</div>
 							</div>
 
 							<div class="form-group">
