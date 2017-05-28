@@ -83,7 +83,14 @@
 												value="${postVO.published}" /></td>
 										<td>Paid</td>
 										<td>Paid</td>
-										<td>${postVO.categoryVO.term}</td>
+										<c:if test="${postVO.categoryVO.term != null}">
+											<td id="categoryTermTd${postVO.id}">${postVO.categoryVO.term}</td>
+										</c:if>
+										<c:if test="${postVO.categoryVO.term == null}">
+											<td id="categoryTermTd${postVO.id}"><a href="#categorySelectModal"
+												data-postid="${postVO.id}" data-toggle="modal"><span
+													style="color: cyan;">카테고리를 설정하세요.</span></a></td>
+										</c:if>
 										<td><a href="#">View</a></td>
 									</tr>
 								</c:forEach>
@@ -96,6 +103,36 @@
 						<input type="submit" class="btn btn-danger" value="삭제" />
 					</sf:form>
 
+					<!-- Small modal -->
+					<div class="modal fade" id="categorySelectModal" tabindex="-1"
+						role="dialog" aria-labelledby="categorySelectModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog modal-sm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="categorySelectModalLabel"></h4>
+								</div>
+								<div class="modal-body">
+									<select class="form-control" name="categoryId" required>
+										<c:forEach items="${categoryList}" var="categoryVO">
+											<option value="${categoryVO.id}">${categoryVO.term}</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary"
+										id="categorySelectButton" data-dismiss="modal">확인</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">닫기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -103,6 +140,8 @@
 </div>
 
 <script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
+<script
+	src="/resources/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 	var result = '${msg}';
@@ -110,6 +149,52 @@
 	if (result == 'success') {
 		alert("처리가 완료되었습니다.");
 	}
+</script>
+
+<script type="text/javascript">
+	$(function() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	var postId = 0;
+
+	$("#categorySelectModal").on(
+			"show.bs.modal",
+			function(event) {
+				postId = $(event.relatedTarget).data('postid');
+
+				$(this).find('.modal-title').html(
+						"카테고리를 선택하세요. <small>(글 번호: " + postId + ")</small>"); // $(this): modal
+			});
+
+	$(function() {
+		$("#categorySelectButton").click(function(event) {
+			if (postId != 0) {
+				var categoryId = $(".modal-body select option:selected").val();
+
+				$.ajax({
+					method : 'POST',
+					url : "/admin/post",
+					contentType : 'application/json',
+					data : JSON.stringify({
+						id : postId,
+						categoryId : Number(categoryId)
+					})
+				}).done(function(data) {
+					var categoryTerm = data.categoryVO.term;
+					$("#categoryTermTd" + postId).html(categoryTerm);
+					
+					alert("카테고리를 설정했습니다.");
+				});
+			}
+		});
+	})
 </script>
 
 <script type="text/javascript">
