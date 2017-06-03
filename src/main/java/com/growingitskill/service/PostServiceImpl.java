@@ -26,8 +26,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public PostVO read(long id) throws Exception {
-		return postMapper.read(id);
+	public PostVO findById(long id) throws Exception {
+		return postMapper.readById(id);
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void remove(long[] postId) throws Exception {
-		postMapper.delete(postId);
+	public void removeByIds(long[] ids) throws Exception {
+		postMapper.deleteByIds(ids);
 	}
 
 	@Override

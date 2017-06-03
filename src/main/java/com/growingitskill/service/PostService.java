@@ -6,13 +6,13 @@ import com.growingitskill.domain.PostVO;
 
 public interface PostService {
 
-	void regist(PostVO vo) throws Exception;
+	void regist(PostVO postVO) throws Exception;
 
-	PostVO read(long id) throws Exception;
+	PostVO findById(long id) throws Exception;
 
-	void modify(PostVO vo) throws Exception;
+	void modify(PostVO postVO) throws Exception;
 
-	void remove(long[] postId) throws Exception;
+	void removeByIds(long[] ids) throws Exception;
 
 	List<PostVO> listAll() throws Exception;
 

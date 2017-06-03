@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.growingitskill.service.PostService;
 
@@ -31,7 +30,7 @@ public class IndexController {
 	
 	@RequestMapping(value = "/post/{id}", method=RequestMethod.GET)
 	public String read(@PathVariable("id") long id, Model model) throws Exception {
-		model.addAttribute(postService.read(id));
+		model.addAttribute(postService.findById(id));
 		
 		return "details";
 	}

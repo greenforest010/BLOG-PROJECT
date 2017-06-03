@@ -1,6 +1,7 @@
 package com.growingitskill.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,22 +38,21 @@ public class CategoryController {
 		return categoryVO;
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public void rename(@PathVariable long id,  @RequestBody CategoryVO categoryVO) throws Exception {
-		categoryVO.setId(id);
+	@RequestMapping(value="{id}", method=RequestMethod.PUT)
+	public void modify(@PathVariable long id,  @RequestBody Map<String, Object> map) throws Exception {
 		
-		logger.info(categoryVO.toString());
-		
-		if (categoryVO.getTerm() != null) {
-			categoryService.renameCategory(categoryVO);
-		}
-		
-		if (categoryVO.getSlugTerm() != null) {
-			categoryService.modifyCategorySlugTerm(categoryVO);
-		}
-		
-		if (categoryVO.getParent() != 0) {
-			categoryService.moveCategory(categoryVO);
+		if (map.get("term") != null) {
+			String term = (String) map.get("term");
+			
+			categoryService.renameCategoryById(id, term);
+		} else if (map.get("slugTerm") != null) {
+			String slugTerm = (String) map.get("slugTerm");
+			
+			categoryService.modifyCategorySlugTermById(id, slugTerm);
+		} else if (map.get("parent") != null) {
+			long parent = Long.parseLong((String) map.get("parent"));
+			
+			categoryService.moveCategory(id, parent);	
 		}
 	}
 	
