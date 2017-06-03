@@ -3,7 +3,6 @@ package com.growingitskill.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.growingitskill.domain.MemberVO;
 import com.growingitskill.mapper.MemberMapper;
 
 @Service
@@ -13,8 +12,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberMapper memberMapper;
 
 	@Override
-	public long getById(MemberVO memberVO) throws Exception {
-		return memberMapper.getById(memberVO);
+	public long findIdByLoginId(String loginId) throws Exception {
+		return memberMapper.readIdByLoginId(loginId);
 	}
 	
 	

@@ -12,8 +12,7 @@ public class PostVO {
 	private String slugTitle;
 	private Date published;
 
-	private String loginId;
-
+	private MemberVO memberVO;
 	private CategoryVO categoryVO;
 
 	public long getId() {
@@ -72,12 +71,12 @@ public class PostVO {
 		this.published = published;
 	}
 
-	public String getLoginId() {
-		return loginId;
+	public MemberVO getMemberVO() {
+		return memberVO;
 	}
 
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
 	}
 
 	public CategoryVO getCategoryVO() {
@@ -90,9 +89,29 @@ public class PostVO {
 
 	@Override
 	public String toString() {
-		return "post id: " + getId() + ", title: " + getTitle() + ", author: " + getAuthor() + ", published: "
-				+ getPublished() + ", loginId: " + getLoginId();
+		String post = "id: " + getId() + ", title: " + getTitle() + ", author: " + getAuthor() + ", content: "
+				+ getContent() + ", published: " + getPublished() + ", slugTitle: " + getSlugTitle();
 
+		String member = null;
+		String category = null;
+
+		if (getMemberVO() != null) {
+			member = ", loginId: " + getMemberVO().getLoginId();
+		}
+
+		if (getCategoryVO() != null) {
+			category = ", categoryId: " + getCategoryVO().getId() + ", term: " + getCategoryVO().getTerm();
+		}
+		
+		if (member != null && category != null) {
+			return post + member + category;
+		} else if (member != null && category == null) {
+			return post + member;
+		} else if (member == null && category != null) {
+			return post + category;
+		} else {
+			return post;
+		}
 	}
 
 }

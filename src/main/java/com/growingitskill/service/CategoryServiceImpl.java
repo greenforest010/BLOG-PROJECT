@@ -25,23 +25,23 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public void renameCategory(CategoryVO categoryVO) throws Exception {
-		categoryMapper.updateTerm(categoryVO);
+	public void renameCategoryById(long id, String term) throws Exception {
+		categoryMapper.updateTermById(id, term);
 	}
 
 	@Override
-	public void modifyCategorySlugTerm(CategoryVO categoryVO) throws Exception {
-		categoryMapper.updateSlugTerm(categoryVO);
+	public void modifyCategorySlugTermById(long id, String slugTerm) throws Exception {
+		categoryMapper.updateSlugTermById(id, slugTerm);
 	}
 	
 	@Override
-	public void moveCategory(CategoryVO categoryVO) throws Exception {
-		categoryMapper.updateParent(categoryVO);
+	public void moveCategory(long id, long parent) throws Exception {
+		categoryMapper.updateParentById(id, parent);
 	}
 	
 	@Override
 	public void removeCategory(long id) throws Exception {
-		categoryMapper.delete(id);
+		categoryMapper.deleteById(id);
 	}
 
 }

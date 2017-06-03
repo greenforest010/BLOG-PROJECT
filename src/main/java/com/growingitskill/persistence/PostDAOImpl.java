@@ -12,23 +12,23 @@ public class PostDAOImpl extends SqlSessionDaoSupport implements PostMapper {
 	private static String namespace = "com.growingitskill.mapper.PostMapper";
 
 	@Override
-	public void create(PostVO vo) throws Exception {
-		getSqlSession().insert(namespace + ".create", vo);
+	public void create(PostVO postVO) throws Exception {
+		getSqlSession().insert(namespace + ".create", postVO);
 	}
 
 	@Override
-	public PostVO read(long id) throws Exception {
-		return getSqlSession().selectOne(namespace + ".read", id);
+	public PostVO readById(long id) throws Exception {
+		return getSqlSession().selectOne(namespace + ".readById", id);
 	}
 
 	@Override
-	public void update(PostVO vo) throws Exception {
-		getSqlSession().update(namespace + ".update", vo);
+	public void update(PostVO postVO) throws Exception {
+		getSqlSession().update(namespace + ".update", postVO);
 	}
 
 	@Override
-	public void delete(long[] postId) throws Exception {
-		getSqlSession().delete(namespace + ".delete", postId);
+	public void deleteByIds(long[] ids) throws Exception {
+		getSqlSession().delete(namespace + ".deleteByIds", ids);
 	}
 
 	@Override

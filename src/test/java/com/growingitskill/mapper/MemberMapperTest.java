@@ -1,4 +1,4 @@
-package com.growingitskill.database;
+package com.growingitskill.mapper;
 
 import javax.naming.NamingException;
 
@@ -12,13 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.growingitskill.config.MybatisJndiConfig;
-import com.growingitskill.mapper.UserMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=MybatisJndiConfig.class)
-public class UserDAOTest {
+public class MemberMapperTest {
 	
-	/*@BeforeClass
+	@BeforeClass
 	public static void jndiBind() throws NamingException {
 		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -27,30 +26,17 @@ public class UserDAOTest {
 		dataSource.setUsername("test");
 		dataSource.setPassword("test");
 		builder.bind("jdbc/test", dataSource);
-	}*/
-	
-	@BeforeClass
-	public static void jndiBind() throws NamingException {
-		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
-		dataSource.setUrl("jdbc:log4jdbc:mysql://localhost/test");
-		dataSource.setUsername("test");
-		dataSource.setPassword("test");
-		builder.bind("jdbc/test", dataSource);
 	}
 	
 	@Autowired
-	private UserMapper userMapper;
+	private MemberMapper memberMapper;
 	
 	@Test
-	public void testGetUser() throws Exception {
-		userMapper.getUser("wow");
+	public void getIdByLoginId() throws Exception {
+		String loginId = "testuser";
+		
+		long id = memberMapper.readIdByLoginId(loginId);
+		
+		System.out.println("id: " + id);
 	}
-	
-	@Test
-	public void testSetUser() throws Exception {
-		userMapper.setUser("haha");
-	}
-
 }

@@ -77,8 +77,8 @@
 										<td class="a-center "><input type="checkbox" class="flat"
 											name="table_records" value="${postVO.id}"></td>
 										<td>${postVO.id}</td>
-										<td><a href="post/edit?id=${postVO.id}">${postVO.title}</a></td>
-										<td>${postVO.loginId}</td>
+										<td><a href="/admin/post/${postVO.id}">${postVO.title}</a></td>
+										<td>${postVO.memberVO.loginId}</td>
 										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 												value="${postVO.published}" /></td>
 										<td>Paid</td>
@@ -198,25 +198,22 @@
 </script>
 
 <script type="text/javascript">
-	$("#deletePostForm")
-			.submit(
-					function(event) {
-						var postId = [];
-
-						$("input[name='table_records']:checked").each(
-								function() {
-									postId.push($(this).val()); // this -> input(checkbox)
-								});
-
-						if (postId == '') {
-							alert("삭제할 대상을 선택하세요.");
-
-							return false;
-						} else {
-							var postIdInput = "<input type='hidden' name='postId' value=" + postId +" />";
-
-							$(this).append(postIdInput); // this -> deletePostForm
-						}
-					});
+	$("#deletePostForm").submit(function(event) {
+		var postIds = [];
+		
+		$("input[name='table_records']:checked").each(function() {
+			postIds.push($(this).val()); // this -> input(checkbox)
+		});
+		
+		if (postIds == '') {
+			alert("삭제할 대상을 선택하세요.");
+			
+			return false;
+		} else {
+			var postIdInput = "<input type='hidden' name='postIds' value=" + postIds +" />";
+			
+			$(this).append(postIdInput); // this -> deletePostForm
+		}
+	});
 </script>
 <!-- /page content -->
