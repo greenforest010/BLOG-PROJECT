@@ -50,89 +50,88 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<div class="table-responsive">
-						<table class="table table-striped jambo_table bulk_action">
-							<thead>
-								<tr class="headings">
-									<th><input type="checkbox" id="check-all" class="flat">
-									</th>
-									<th class="column-title">번호</th>
-									<th class="column-title">제목</th>
-									<th class="column-title">글쓴이</th>
-									<th class="column-title">등록일</th>
-									<th class="column-title">조회수</th>
-									<th class="column-title">댓글</th>
-									<th class="column-title">카테고리</th>
-									<th class="column-title no-link last"><span class="nobr">태그</span>
-									</th>
-									<th class="bulk-actions" colspan="8"><a class="antoo"
-										style="color: #fff; font-weight: 500;">Bulk Actions ( <span
-											class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a></th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<c:forEach items="${list}" var="postVO">
-									<tr>
-										<td class="a-center "><input type="checkbox" class="flat"
-											name="table_records" value="${postVO.id}"></td>
-										<td>${postVO.id}</td>
-										<td><a href="/admin/post/${postVO.id}">${postVO.title}</a></td>
-										<td>${postVO.memberVO.loginId}</td>
-										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-												value="${postVO.published}" /></td>
-										<td>Paid</td>
-										<td>Paid</td>
-										<c:if test="${postVO.categoryVO.term != null}">
-											<td id="categoryTermTd${postVO.id}">${postVO.categoryVO.term}</td>
-										</c:if>
-										<c:if test="${postVO.categoryVO.term == null}">
-											<td id="categoryTermTd${postVO.id}"><a href="#categorySelectModal"
-												data-postid="${postVO.id}" data-toggle="modal"><span
-													style="color: cyan;">카테고리를 설정하세요.</span></a></td>
-										</c:if>
-										<td><a href="#">View</a></td>
+					<div style="width: 100%; height: 300px; overflow: auto">
+						<!-- 테이블 밖 스크롤 설정(테이블 안으로 변경 하는 코드 필요...)  -->
+						<div class="table-responsive">
+							<table class="table table-striped jambo_table bulk_action">
+								<thead>
+									<tr class="headings">
+										<th><input type="checkbox" id="check-all" class="flat">
+										</th>
+										<th class="column-title">번호</th>
+										<th class="column-title">제목</th>
+										<th class="column-title">글쓴이</th>
+										<th class="column-title">등록일</th>
+										<th class="column-title">조회수</th>
+										<th class="column-title">댓글</th>
+										<th class="column-title">카테고리</th>
+										<th class="column-title no-link last"><span class="nobr">태그</span>
+										</th>
+										<th class="bulk-actions" colspan="8"><a class="antoo"
+											style="color: #fff; font-weight: 500;">Bulk Actions ( <span
+												class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a></th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<c:forEach items="${list}" var="postVO">
+										<tr>
+											<td class="a-center "><input type="checkbox"
+												class="flat" name="table_records" value="${postVO.id}"></td>
+											<td>${postVO.id}</td>
+											<td><a href="/admin/post/${postVO.id}">${postVO.title}</a></td>
+											<td>${postVO.memberVO.loginId}</td>
+											<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
+													value="${postVO.published}" /></td>
+											<td>Paid</td>
+											<td>Paid</td>
+											<c:if test="${postVO.categoryVO.term != null}">
+												<td id="categoryTermTd${postVO.id}">${postVO.categoryVO.term}</td>
+											</c:if>
+											<c:if test="${postVO.categoryVO.term == null}">
+												<td id="categoryTermTd${postVO.id}"><a
+													href="#categorySelectModal" data-postid="${postVO.id}"
+													data-toggle="modal"><span style="color: cyan;">카테고리를
+															설정하세요.</span></a></td>
+											</c:if>
+											<td><a href="#">View</a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
 					</div>
+				</div>
 
-					<sf:form id="deletePostForm" action="/admin/post/remove"
-						method="post">
-						<input type="submit" class="btn btn-danger" value="삭제" />
-					</sf:form>
+				<button id="deletePost" class="btn btn-danger">삭제</button>
 
-					<!-- Small modal -->
-					<div class="modal fade" id="categorySelectModal" tabindex="-1"
-						role="dialog" aria-labelledby="categorySelectModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog modal-sm">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title" id="categorySelectModalLabel"></h4>
-								</div>
-								<div class="modal-body">
-									<select class="form-control" name="categoryId" required>
-										<c:forEach items="${categoryList}" var="categoryVO">
-											<option value="${categoryVO.id}">${categoryVO.term}</option>
-										</c:forEach>
-									</select>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-primary"
-										id="categorySelectButton" data-dismiss="modal">확인</button>
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">닫기</button>
-								</div>
+				<!-- Small modal -->
+				<div class="modal fade" id="categorySelectModal" tabindex="-1"
+					role="dialog" aria-labelledby="categorySelectModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="categorySelectModalLabel"></h4>
+							</div>
+							<div class="modal-body">
+								<select class="form-control" name="categoryId" required>
+									<c:forEach items="${categoryList}" var="categoryVO">
+										<option value="${categoryVO.id}">${categoryVO.term}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									id="categorySelectButton" data-dismiss="modal">확인</button>
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">닫기</button>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -189,7 +188,7 @@
 				}).done(function(data) {
 					var categoryTerm = data.categoryVO.term;
 					$("#categoryTermTd" + postId).html(categoryTerm);
-					
+
 					alert("카테고리를 설정했습니다.");
 				});
 			}
@@ -198,22 +197,30 @@
 </script>
 
 <script type="text/javascript">
-	$("#deletePostForm").submit(function(event) {
-		var postIds = [];
-		
-		$("input[name='table_records']:checked").each(function() {
-			postIds.push($(this).val()); // this -> input(checkbox)
-		});
-		
-		if (postIds == '') {
-			alert("삭제할 대상을 선택하세요.");
-			
-			return false;
-		} else {
-			var postIdInput = "<input type='hidden' name='postIds' value=" + postIds +" />";
-			
-			$(this).append(postIdInput); // this -> deletePostForm
-		}
-	});
+	$("#deletePost").click(
+			function() {
+				var postIds = [];
+
+				$("input[name='table_records']:checked").each(function() {
+					postIds.push($(this).val()); // this -> input(checkbox)
+				});
+
+				if (postIds == '') {
+					alert("삭제할 대상을 선택하세요.");
+
+					return false;
+				} else {
+					$.ajax({
+						url : "/posts?ids=" + postIds,
+						method : "DELETE"
+					}).done(
+							function() {
+								$("input[name='table_records']:checked")
+										.parents("tr").remove();
+
+								alert("글을 삭제했습니다.");
+							});
+				}
+			});
 </script>
 <!-- /page content -->

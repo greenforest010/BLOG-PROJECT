@@ -24,9 +24,9 @@ import com.growingitskill.service.PostService;
 
 @Controller
 @RequestMapping("/admin/post")
-public class PostController {
+public class PostViewController {
 
-	public static final Logger logger = LoggerFactory.getLogger(PostController.class);
+	public static final Logger logger = LoggerFactory.getLogger(PostViewController.class);
 
 	@Autowired
 	private PostService postService;
@@ -91,32 +91,20 @@ public class PostController {
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public String editPage(@PathVariable("id") long id, Model model) throws Exception {
-		logger.info("editPage get ......");
-
 		model.addAttribute(postService.findById(id));
 		model.addAttribute("categoryList", categoryService.listAll());
 		
 		return "admin/post/edit";
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.POST)
-	public String editPagePOST(PostVO postVO, @RequestParam("categoryId") long categoryId, RedirectAttributes redirectAttributes) throws Exception {
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	public String editPagePUT(PostVO postVO, @RequestParam("categoryId") long categoryId, RedirectAttributes redirectAttributes) throws Exception {
 		CategoryVO categoryVO = new CategoryVO();
 		categoryVO.setId(categoryId);
 		
 		postVO.setCategoryVO(categoryVO);
 
 		postService.modify(postVO);
-
-		redirectAttributes.addFlashAttribute("msg", "success");
-
-		return "redirect:/admin/post";
-	}
-
-	@RequestMapping(value = "remove", method = RequestMethod.POST)
-	public String remove(@RequestParam("postIds") long[] ids, RedirectAttributes redirectAttributes)
-			throws Exception {
-		postService.removeByIds(ids);
 
 		redirectAttributes.addFlashAttribute("msg", "success");
 

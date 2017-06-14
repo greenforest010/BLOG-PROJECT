@@ -34,7 +34,7 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<sf:form method="post">
+						<sf:form method="put">
 							<input type="hidden" value="${postVO.id}" />
 
 							<div class="form-group">
