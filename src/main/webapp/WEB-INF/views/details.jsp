@@ -19,7 +19,7 @@
 				<!-- start details -->
 				<div class="details">
 					<h2>${postVO.title}</h2>
-					${postVO.loginId}, <fmt:formatDate pattern="yyyy-MM-dd HH-mm" value="${postVO.published}"/>
+					${postVO.memberVO.loginId}, <fmt:formatDate pattern="yyyy-MM-dd HH-mm" value="${postVO.published}"/>
 					<div class="det_pic">
 						<img src="/resources/images/det_pic.jpg" alt="" />
 					</div>

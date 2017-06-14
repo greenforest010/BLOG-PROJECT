@@ -20,6 +20,7 @@
 <link
 	href="/resources/admin/vendors/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+
 <!-- Font Awesome -->
 <link
 	href="/resources/admin/vendors/font-awesome/css/font-awesome.min.css"
