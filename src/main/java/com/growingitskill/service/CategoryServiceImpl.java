@@ -20,6 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
+	public CategoryVO findCategoryById(long id) throws Exception {
+		return categoryMapper.readCategoryById(id);
+	}
+	
+	@Override
 	public void addCategory(CategoryVO categoryVO) throws Exception {
 		categoryMapper.create(categoryVO);
 	}
