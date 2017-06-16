@@ -14,10 +14,6 @@ import org.apache.ibatis.annotations.Update;
 import com.growingitskill.domain.CategoryVO;
 
 public interface CategoryMapper {
-	
-	@Select("SELECT * FROM category WHERE id = #{id}")
-	@Results(@Result(property="slugTerm", column="slug_term"))
-	CategoryVO readCategoryById(long id) throws Exception;
 
 	@Select("SELECT * FROM category")
 	@Results(@Result(property = "slugTerm", column = "slug_term"))
@@ -26,6 +22,10 @@ public interface CategoryMapper {
 	@Insert("INSERT INTO category(term, slug_term, parent) VALUES(#{term}, #{slugTerm}, #{parent})")
 	@SelectKey(statement = { "SELECT LAST_INSERT_ID()" }, keyProperty = "id", before = false, resultType = long.class)
 	void create(CategoryVO categoryVO) throws Exception;
+	
+	@Select("SELECT * FROM category WHERE id = #{id}")
+	@Results(@Result(property="slugTerm", column="slug_term"))
+	CategoryVO readCategoryById(long id) throws Exception;
 
 	@Update("UPDATE category SET term = #{term} WHERE id = #{id}")
 	void updateTermById(@Param("id") long id, @Param("term") String term) throws Exception;

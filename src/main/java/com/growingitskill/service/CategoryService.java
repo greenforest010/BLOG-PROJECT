@@ -10,6 +10,8 @@ public interface CategoryService {
 	
 	void addCategory(CategoryVO categoryVO) throws Exception;
 	
+	CategoryVO findCategoryById(long id) throws Exception;
+	
 	void renameCategoryById(long id, String term) throws Exception;
 	
 	void modifyCategorySlugTermById(long id, String slugTerm) throws Exception;

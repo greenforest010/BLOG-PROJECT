@@ -14,11 +14,6 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	private static final String namespace = "com.growingitskill.mapper.CategoryMapper";
 
 	@Override
-	public CategoryVO readCategoryById(long id) throws Exception {
-		return getSqlSession().selectOne(namespace + ".readCategoryById", id);
-	}
-
-	@Override
 	public List<CategoryVO> listAll() throws Exception {
 		return getSqlSession().selectList(namespace + ".listAll");
 	}
@@ -26,6 +21,11 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	@Override
 	public void create(CategoryVO categoryVO) throws Exception {
 		getSqlSession().insert(namespace + ".create", categoryVO);
+	}
+
+	@Override
+	public CategoryVO readCategoryById(long id) throws Exception {
+		return getSqlSession().selectOne(namespace + ".readCategoryById", id);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("slugTerm", slugTerm);
-		
+
 		getSqlSession().update(namespace + ".updateSlugTermById", map);
 	}
 
@@ -51,7 +51,7 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("parent", parent);
-		
+
 		getSqlSession().update(namespace + ".updateParentById", map);
 	}
 
