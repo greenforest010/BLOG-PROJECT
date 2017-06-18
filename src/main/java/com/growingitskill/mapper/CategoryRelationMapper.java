@@ -15,8 +15,8 @@ public interface CategoryRelationMapper {
 	@Results({ @Result(property = "id", column = "post_id"),
 			@Result(property = "categoryVO", column = "category_id", javaType = CategoryVO.class, one = @One(select = "selectCategory")) })
 	void create(PostVO postVO) throws Exception;
-	
-	@Update("UPDATE category_relation SET category_id = #{categoryVO.id} WHERE post_id = #{id}")
+
+	@Update("INSERT INTO category_relation(post_id, category_id) VALUES(#{id}, #{categoryVO.id}) ON DUPLICATE KEY UPDATE category_id = #{categoryVO.id}")
 	void update(PostVO postVO) throws Exception;
 
 }
