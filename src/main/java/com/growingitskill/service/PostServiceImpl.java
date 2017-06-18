@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.mapper.CategoryRelationMapper;
@@ -18,6 +19,7 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	private CategoryRelationMapper categoryRelationMapper;
 
+	@Transactional
 	@Override
 	public void regist(PostVO postVO) throws Exception {
 		postMapper.create(postVO);
@@ -30,6 +32,7 @@ public class PostServiceImpl implements PostService {
 		return postMapper.readById(id);
 	}
 
+	@Transactional
 	@Override
 	public void modify(PostVO postVO) throws Exception {
 		postMapper.update(postVO);

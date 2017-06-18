@@ -13,7 +13,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jndi.JndiObjectFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /*
@@ -24,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages = { "com.growingitskill" }, excludeFilters = {
 		@Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class) })
 @MapperScan("com.growingitskill.mapper")
+@EnableTransactionManagement
 public class RootConfig {
 
 	@Autowired
@@ -37,6 +41,11 @@ public class RootConfig {
 		jndiObjectFB.setProxyInterface(DataSource.class);
 
 		return jndiObjectFB;
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new DataSourceTransactionManager((DataSource) dataSource().getObject());
 	}
 
 	@Bean
