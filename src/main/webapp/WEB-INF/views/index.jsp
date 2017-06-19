@@ -30,7 +30,9 @@
 							</div>
 							<div class="b_right">
 								<%-- <h4><a href="${postVO.slugTitle}">${postVO.title}</a></h4> --%>
-								<h4><a href="/post/${postVO.id}">${postVO.title}</a></h4>
+								<h4>
+									<a href="/post/${postVO.id}">${postVO.title}</a>
+								</h4>
 								<div class="blog_list">
 									<ul>
 										<li><a href="#"> <i class="date"> </i><span><fmt:formatDate
@@ -58,13 +60,23 @@
 						</div>
 					</c:forEach>
 
-					<ul class="pagination">
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-					</ul>
+					<div class="txt-center">
+						<ul class="pagination">
+							<c:if test="${pageMaker.previous}">
+								<li><a href="${pageMaker.startPage -  1}">&laquo;</a></li>
+							</c:if>
+							<c:forEach begin="${pageMaker.startPage}"
+								end="${pageMaker.endPage}" var="idx">
+								<li
+									<c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}" />><a
+									href="${idx}">${idx}</a></li>
+							</c:forEach>
+							<c:if test="${pageMaker.next && (pageMaker.endPage > 0)}">
+								<li><a href="${pageMaker.endPage + 1}">&raquo;</a></li>
+							</c:if>
+						</ul>
+					</div>
+
 				</div>
 
 				<!-- start blog_sidebar -->
@@ -107,3 +119,23 @@
 		</div>
 	</div>
 </div>
+
+<form id="pageForm">
+	<input type='hidden' name="page">
+	<input type='hidden' name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+</form>
+
+<script src="resources/js/jquery.min.js"></script>
+<script>
+	$(".pagination li a").on("click", function(event) {
+
+		event.preventDefault();
+
+		var targetPage = $(this).attr("href");
+
+		var pageForm = $("#pageForm");
+		pageForm.find("[name='page']").val(targetPage);
+		pageForm.attr("action", "/").attr("method", "get");
+		pageForm.submit();
+	});
+</script>

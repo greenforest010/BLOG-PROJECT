@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.growingitskill.domain.CategoryVO;
+import com.growingitskill.domain.Criteria;
+import com.growingitskill.domain.PageMaker;
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.mapper.CategoryRelationMapper;
 import com.growingitskill.service.CategoryService;
@@ -41,9 +43,24 @@ public class PostViewController {
 	private CategoryRelationMapper categoryRelationMapper;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String listPage(Model model) throws Exception {	
-		model.addAttribute("list", postService.listAll());
+	public String listPage(Criteria criteria, Model model) throws Exception {	
+		int requestPerPageNum = criteria.getPerPageNum();
+		
+		if (requestPerPageNum < 20) {
+			requestPerPageNum = 20;
+		}
+		
+		criteria.setPerPageNum(requestPerPageNum);
+		
+		model.addAttribute("list", postService.findList(criteria));
 		model.addAttribute("categoryList", categoryService.listAll());
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setDisplayPageNum(10);
+		pageMaker.setTotalCount(postService.countCriteria(criteria));
+		
+		model.addAttribute("pageMaker", pageMaker);
 
 		return "admin/post/list";
 	}

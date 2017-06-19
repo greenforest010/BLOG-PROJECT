@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
+import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.sqlprovider.PostSqlProvider;
 
@@ -25,7 +27,7 @@ public interface PostMapper {
 	@Update("UPDATE post SET title = #{title}, content = #{content}, slug_title = #{slugTitle} where id = #{id}")
 	void update(PostVO postVO) throws Exception;
 
-	@DeleteProvider(type=PostSqlProvider.class, method="deleteByIds")
+	@DeleteProvider(type = PostSqlProvider.class, method = "deleteByIds")
 	void deleteByIds(@Param("ids") long[] ids) throws Exception;
 
 	/*
@@ -33,5 +35,13 @@ public interface PostMapper {
 	 * mapper로 대체
 	 */
 	List<PostVO> listAll() throws Exception;
+
+	/*
+	 * xml mapper로 대체
+	 */
+	List<PostVO> readList(Criteria criteria) throws Exception;
+
+	@Select("SELECT COUNT(id) FROM post")
+	int countPaging(Criteria criteria) throws Exception;
 
 }
