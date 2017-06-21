@@ -15,8 +15,9 @@
 
 	<div class="row">
 		<div class="col-md-1 col-sm-1 col-xs-1">
-			<a class="btn btn-primary" href="/admin/post/new" role="button">글
-				쓰기</a>
+			<a class="btn btn-primary"
+				href="/admin/post/new?page=${criteria.page}&perPageNum=${criteria.perPageNum}"
+				role="button">글 쓰기</a>
 		</div>
 
 		<div
@@ -50,7 +51,7 @@
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<div style="width: 100%; height: 300px; overflow: auto">
+					<div style="width: 100%; height: 400px; overflow: auto">
 						<!-- 테이블 밖 스크롤 설정(테이블 안으로 변경 하는 코드 필요...)  -->
 						<div class="table-responsive">
 							<table class="table table-striped jambo_table bulk_action">
@@ -78,7 +79,8 @@
 											<td class="a-center "><input type="checkbox"
 												class="flat" name="table_records" value="${postVO.id}"></td>
 											<td>${postVO.id}</td>
-											<td><a href="/admin/post/${postVO.id}">${postVO.title}</a></td>
+											<td><a
+												href="/admin/post/${postVO.id}?page=${criteria.page}&perPageNum=${criteria.perPageNum}">${postVO.title}</a></td>
 											<td>${postVO.memberVO.loginId}</td>
 											<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 													value="${postVO.published}" /></td>
@@ -103,6 +105,28 @@
 				</div>
 
 				<button id="deletePost" class="btn btn-danger">삭제</button>
+
+				<div class="text-center">
+					<ul class="pagination">
+						<c:if test="${pageMaker.previous}">
+							<li><a href="${pageMaker.startPage -  1}">&laquo;</a></li>
+						</c:if>
+						<c:forEach begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}" var="idx">
+							<li
+								<c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}" />><a
+								href="${idx}">${idx}</a></li>
+						</c:forEach>
+						<c:if test="${pageMaker.next && (pageMaker.endPage > 0)}">
+							<li><a href="${pageMaker.endPage + 1}">&raquo;</a></li>
+						</c:if>
+					</ul>
+				</div>
+
+				<form id="pageForm">
+					<input type='hidden' name="page"> <input type='hidden'
+						name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+				</form>
 
 				<!-- Small modal -->
 				<div class="modal fade" id="categorySelectModal" tabindex="-1"
@@ -148,6 +172,20 @@
 	if (result == 'success') {
 		alert("처리가 완료되었습니다.");
 	}
+</script>
+
+<script>
+	$(".pagination li a").on("click", function(event) {
+
+		event.preventDefault();
+
+		var targetPage = $(this).attr("href");
+
+		var pageForm = $("#pageForm");
+		pageForm.find("[name='page']").val(targetPage);
+		pageForm.attr("action", "/admin/post").attr("method", "get");
+		pageForm.submit();
+	});
 </script>
 
 <script type="text/javascript">

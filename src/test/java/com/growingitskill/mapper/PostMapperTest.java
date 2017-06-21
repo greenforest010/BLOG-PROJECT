@@ -14,7 +14,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.growingitskill.config.MybatisJndiConfig;
+import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
+
+import ch.qos.logback.classic.Logger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = MybatisJndiConfig.class)
@@ -52,14 +55,14 @@ public class PostMapperTest {
 		System.out.println("id: " + postVO.getId());
 	}*/
 
-	@Test
+	/*@Test
 	public void selectPostById() throws Exception {
 		long id = 21;
 
 		PostVO postVO = postMapper.readById(id);
 
 		System.out.println(postVO.toString());
-	}
+	}*/
 	
 	/*@Test
 	public void updatePostById() throws Exception {
@@ -72,14 +75,14 @@ public class PostMapperTest {
 		postMapper.update(postVO);
 	}*/
 
-	@Test
+	/*@Test
 	public void selectPost() throws Exception {
 		List<PostVO> lists = postMapper.listAll();
 
 		for (PostVO postVO : lists) {
-			System.out.println(postVO.toString());
+			System.out.println("original: " + postVO.toString());
 		}
-	}
+	}*/
 	
 	/*@Test
 	public void deletePost() throws Exception {
@@ -87,5 +90,18 @@ public class PostMapperTest {
 		
 		postMapper.deleteByIds(id);
 	}*/
+	
+	@Test
+	public void selectPostListPage() throws Exception {
+		Criteria criteria = new Criteria();
+		criteria.setPage(2);
+		criteria.setPerPageNum(20);
+		
+		List<PostVO> list = postMapper.readList(criteria);
+		
+		for (PostVO postVO : list) {
+			System.out.println(postVO.toString());
+		}
+	}
 
 }
