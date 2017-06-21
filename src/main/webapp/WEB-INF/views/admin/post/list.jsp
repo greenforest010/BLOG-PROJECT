@@ -15,8 +15,9 @@
 
 	<div class="row">
 		<div class="col-md-1 col-sm-1 col-xs-1">
-			<a class="btn btn-primary" href="/admin/post/new" role="button">글
-				쓰기</a>
+			<a class="btn btn-primary"
+				href="/admin/post/new?page=${criteria.page}&perPageNum=${criteria.perPageNum}"
+				role="button">글 쓰기</a>
 		</div>
 
 		<div
@@ -78,7 +79,8 @@
 											<td class="a-center "><input type="checkbox"
 												class="flat" name="table_records" value="${postVO.id}"></td>
 											<td>${postVO.id}</td>
-											<td><a href="/admin/post/${postVO.id}">${postVO.title}</a></td>
+											<td><a
+												href="/admin/post/${postVO.id}?page=${criteria.page}&perPageNum=${criteria.perPageNum}">${postVO.title}</a></td>
 											<td>${postVO.memberVO.loginId}</td>
 											<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 													value="${postVO.published}" /></td>

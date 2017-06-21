@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,65 +39,67 @@ public class PostViewController {
 
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private CategoryRelationMapper categoryRelationMapper;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String listPage(Criteria criteria, Model model) throws Exception {	
+	public String listPage(@ModelAttribute Criteria criteria, Model model) throws Exception {
 		int requestPerPageNum = criteria.getPerPageNum();
-		
+
 		if (requestPerPageNum < 20) {
 			requestPerPageNum = 20;
 		}
-		
+
+		logger.info("list -> " + criteria.toString());
+
 		criteria.setPerPageNum(requestPerPageNum);
-		
+
 		model.addAttribute("list", postService.findList(criteria));
 		model.addAttribute("categoryList", categoryService.listAll());
-		
+
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setTotalCount(postService.countCriteria(criteria));
-		
+
 		model.addAttribute("pageMaker", pageMaker);
 
 		return "admin/post/list";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	public PostVO listPage(@RequestBody Map<String, Long> map) throws Exception {
 		CategoryVO categoryVO = new CategoryVO();
 		categoryVO.setId(map.get("categoryId"));
-		
+
 		PostVO postVO = new PostVO();
 		postVO.setId(map.get("id"));
 		postVO.setCategoryVO(categoryVO);
-		
+
 		categoryRelationMapper.create(postVO);
-		
+
 		PostVO result = postService.findById(map.get("id"));
-		
+
 		return result;
 	}
 
 	@RequestMapping(value = "new", method = RequestMethod.GET)
-	public void newPage(Model model) throws Exception {
+	public void newPage(@ModelAttribute Criteria criteria, Model model) throws Exception {
 		model.addAttribute("categoryList", categoryService.listAll());
 	}
 
 	@RequestMapping(value = "new", method = RequestMethod.POST)
-	public String newPagePOST(PostVO postVO, @RequestParam("loginId") String loginId, @RequestParam("categoryId") long categoryId,
-			RedirectAttributes redirectAttributes) throws Exception {
+	public String newPagePOST(PostVO postVO, @RequestParam("loginId") String loginId,
+			@RequestParam("categoryId") long categoryId, RedirectAttributes redirectAttributes) throws Exception {
 		CategoryVO categoryVO = new CategoryVO();
 		categoryVO.setId(categoryId);
 
 		postVO.setCategoryVO(categoryVO);
 
 		postVO.setAuthor(memberService.findIdByLoginId(loginId));
-		
+
 		logger.info(postVO.toString());
 
 		postService.regist(postVO);
@@ -107,22 +110,26 @@ public class PostViewController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public String editPage(@PathVariable("id") long id, Model model) throws Exception {
+	public String editPage(@PathVariable("id") long id, @ModelAttribute Criteria criteria, Model model)
+			throws Exception {
 		model.addAttribute(postService.findById(id));
 		model.addAttribute("categoryList", categoryService.listAll());
-		
+
 		return "admin/post/edit";
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public String editPagePUT(PostVO postVO, @RequestParam("categoryId") long categoryId, RedirectAttributes redirectAttributes) throws Exception {
+	public String editPagePUT(PostVO postVO, @RequestParam("categoryId") long categoryId, Criteria criteria,
+			RedirectAttributes redirectAttributes) throws Exception {
 		CategoryVO categoryVO = new CategoryVO();
 		categoryVO.setId(categoryId);
-		
+
 		postVO.setCategoryVO(categoryVO);
 
 		postService.modify(postVO);
 
+		redirectAttributes.addAttribute("page", criteria.getPage());
+		redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
 		redirectAttributes.addFlashAttribute("msg", "success");
 
 		return "redirect:/admin/post";

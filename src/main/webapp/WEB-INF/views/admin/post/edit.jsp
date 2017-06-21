@@ -35,7 +35,9 @@
 					</div>
 					<div class="x_content">
 						<sf:form method="put">
-							<input type="hidden" value="${postVO.id}" />
+							<input type="hidden" name="id" value="${postVO.id}" />
+							<input type="hidden" name="page" value="${criteria.page}" />
+							<input type="hidden" name="perPageNum" value="${criteria.perPageNum}" />
 
 							<div class="form-group">
 								<label for="title">제목*</label> <input type="text"
@@ -104,3 +106,12 @@
 	</div>
 </div>
 <!-- /page content -->
+
+<script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$(".btn-danger").on("click", function() {
+		self.location = "/admin/post?page=" + ${criteria.page} + "&perPageNum=" + ${criteria.perPageNum};
+	});
+});
+</script>
