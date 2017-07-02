@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,6 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		encodingFilter.setForceEncoding(true);
 
 		http.addFilterBefore(encodingFilter, CsrfFilter.class);
+
+		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/categories/**").permitAll()
+				.antMatchers("/categories/**", "/posts/**").hasAuthority("ROLE_ADMIN").and().httpBasic();
 
 		http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").and()
 				.authorizeRequests().antMatchers("/admin/**").authenticated().and().logout()
