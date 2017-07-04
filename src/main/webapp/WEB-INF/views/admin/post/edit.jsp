@@ -108,10 +108,15 @@
 <!-- /page content -->
 
 <script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
+<script src="/resources/admin/vendors/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 $(function() {
 	$(".btn-danger").on("click", function() {
 		self.location = "/admin/post?page=" + ${criteria.page} + "&perPageNum=" + ${criteria.perPageNum};
 	});
 });
+</script>
+
+<script type="text/javascript">
+	CKEDITOR.replace('content');
 </script>
