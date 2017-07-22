@@ -21,11 +21,12 @@ public interface AttachmentMapper {
 			@Result(property = "alternateText", column = "alternate_text") })
 	List<AttachmentVO> listAll() throws Exception;
 
-	@Insert("INSERT INTO attachment(fullname) VALUES(#{fullName})")
+	@Insert("INSERT INTO attachment(fullname, mime_type) VALUES(#{fullName}, #{mimeType})")
 	@SelectKey(statement = { "SELECT LAST_INSERT_ID()" }, keyProperty = "id", before = false, resultType = long.class)
 	void create(AttachmentVO attachmentVO) throws Exception;
 
 	@Select("SELECT * FROM attachment WHERE id = #{id}")
+	@Results(@Result(property = "mimeType", column = "mime_type"))
 	AttachmentVO readAttachmentById(long id) throws Exception;
 
 	@Update("UPDATE attachment SET alternate_text = #{alternateText} WHERE id = #{id}")
