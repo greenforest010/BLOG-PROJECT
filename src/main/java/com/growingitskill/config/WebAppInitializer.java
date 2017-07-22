@@ -1,6 +1,8 @@
 package com.growingitskill.config;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -10,6 +12,8 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  */
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+	
+	public static final String uploadPath = "/home/greenforest010/Programming/BLOP-2017/src/main/webapp/resources/upload";
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
@@ -30,6 +34,11 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	@Override
 	protected Filter[] getServletFilters() {
 		return new Filter[] { new HiddenHttpMethodFilter() };
+	}
+
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		registration.setMultipartConfig(new MultipartConfigElement(uploadPath, 10485760, 20971520, 0));
 	}
 
 }

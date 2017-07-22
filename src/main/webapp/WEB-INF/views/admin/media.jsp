@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- Dropzone  -->
 <script src="/resources/admin/vendors/dropzone/dist/min/dropzone.min.js"></script>
@@ -35,9 +36,8 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<form class="dropzone" action="/uploads" method="post"
-							enctype="multipart/form-data"
-							style="border: 2px dashed;">
+						<form class="dropzone" action="/attachments" method="post"
+							enctype="multipart/form-data" style="border: 2px dashed;">
 							<div class="dz-message" data-dz-message>
 								<h4>
 									<span>이 영역을 <strong>Click</strong> 또는 파일을 <strong>Drag
@@ -83,86 +83,28 @@
 							</div>
 						</div>
 
-						<div class="col-md-55">
-							<div class="thumbnail">
-								<div class="image view view-first">
-									<img style="width: 100%; display: block;"
-										src="/resources/admin/images/picture2.jpg" alt="image" />
-									<div class="mask">
-										<p>Your Text</p>
-										<div class="tools tools-bottom">
-											<a href="#"><i class="fa fa-link"></i></a> <a href="#"><i
-												class="fa fa-pencil"></i></a> <a href="#"><i
-												class="fa fa-times"></i></a>
+						<c:forEach items="${list}" var="attachmentVO">
+							<div class="col-md-55">
+								<div class="thumbnail">
+									<div class="image view view-first">
+										<img style="width: 100%; display: block;"
+											src="/resources/upload${attachmentVO.fullName}" alt="image" />
+										<div class="mask">
+											<p>Your Text</p>
+											<div class="tools tools-bottom">
+												<a href="#"><i class="fa fa-link"></i></a> <a href="#"><i
+													class="fa fa-pencil"></i></a> <a href="#"><i
+													class="fa fa-times"></i></a>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="caption">
-									<p>Snow and Ice Incoming for the South</p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-55">
-							<div class="thumbnail">
-								<div class="image view view-first">
-									<img style="width: 100%; display: block;"
-										src="/resources/admin/images/picture2.jpg" alt="image" />
-									<div class="mask">
-										<p>Your Text</p>
-										<div class="tools tools-bottom">
-											<a href="#"><i class="fa fa-link"></i></a> <a href="#"><i
-												class="fa fa-pencil"></i></a> <a href="#"><i
-												class="fa fa-times"></i></a>
-										</div>
+									<div class="caption">
+										<p>Snow and Ice Incoming for the South</p>
 									</div>
 								</div>
-								<div class="caption">
-									<p>Snow and Ice Incoming for the South</p>
-								</div>
 							</div>
-						</div>
-
-						<div class="col-md-55">
-							<div class="thumbnail">
-								<div class="image view view-first">
-									<img style="width: 100%; display: block;"
-										src="/resources/admin/images/picture2.jpg" alt="image" />
-									<div class="mask">
-										<p>Your Text</p>
-										<div class="tools tools-bottom">
-											<a href="#"><i class="fa fa-link"></i></a> <a href="#"><i
-												class="fa fa-pencil"></i></a> <a href="#"><i
-												class="fa fa-times"></i></a>
-										</div>
-									</div>
-								</div>
-								<div class="caption">
-									<p>Snow and Ice Incoming for the South</p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-md-55">
-							<div class="thumbnail">
-								<div class="image view view-first">
-									<img style="width: 100%; display: block;"
-										src="/resources/admin/images/picture2.jpg" alt="image" />
-									<div class="mask">
-										<p>Your Text</p>
-										<div class="tools tools-bottom">
-											<a href="#"><i class="fa fa-link"></i></a> <a href="#"><i
-												class="fa fa-pencil"></i></a> <a href="#"><i
-												class="fa fa-times"></i></a>
-										</div>
-									</div>
-								</div>
-								<div class="caption">
-									<p>Snow and Ice Incoming for the South</p>
-								</div>
-							</div>
-						</div>
-
+						</c:forEach>
+						
 					</div>
 				</div>
 			</div>
