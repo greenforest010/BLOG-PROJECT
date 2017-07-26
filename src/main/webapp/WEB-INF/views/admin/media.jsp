@@ -82,7 +82,7 @@
 								</span>
 							</div>
 						</div>
-
+						
 						<c:forEach items="${list}" var="attachmentVO">
 							<div class="col-md-55">
 								<div class="thumbnail">
@@ -92,18 +92,104 @@
 										<div class="mask">
 											<p>Your Text</p>
 											<div class="tools tools-bottom">
-												<a href="#"><i class="fa fa-link"></i></a> <a href="#"><i
-													class="fa fa-pencil"></i></a> <a href="#"><i
+												<a href="#mediaDetailModal" data-toggle="modal"
+													data-attachmentid="${attachmentVO.id}"><i
+													class="fa fa-pencil"></i></a> <a class="mediaDelete" href="#" onclick="return false;" data-attachmentid="${attachmentVO.id}"><i
 													class="fa fa-times"></i></a>
 											</div>
 										</div>
 									</div>
 									<div class="caption">
-										<p>Snow and Ice Incoming for the South</p>
+										<p>
+											<strong>${attachmentVO.fullName}</strong>
+										</p>
 									</div>
 								</div>
 							</div>
 						</c:forEach>
+						
+
+						<!-- Small modal -->
+						<div class="modal fade" id="mediaDetailModal" tabindex="-1"
+							role="dialog" aria-labelledby="mediaDetailModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="mediaDetailModalLabel">파일 상세</h4>
+									</div>
+									
+									<div class="modal-body">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-md-5">
+													<img style="width: 100%; display: block;" alt="image" />
+												</div>
+												<div class="col-md-6 col-md-offset-1">
+													<div class="form-horizontal">
+														<div class="form-group">
+															<label for="fullName" class="col-md-3 control-label">파일명</label>
+															<div class="col-md-9">
+																<input class="form-control" type="text" readonly />
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="fileUrl" class="col-md-3 control-label">URL</label>
+															<div class="col-md-9">
+																<input class="form-control" type="text" readonly />
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="mimeType" class="col-md-3 control-label">파일
+																형식</label>
+															<div class="col-md-9">
+																<input class="form-control" type="text" readonly />
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="registered" class="col-md-3 control-label">등록
+																날짜</label>
+															<div class="col-md-9">
+																<input class="form-control" type="text" readonly />
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="updated" class="col-md-3 control-label">변경
+																날짜</label>
+															<div class="col-md-9">
+																<input class="form-control" type="text" readonly />
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="alternateText" class="col-md-3 control-label">대체
+																텍스트</label>
+															<div class="col-md-9">
+																<input class="form-control" type="text" />
+															</div>
+														</div>
+
+														<div class="form-group">
+															<label for="description" class="col-md-3 control-label">설명</label>
+															<div class="col-md-9">
+																<input class="form-control" type="text" />
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="modal-footer">
+									<button type="button" class="btn btn-primary" id="fileDetailUpdateButton" data-dismiss="modal">확인</button>
+									</div>
+								</div>
+							</div>
+						</div>
 						
 					</div>
 				</div>
@@ -112,3 +198,106 @@
 	</div>
 </div>
 <!-- /page content -->
+
+<script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
+
+<script
+	src="/resources/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+var attachmentId = 0;
+
+$("#mediaDetailModal").on("show.bs.modal", function(event) {
+	attachmentId = $(event.relatedTarget).data('attachmentid');
+	
+	$.getJSON("/attachments/" + attachmentId, function(data) {
+		$.each(data, function(key, value) {
+			function findInputOfMediaDetailModal(mediaDetailAttribute) {
+				return $(".modal-body").find('label[for="'+ mediaDetailAttribute+ '"]').parent().find("input");
+			}
+			
+			function makeDate(dateNumber) {
+				var dateObj = new Date(dateNumber);
+				var year = dateObj.getFullYear();
+				var month = dateObj.getMonth() + 1;
+				var date = dateObj.getDate();
+				var hours = dateObj.getHours();
+				var minutes = dateObj.getMinutes();
+				var seconds = dateObj.getSeconds();
+				
+				var result = year + "." + month + "."+ date + "." + " " + hours + ":" + minutes + ":" + seconds;
+				
+				return result;
+			}
+			
+			if (key == 'fullName') {
+				var fileUrl = "/resources/upload" + value;
+				
+				$(".modal-body").find("img").attr("src",function() {
+					return fileUrl;
+				});
+				
+				findInputOfMediaDetailModal('fileUrl').val(fileUrl);
+			} else if (key == 'registered') {
+				var registered = makeDate(value);
+				
+				value = registered;
+			} else if (key == 'updated') {
+				var updated = makeDate(value);
+				
+				value = updated;
+			}
+			
+			findInputOfMediaDetailModal(key).val(value);
+			
+			console.log("key: " + key + ", value: " + value);
+		});
+	}).fail(function(jqxhr, textStatus, error) {
+		var err = textStatus + ", " + error;
+		
+		console.log("Request Failed: " + err);
+		});
+	});
+	
+$(function() {
+	$("#fileDetailUpdateButton").click(function(event) {
+		if (attachmentId != 0) {
+			var alternateText = $(".modal-body").find('label[for="alternateText"]').parent().find("input").val();
+			var description = $(".modal-body").find('label[for="description"]').parent().find("input").val();
+			
+			$.ajax({
+				method : 'PUT',
+				url : "/attachments/" + attachmentId,
+				contentType : 'application/json',
+				data : JSON.stringify({
+					alternateText : alternateText,
+					description : description
+				})
+			}).done(function(data) {
+				alert("파일 정보를 변경했습니다.");
+				}).fail(function(jqxhr, textStatus, error) {
+				var err = textStatus + ", " + error;
+				
+				console.log("Request Failed: " + err);
+				});
+			}
+		});
+	});
+</script>
+
+<script type="text/javascript">
+$(".mediaDelete").click(function() {
+	var attachmentId = $(this).data("attachmentid");
+	
+	$.ajax({
+		method : 'DELETE',
+		url : "/attachments?ids=" + attachmentId,
+	}).done(function(data) {
+		alert("해당 파일을 삭제했습니다.");
+		}).fail(function(jqxhr, textStatus, error) {
+		var err = textStatus + ", " + error;
+		
+		console.log("Request Failed: " + err);
+		});
+});
+</script>

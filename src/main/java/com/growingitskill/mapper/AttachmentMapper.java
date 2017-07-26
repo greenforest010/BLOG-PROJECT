@@ -26,7 +26,8 @@ public interface AttachmentMapper {
 	void create(AttachmentVO attachmentVO) throws Exception;
 
 	@Select("SELECT * FROM attachment WHERE id = #{id}")
-	@Results(@Result(property = "mimeType", column = "mime_type"))
+	@Results({ @Result(property = "mimeType", column = "mime_type"),
+			@Result(property = "alternateText", column = "alternate_text") })
 	AttachmentVO readAttachmentById(long id) throws Exception;
 
 	@Update("UPDATE attachment SET alternate_text = #{alternateText} WHERE id = #{id}")
