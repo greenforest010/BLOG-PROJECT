@@ -38,7 +38,7 @@ public class AttachmentMapperTest {
 	@Autowired
 	private AttachmentMapper attachmentMapper;
 	
-	@Test
+	/*@Test
 	public void insertAttachment() throws Exception {
 		AttachmentVO attachmentVO = new AttachmentVO();
 		attachmentVO.setFullName("ㅏㅏㅏㅏoop");
@@ -46,18 +46,22 @@ public class AttachmentMapperTest {
 		attachmentMapper.create(attachmentVO);
 		
 		logger.info("id: " + attachmentVO.getId());
-	}
+	}*/
 	
 	@Test
 	public void selectAttachmentById() throws Exception {
-		long id = 18;
+		long id = 100;
 
 		AttachmentVO attachmentVO = attachmentMapper.readAttachmentById(id);
-
-		logger.info(attachmentVO.toString());
+		
+		if (attachmentVO != null) {
+			logger.info(attachmentVO.toString());
+		} else {
+			logger.info("attachment is null");
+		}
 	}
 	
-	@Test
+	/*@Test
 	public void updateAlternateText() throws Exception {
 		long id = 24;
 		String alternateText = "al";
@@ -78,7 +82,7 @@ public class AttachmentMapperTest {
 		long[] ids = {22, 23, 25};
 		
 		attachmentMapper.deleteByIds(ids);
-	}
+	}*/
 	
 	@Test
 	public void selectAttachment() throws Exception {
