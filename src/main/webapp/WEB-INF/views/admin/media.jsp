@@ -286,13 +286,15 @@ $(function() {
 </script>
 
 <script type="text/javascript">
-$(".mediaDelete").click(function() {
-	var attachmentId = $(this).data("attachmentid");
+$(".mediaDelete").click(function(event) {
+	attachmentId = $(this).data("attachmentid");
 	
 	$.ajax({
 		method : 'DELETE',
 		url : "/attachments?ids=" + attachmentId,
-	}).done(function(data) {
+	}).done(function() {
+		$(event.target).parents(".col-md-55").remove();
+		
 		alert("해당 파일을 삭제했습니다.");
 		}).fail(function(jqxhr, textStatus, error) {
 		var err = textStatus + ", " + error;
