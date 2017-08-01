@@ -1,6 +1,10 @@
 package com.growingitskill.controller;
 
+import java.net.URI;
 import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,23 +17,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PageMaker;
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.mapper.CategoryRelationMapper;
+import com.growingitskill.service.AttachmentService;
 import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.MemberService;
 import com.growingitskill.service.PostService;
+import com.growingitskill.util.UploadFileUtils;
 
 @Controller
 @RequestMapping("/admin/post")
 public class PostViewController {
 
-	public static final Logger logger = LoggerFactory.getLogger(PostViewController.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(PostViewController.class);
+
+	@Autowired
+	private ServletContext servletContext;
 
 	@Autowired
 	private PostService postService;
@@ -43,6 +56,9 @@ public class PostViewController {
 	@Autowired
 	private CategoryRelationMapper categoryRelationMapper;
 
+	@Autowired
+	private AttachmentService attachmentService;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String listPage(@ModelAttribute Criteria criteria, Model model) throws Exception {
 		int requestPerPageNum = criteria.getPerPageNum();
@@ -51,7 +67,7 @@ public class PostViewController {
 			requestPerPageNum = 20;
 		}
 
-		logger.info("list -> " + criteria.toString());
+		LOGGER.info("list -> " + criteria.toString());
 
 		criteria.setPerPageNum(requestPerPageNum);
 
@@ -100,7 +116,7 @@ public class PostViewController {
 
 		postVO.setAuthor(memberService.findIdByLoginId(loginId));
 
-		logger.info(postVO.toString());
+		LOGGER.info(postVO.toString());
 
 		postService.regist(postVO);
 
@@ -133,6 +149,44 @@ public class PostViewController {
 		redirectAttributes.addFlashAttribute("msg", "success");
 
 		return "redirect:/admin/post";
+	}
+
+	/**
+	 * 
+	 * @param upload
+	 *            CKeditor의 파일 업로드는 Request Payload의 name에 따라 MultipartFile
+	 *            변수이름을 "upload"라 해준다. (다른 이름일 시 파일을 못 찾는 버그 발생)
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "upload", method = RequestMethod.POST)
+	public String uploadByCKEditor(@RequestPart("upload") MultipartFile file, @RequestParam("CKEditorFuncNum") int number,
+			UriComponentsBuilder uriComponentsBuilder, Model model, HttpServletResponse response) throws Exception {
+		LOGGER.info("originalFilename: " + file.getOriginalFilename());
+		LOGGER.info("contentType: " + file.getContentType());
+		LOGGER.info("name: " + file.getName());
+		LOGGER.info("byte: " + file.getBytes());
+		LOGGER.info("size: " + file.getSize());
+		LOGGER.info("number: " + number);
+
+		String path = servletContext.getRealPath("/resources/upload");
+
+		String fullName = UploadFileUtils.uploadFile(path, file.getOriginalFilename(), file.getBytes());
+
+		AttachmentVO attachmentVO = new AttachmentVO();
+		attachmentVO.setFullName(fullName);
+		attachmentVO.setMimeType(file.getContentType());
+
+		attachmentService.addAttachment(attachmentVO);
+
+		URI locationUri = uriComponentsBuilder.path("/attachments/").path(String.valueOf(attachmentVO.getId())).build()
+				.toUri();
+		
+		response.setHeader("Location", locationUri.toString());
+		
+		model.addAttribute("CKEditorFuncNum", number);
+		model.addAttribute("fileUrl", "/resources/upload" + fullName);
+		
+		return "admin/post/upload";
 	}
 
 }

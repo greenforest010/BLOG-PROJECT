@@ -54,10 +54,11 @@
 							</div>
 
 							<div class="form-group">
-								<label for="category">카테고리*</label> <select class="form-control" name="categoryId" required>
+								<label for="category">카테고리*</label> <select class="form-control"
+									name="categoryId" required>
 									<option value="">카테고리를 선택해 주세요.</option>
 									<c:forEach items="${categoryList}" var="categoryVO">
-										<option  value="${categoryVO.id}">${categoryVO.term}</option>
+										<option value="${categoryVO.id}">${categoryVO.term}</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -91,13 +92,28 @@
 <script src="/resources/admin/vendors/ckeditor/ckeditor.js"></script>
 
 <script type="text/javascript">
-$(function() {
-	$(".btn-danger").on("click", function() {
-		self.location = "/admin/post?page=" + ${criteria.page} + "&perPageNum=" + ${criteria.perPageNum};
+	$(function() {
+		$(".btn-danger").on("click", function() {
+			self.location = "/admin/post?page=" + ${criteria.page} +"&perPageNum=" + ${criteria.perPageNum};
+		});
 	});
-});
 </script>
 
 <script type="text/javascript">
-	CKEDITOR.replace('content');
+	CKEDITOR.replace('content', {
+		filebrowserUploadUrl : '/admin/post/upload'
+	});
+</script>
+
+<script type="text/javascript">
+	/* CKEDITOR 다이얼로그 이벤트 관련 */
+	CKEDITOR.on('dialogDefinition', function(event) {
+		var dialogName = event.data.name;
+		var dialogDefinition = event.data.definition;
+
+		if (dialogName == 'image') {
+			dialogDefinition.removeContents('Link');
+			dialogDefinition.removeContents('advanced');
+		}
+	});
 </script>

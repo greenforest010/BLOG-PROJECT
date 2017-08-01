@@ -37,7 +37,8 @@
 						<sf:form method="put">
 							<input type="hidden" name="id" value="${postVO.id}" />
 							<input type="hidden" name="page" value="${criteria.page}" />
-							<input type="hidden" name="perPageNum" value="${criteria.perPageNum}" />
+							<input type="hidden" name="perPageNum"
+								value="${criteria.perPageNum}" />
 
 							<div class="form-group">
 								<label for="title">제목*</label> <input type="text"
@@ -110,13 +111,28 @@
 <script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
 <script src="/resources/admin/vendors/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-$(function() {
-	$(".btn-danger").on("click", function() {
-		self.location = "/admin/post?page=" + ${criteria.page} + "&perPageNum=" + ${criteria.perPageNum};
+	$(function() {
+		$(".btn-danger").on("click", function() {
+			self.location = "/admin/post?page=" + ${criteria.page} + "&perPageNum=" + ${criteria.perPageNum};
+		});
 	});
-});
 </script>
 
 <script type="text/javascript">
-	CKEDITOR.replace('content');
+	CKEDITOR.replace('content', {
+		filebrowserUploadUrl : '/admin/post/upload'
+	});
+</script>
+
+<script type="text/javascript">
+	/* CKEDITOR 다이얼로그 이벤트 관련 */
+	CKEDITOR.on('dialogDefinition', function(event) {
+		var dialogName = event.data.name;
+		var dialogDefinition = event.data.definition;
+
+		if (dialogName == 'image') {
+			dialogDefinition.removeContents('Link');
+			dialogDefinition.removeContents('advanced');
+		}
+	});
 </script>
