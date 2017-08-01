@@ -86,32 +86,32 @@ public class AttachmentController {
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public ResponseEntity<AttachmentVO> modify(@PathVariable long id, @RequestBody Map<String, String> map)
 			throws Exception {
-		
+
 		if (map.get("alternateText") != null) {
 			attachmentService.modifyAlternateTextById(id, map.get("alternateText"));
 		}
-		
+
 		if (map.get("description") != null) {
 			attachmentService.modifyDescriptionById(id, map.get("description"));
 		}
 
 		return responseFindAttachmentById(id);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void remove(@RequestParam("ids") long[] ids) throws Exception {
 		String path = servletContext.getRealPath("/resources/upload");
-		
+
 		for (long id : ids) {
 			AttachmentVO attachmentVO = attachmentService.findAttachmentById(id);
-			
+
 			if (attachmentVO != null) {
 				String fullName = attachmentVO.getFullName();
-				
+
 				new File(path + fullName).delete();
 			}
 		}
-		
+
 		attachmentService.removeAttachmentByIds(ids);
 	}
 

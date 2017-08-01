@@ -47,6 +47,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/admin/post/edit.jsp" />
 	</definition>
 	
+	<definition name="admin/post/upload" template="/WEB-INF/views/admin/post/upload.jsp"/>
+	
 	<definition name="admin/category" extends="adminBase">
 		<put-attribute name="content" value="/WEB-INF/views/admin/category.jsp" />
 	</definition>
