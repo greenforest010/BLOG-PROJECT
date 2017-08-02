@@ -38,7 +38,8 @@
 										<li><a href="#"> <i class="date"> </i><span><fmt:formatDate
 														pattern="yyyy-MM-dd HH:mm" value="${postVO.published}" />
 											</span></a></li>
-										<li><a href="#"> <i class="comment"> </i> <span>Comments</span></a></li>
+										<li><a href="/post/${postVO.id}#disqus_thread"> <i
+												class="comment"> </i> <span>Comments</span></a></li>
 										<li><a href="#"> <i class="news"> </i><span>Public,
 													News</span></a></li>
 										<li><a href="#"> <i class="views"> </i><span>124
@@ -54,7 +55,6 @@
 								</div>
 							</div>
 							<div class="clear"></div>
-							<img src="/resources/images/blog_pic1.jpg" alt="" />
 							<p>${postVO.content}</p>
 							<a class="btn" href="details">read more</a>
 						</div>
@@ -121,8 +121,8 @@
 </div>
 
 <form id="pageForm">
-	<input type='hidden' name="page">
-	<input type='hidden' name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+	<input type='hidden' name="page"> <input type='hidden'
+		name="perPageNum" value="${pageMaker.criteria.perPageNum}">
 </form>
 
 <script src="resources/js/jquery.min.js"></script>
@@ -139,3 +139,5 @@
 		pageForm.submit();
 	});
 </script>
+
+<script id="dsq-count-scr" src="//growingitskill.disqus.com/count.js" async></script>
