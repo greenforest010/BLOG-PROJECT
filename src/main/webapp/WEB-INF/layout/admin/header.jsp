@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <div class="container body">
 	<div class="main_container">
@@ -38,12 +39,13 @@
 					<div class="menu_section">
 						<h3>메뉴</h3>
 						<ul class="nav side-menu">
-							<li><a href="/admin/post"><i class="fa fa-home"></i>글</a></li>
-							<li><a href="#"><i class="fa fa-home"></i>댓글</a></li>
-							<li><a href="/admin/category"><i class="fa fa-home"></i>카테고리</a></li>
-							<li><a href="/admin/tag"><i class="fa fa-home"></i>태그</a></li>
-							<li><a href="/admin/media"><i class="fa fa-home"></i>미디어
+							<li><a href="/admin/post"><i class="fa fa-pencil-square-o"></i>글</a></li>
+							<li><a href="#"><i class="fa fa-comments"></i>댓글</a></li>
+							<li><a href="/admin/category"><i class="fa fa-folder"></i>카테고리</a></li>
+							<li><a href="/admin/tag"><i class="fa fa-tags"></i>태그</a></li>
+							<li><a href="/admin/media"><i class="fa fa-picture-o"></i>미디어
 									리소스</a></li>
+							<li><a href="/"><i class="fa fa-home"></i>블로그 페이지로 이동</a></li>
 						</ul>
 					</div>
 				</div>
