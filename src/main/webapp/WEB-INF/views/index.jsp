@@ -35,28 +35,20 @@
 								</h4>
 								<div class="blog_list">
 									<ul>
+										<li><a href="#"> <i class="date"> </i><span>${postVO.memberVO.loginId}</span></a></li>
 										<li><a href="#"> <i class="date"> </i><span><fmt:formatDate
 														pattern="yyyy-MM-dd HH:mm" value="${postVO.published}" />
 											</span></a></li>
-										<li><a href="/post/${postVO.id}#disqus_thread"> <i
-												class="comment"> </i> <span>Comments</span></a></li>
-										<li><a href="#"> <i class="news"> </i><span>Public,
-													News</span></a></li>
 										<li><a href="#"> <i class="views"> </i><span>124
 													views</span></a></li>
-									</ul>
-									<div class="clear"></div>
-								</div>
-								<div class="blog_art">
-									<ul>
-										<li><a href="#"> <i> </i><span>18</span></a></li>
+										<li><a href="/post/${postVO.id}#disqus_thread"> <i
+												class="comment"> </i> <span>Comments</span></a></li>
 									</ul>
 									<div class="clear"></div>
 								</div>
 							</div>
 							<div class="clear"></div>
 							<p>${postVO.content}</p>
-							<a class="btn" href="details">read more</a>
 						</div>
 					</c:forEach>
 
@@ -168,7 +160,7 @@
 		success : function(data) {
 			var state = new Object();
 			state.opened = true;
-			
+
 			$.each(data, function(key, val) {
 				var items = new Object();
 
