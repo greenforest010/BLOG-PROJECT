@@ -20,6 +20,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	rel='stylesheet' type='text/css'>
 <link href="/resources/css/style.css" rel="stylesheet" type="text/css"
 	media="all" />
+
+<!-- jsTree  -->
+<link rel="stylesheet"
+	href="/resources/js/jsTree/dist/themes/default/style.min.css" />
+	
 <!--  jquery plguin -->
 <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
 </head>
