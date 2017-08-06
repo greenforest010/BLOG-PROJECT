@@ -82,6 +82,10 @@
 				<!-- start blog_sidebar -->
 				<div class="blog_sidebar">
 					<div class="sidebar">
+						<!-- start category-->
+						<h4>Category</h4>
+						<div id="category" style="margin: 8%;"></div>
+
 						<!-- start tag_nav -->
 						<h4>tags</h4>
 						<ul class="tag_nav">
@@ -140,4 +144,51 @@
 	});
 </script>
 
-<script id="dsq-count-scr" src="//growingitskill.disqus.com/count.js" async></script>
+<script id="dsq-count-scr" src="//growingitskill.disqus.com/count.js"
+	async></script>
+
+<!-- jsTree-->
+<script src="/resources/js/jsTree/dist/jstree.min.js"></script>
+
+<script type="text/javascript">
+	/* $(function() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
+		});
+	}); */
+
+	var categoryData = [];
+
+	$.ajax({
+		async : false,
+		url : "/categories",
+		dataType : "json",
+		success : function(data) {
+			$.each(data, function(key, val) {
+				var items = new Object();
+
+				if (val.parent == 0) {
+					val.parent = "#";
+				}
+
+				items.id = val.id.toString();
+				items.text = val.term;
+				items.parent = val.parent.toString();
+				items.slugTerm = val.slugTerm;
+
+				categoryData.push(items);
+			});
+		}
+	});
+
+	$('#category').on('loaded.jstree', function(e, data) {
+		$(this).jstree('open_all');
+	}).jstree({
+		'core' : {
+			'data' : categoryData
+		},
+		'plugins' : [ 'unique', 'sort' ]
+	});
+</script>
