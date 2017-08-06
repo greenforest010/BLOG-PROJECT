@@ -21,6 +21,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href="/resources/css/style.css" rel="stylesheet" type="text/css"
 	media="all" />
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <!-- jsTree  -->
 <link rel="stylesheet"
 	href="/resources/js/jsTree/dist/themes/default/style.min.css" />
