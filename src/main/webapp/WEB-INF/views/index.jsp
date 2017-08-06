@@ -166,6 +166,9 @@
 		url : "/categories",
 		dataType : "json",
 		success : function(data) {
+			var state = new Object();
+			state.opened = true;
+			
 			$.each(data, function(key, val) {
 				var items = new Object();
 
@@ -177,18 +180,22 @@
 				items.text = val.term;
 				items.parent = val.parent.toString();
 				items.slugTerm = val.slugTerm;
+				items.state = state;
 
 				categoryData.push(items);
 			});
 		}
 	});
 
-	$('#category').on('loaded.jstree', function(e, data) {
-		$(this).jstree('open_all');
-	}).jstree({
+	$('#category').jstree({
 		'core' : {
 			'data' : categoryData
 		},
-		'plugins' : [ 'unique', 'sort' ]
+		'types' : {
+			'default' : {
+				'icon' : "glyphicon glyphicon-tag"
+			}
+		},
+		'plugins' : [ 'unique', 'sort', 'types' ]
 	});
 </script>

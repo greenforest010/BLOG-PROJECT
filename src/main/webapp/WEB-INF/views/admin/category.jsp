@@ -92,6 +92,9 @@
 		url : "/categories",
 		dataType : "json",
 		success : function(data) {
+			var state = new Object();
+			state.opened = true;
+			
 			$.each(data, function(key, val) {
 				var items = new Object();
 
@@ -103,10 +106,11 @@
 				items.text = val.term;
 				items.parent = val.parent.toString();
 				items.slugTerm = val.slugTerm;
-
-				console.log("id: " + items.id + ", text: " + items.text
+				items.state = state;
+				
+				/* console.log("id: " + items.id + ", text: " + items.text
 						+ ", parent: " + items.parent + ", slugTerm: "
-						+ items.slugTerm);
+						+ items.slugTerm); */
 
 				categoryData.push(items);
 			});
@@ -184,13 +188,17 @@
 		}).fail(function() {
 			data.instance.refresh();
 		});
-
 	}).jstree({
 		'core' : {
 			'data' : categoryData,
 			'check_callback' : true
 		},
-		'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd', 'changed' ]
+		'types' : {
+			'default' : {
+				'icon' : "glyphicon glyphicon-tag"
+			}
+		},
+		'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd', 'changed', 'types' ]
 	});
 
 	$('#changeCategoryPermalink').on('click', function() {
