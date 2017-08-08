@@ -2,8 +2,8 @@ package com.growingitskill.service;
 
 import java.util.List;
 
-import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
+import com.growingitskill.domain.SearchCriteria;
 
 public interface PostService {
 
@@ -17,8 +17,8 @@ public interface PostService {
 
 	List<PostVO> listAll() throws Exception;
 	
-	List<PostVO> findList(Criteria criteria) throws Exception;
+	List<PostVO> findList(SearchCriteria searchCriteria) throws Exception;
 	
-	int countCriteria(Criteria criteria) throws Exception;
+	int countCriteria(SearchCriteria searchCriteria) throws Exception;
 
 }

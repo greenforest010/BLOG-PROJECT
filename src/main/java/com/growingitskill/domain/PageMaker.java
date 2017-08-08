@@ -1,14 +1,17 @@
 package com.growingitskill.domain;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 	private int totalCount;
 	private int startPage;
 	private int endPage;
 	private boolean previous;
 	private boolean next;
-	
+
 	private int displayPageNum = 5;
-	
+
 	private Criteria criteria;
 
 	public int getTotalCount() {
@@ -17,7 +20,7 @@ public class PageMaker {
 
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
-		
+
 		calculateData();
 	}
 
@@ -68,22 +71,37 @@ public class PageMaker {
 	public void setCriteria(Criteria criteria) {
 		this.criteria = criteria;
 	}
-	
+
 	private void calculateData() {
 		endPage = (int) Math.ceil(criteria.getPage() / (double) displayPageNum) * displayPageNum;
-		
+
 		startPage = (endPage - displayPageNum) + 1;
-		
+
 		int tempEndPage = (int) Math.ceil((totalCount / (double) criteria.getPerPageNum()));
-		
+
 		if (endPage > tempEndPage) {
 			endPage = tempEndPage;
 		}
-		
+
 		previous = (startPage == 1) ? false : true;
 		next = (endPage * criteria.getPerPageNum() >= totalCount) ? false : true;
 	}
 	
+	public String makeQuery(int page) {
+		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
+				.queryParam("perPageNum", criteria.getPerPageNum()).build();
+		
+		return uriComponents.toUriString();
+	}
+
+	public String makeSearch(int page) {
+		UriComponents uriComponents = UriComponentsBuilder.newInstance().queryParam("page", page)
+				.queryParam("perPageNum", criteria.getPerPageNum())
+				.queryParam("keyword", ((SearchCriteria) criteria).getKeyword()).build();
+		
+		return uriComponents.toUriString();
+	}
+
 	@Override
 	public String toString() {
 		return "totalCount: " + getTotalCount() + ", endPage: " + getEndPage() + ", startPage: " + getStartPage();

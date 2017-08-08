@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
+import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.mapper.CategoryRelationMapper;
 import com.growingitskill.mapper.PostMapper;
 
@@ -52,13 +52,13 @@ public class PostServiceImpl implements PostService {
 	}
 	
 	@Override
-	public List<PostVO> findList(Criteria criteria) throws Exception {
-		return postMapper.readList(criteria);
+	public List<PostVO> findList(SearchCriteria searchCriteria) throws Exception {
+		return postMapper.readList(searchCriteria);
 	}
 	
 	@Override
-	public int countCriteria(Criteria criteria) throws Exception {
-		return postMapper.countPaging(criteria);
+	public int countCriteria(SearchCriteria searchCriteria) throws Exception {
+		return postMapper.countPaging(searchCriteria);
 	}
 
 }

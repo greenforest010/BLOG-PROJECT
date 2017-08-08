@@ -28,6 +28,7 @@ import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PageMaker;
 import com.growingitskill.domain.PostVO;
+import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.mapper.CategoryRelationMapper;
 import com.growingitskill.service.AttachmentService;
 import com.growingitskill.service.CategoryService;
@@ -60,24 +61,24 @@ public class PostViewController {
 	private AttachmentService attachmentService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String listPage(@ModelAttribute Criteria criteria, Model model) throws Exception {
-		int requestPerPageNum = criteria.getPerPageNum();
+	public String listPage(@ModelAttribute("criteria") SearchCriteria searchCriteria, Model model) throws Exception {
+		int requestPerPageNum = searchCriteria.getPerPageNum();
 
 		if (requestPerPageNum < 20) {
 			requestPerPageNum = 20;
 		}
 
-		LOGGER.info("list -> " + criteria.toString());
+		searchCriteria.setPerPageNum(requestPerPageNum);
 
-		criteria.setPerPageNum(requestPerPageNum);
+		LOGGER.info("list -> " + searchCriteria.toString());
 
-		model.addAttribute("list", postService.findList(criteria));
+		model.addAttribute("list", postService.findList(searchCriteria));
 		model.addAttribute("categoryList", categoryService.listAll());
 
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(criteria);
+		pageMaker.setCriteria(searchCriteria);
 		pageMaker.setDisplayPageNum(10);
-		pageMaker.setTotalCount(postService.countCriteria(criteria));
+		pageMaker.setTotalCount(postService.countCriteria(searchCriteria));
 
 		model.addAttribute("pageMaker", pageMaker);
 
@@ -159,8 +160,9 @@ public class PostViewController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "upload", method = RequestMethod.POST)
-	public String uploadByCKEditor(@RequestPart("upload") MultipartFile file, @RequestParam("CKEditorFuncNum") int number,
-			UriComponentsBuilder uriComponentsBuilder, Model model, HttpServletResponse response) throws Exception {
+	public String uploadByCKEditor(@RequestPart("upload") MultipartFile file,
+			@RequestParam("CKEditorFuncNum") int number, UriComponentsBuilder uriComponentsBuilder, Model model,
+			HttpServletResponse response) throws Exception {
 		LOGGER.info("originalFilename: " + file.getOriginalFilename());
 		LOGGER.info("contentType: " + file.getContentType());
 		LOGGER.info("name: " + file.getName());
@@ -180,12 +182,12 @@ public class PostViewController {
 
 		URI locationUri = uriComponentsBuilder.path("/attachments/").path(String.valueOf(attachmentVO.getId())).build()
 				.toUri();
-		
+
 		response.setHeader("Location", locationUri.toString());
-		
+
 		model.addAttribute("CKEditorFuncNum", number);
 		model.addAttribute("fileUrl", "/resources/upload" + fullName);
-		
+
 		return "admin/post/upload";
 	}
 

@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
-import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
+import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.sqlprovider.PostSqlProvider;
 
 public interface PostMapper {
@@ -39,9 +39,8 @@ public interface PostMapper {
 	/*
 	 * xml mapper로 대체
 	 */
-	List<PostVO> readList(Criteria criteria) throws Exception;
+	List<PostVO> readList(SearchCriteria searchCriteria) throws Exception;
 
-	@Select("SELECT COUNT(id) FROM post")
-	int countPaging(Criteria criteria) throws Exception;
-
+	@Select("SELECT COUNT(id) FROM post WHERE id > 0 AND title LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%')")
+	int countPaging(SearchCriteria searchCriteria) throws Exception;
 }
