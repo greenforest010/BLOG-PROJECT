@@ -23,9 +23,10 @@
 		<div
 			class="col-md-5 col-sm-5 col-xs-8 form-group pull-right top_search">
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search for...">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">Go!</button>
+				<input type="text" class="form-control" name="keyword"
+					placeholder="글 제목이나 내용을 입력하세요..." required> <span
+					class="input-group-btn">
+					<button id="searchButton" class="btn btn-default" type="button">Search!</button>
 				</span>
 			</div>
 		</div>
@@ -52,81 +53,89 @@
 				</div>
 				<div class="x_content">
 					<div style="width: 100%; height: 400px; overflow: auto">
-						<!-- 테이블 밖 스크롤 설정(테이블 안으로 변경 하는 코드 필요...)  -->
-						<div class="table-responsive">
-							<table class="table table-striped jambo_table bulk_action">
-								<thead>
-									<tr class="headings">
-										<th><input type="checkbox" id="check-all" class="flat">
-										</th>
-										<th class="column-title">번호</th>
-										<th class="column-title">제목</th>
-										<th class="column-title">글쓴이</th>
-										<th class="column-title">등록일</th>
-										<th class="column-title">조회수</th>
-										<th class="column-title">댓글</th>
-										<th class="column-title">카테고리</th>
-										<th class="column-title no-link last"><span class="nobr">태그</span>
-										</th>
-										<th class="bulk-actions" colspan="8"><a class="antoo"
-											style="color: #fff; font-weight: 500;">Bulk Actions ( <span
-												class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a></th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${list}" var="postVO">
-										<tr>
-											<td class="a-center "><input type="checkbox"
-												class="flat" name="table_records" value="${postVO.id}"></td>
-											<td>${postVO.id}</td>
-											<td><a
-												href="/admin/post/${postVO.id}?page=${criteria.page}&perPageNum=${criteria.perPageNum}">${postVO.title}</a></td>
-											<td>${postVO.memberVO.loginId}</td>
-											<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-													value="${postVO.published}" /></td>
-											<td>Paid</td>
-											<td>Paid</td>
-											<c:if test="${postVO.categoryVO.term != null}">
-												<td id="categoryTermTd${postVO.id}">${postVO.categoryVO.term}</td>
-											</c:if>
-											<c:if test="${postVO.categoryVO.term == null}">
-												<td id="categoryTermTd${postVO.id}"><a
-													href="#categorySelectModal" data-postid="${postVO.id}"
-													data-toggle="modal"><span style="color: cyan;">카테고리를
-															설정하세요.</span></a></td>
-											</c:if>
-											<td><a href="#">View</a></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+
+						<c:choose>
+							<c:when test="${empty list}">
+								<p>검색 결과가 없습니다.</p>
+							</c:when>
+							<c:otherwise>
+								<!-- 테이블 밖 스크롤 설정(테이블 안으로 변경 하는 코드 필요...)  -->
+								<div class="table-responsive">
+									<table class="table table-striped jambo_table bulk_action">
+										<thead>
+											<tr class="headings">
+												<th><input type="checkbox" id="check-all" class="flat">
+												</th>
+												<th class="column-title">번호</th>
+												<th class="column-title">제목</th>
+												<th class="column-title">글쓴이</th>
+												<th class="column-title">등록일</th>
+												<th class="column-title">조회수</th>
+												<th class="column-title">댓글</th>
+												<th class="column-title">카테고리</th>
+												<th class="column-title no-link last"><span
+													class="nobr">태그</span></th>
+												<th class="bulk-actions" colspan="8"><a class="antoo"
+													style="color: #fff; font-weight: 500;">Bulk Actions ( <span
+														class="action-cnt"> </span> ) <i
+														class="fa fa-chevron-down"></i></a></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${list}" var="postVO">
+												<tr>
+													<td class="a-center "><input type="checkbox"
+														class="flat" name="table_records" value="${postVO.id}"></td>
+													<td>${postVO.id}</td>
+													<td><a
+														href="/admin/post/${postVO.id}${pageMaker.makeSearch(pageMaker.criteria.page)}">${postVO.title}</a></td>
+													<td>${postVO.memberVO.loginId}</td>
+													<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
+															value="${postVO.published}" /></td>
+													<td>Paid</td>
+													<td>Paid</td>
+													<c:if test="${postVO.categoryVO.term != null}">
+														<td id="categoryTermTd${postVO.id}">${postVO.categoryVO.term}</td>
+													</c:if>
+													<c:if test="${postVO.categoryVO.term == null}">
+														<td id="categoryTermTd${postVO.id}"><a
+															href="#categorySelectModal" data-postid="${postVO.id}"
+															data-toggle="modal"><span style="color: cyan;">카테고리를
+																	설정하세요.</span></a></td>
+													</c:if>
+													<td><a href="#">View</a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</c:otherwise>
+						</c:choose>
+
 					</div>
 				</div>
 
-				<button id="deletePost" class="btn btn-danger">삭제</button>
+				<c:if test="${not empty list}">
+					<button id="deletePost" class="btn btn-danger">삭제</button>
+				</c:if>
 
 				<div class="text-center">
 					<ul class="pagination">
 						<c:if test="${pageMaker.previous}">
-							<li><a href="${pageMaker.startPage -  1}">&laquo;</a></li>
+							<li><a
+								href="${pageMaker.makeSearch(pageMaker.startPage -  1)}">&laquo;</a></li>
 						</c:if>
 						<c:forEach begin="${pageMaker.startPage}"
 							end="${pageMaker.endPage}" var="idx">
 							<li
 								<c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}" />><a
-								href="${idx}">${idx}</a></li>
+								href="${pageMaker.makeSearch(idx)}">${idx}</a></li>
 						</c:forEach>
 						<c:if test="${pageMaker.next && (pageMaker.endPage > 0)}">
-							<li><a href="${pageMaker.endPage + 1}">&raquo;</a></li>
+							<li><a href="${pageMaker.makeSearch(pageMaker.endPage + 1)}">&raquo;</a></li>
 						</c:if>
 					</ul>
 				</div>
-
-				<form id="pageForm">
-					<input type='hidden' name="page"> <input type='hidden'
-						name="perPageNum" value="${pageMaker.criteria.perPageNum}">
-				</form>
 
 				<!-- Small modal -->
 				<div class="modal fade" id="categorySelectModal" tabindex="-1"
@@ -172,20 +181,6 @@
 	if (result == 'success') {
 		alert("처리가 완료되었습니다.");
 	}
-</script>
-
-<script>
-	$(".pagination li a").on("click", function(event) {
-
-		event.preventDefault();
-
-		var targetPage = $(this).attr("href");
-
-		var pageForm = $("#pageForm");
-		pageForm.find("[name='page']").val(targetPage);
-		pageForm.attr("action", "/admin/post").attr("method", "get");
-		pageForm.submit();
-	});
 </script>
 
 <script type="text/javascript">
@@ -260,5 +255,28 @@
 							});
 				}
 			});
+</script>
+
+<script type="text/javascript">
+	$(function() {
+		$("#searchButton").on(
+				"click",
+				function(event) {
+					var keywordInput = $(".top_search").find(
+							"input[name='keyword']");
+
+					if (!keywordInput.val()) {
+						alert("검색어를 입력하세요.");
+
+						keywordInput.focus();
+					} else {
+						self.location = "post"
+								+ "${pageMaker.makeQuery(1)}"
+								+ "&keyword="
+								+ $(".top_search")
+										.find("input[name='keyword']").val();
+					}
+				});
+	});
 </script>
 <!-- /page content -->

@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.growingitskill.config.MybatisJndiConfig;
 import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
+import com.growingitskill.domain.SearchCriteria;
 
 import ch.qos.logback.classic.Logger;
 
@@ -91,7 +92,7 @@ public class PostMapperTest {
 		postMapper.deleteByIds(id);
 	}*/
 	
-	@Test
+	/*@Test
 	public void selectPostListPage() throws Exception {
 		Criteria criteria = new Criteria();
 		criteria.setPage(2);
@@ -102,6 +103,21 @@ public class PostMapperTest {
 		for (PostVO postVO : list) {
 			System.out.println(postVO.toString());
 		}
+	}*/
+	
+	@Test
+	public void testDynamic1() throws Exception {
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setPage(1);
+		searchCriteria.setKeyword("캬");
+		
+		List<PostVO> list = postMapper.readList(searchCriteria);
+		
+		for (PostVO postVO : list) {
+			System.out.println(postVO.getId() + ": " + postVO.getTitle());
+		}
+		
+		System.out.println("COUNT: " + postMapper.countPaging(searchCriteria));
 	}
 
 }

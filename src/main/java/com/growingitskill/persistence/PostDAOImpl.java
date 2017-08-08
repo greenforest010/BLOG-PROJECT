@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
+import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.mapper.PostMapper;
 
 public class PostDAOImpl extends SqlSessionDaoSupport implements PostMapper {
@@ -38,13 +38,13 @@ public class PostDAOImpl extends SqlSessionDaoSupport implements PostMapper {
 	}
 	
 	@Override
-	public List<PostVO> readList(Criteria criteria) throws Exception {
-		return getSqlSession().selectList(namespace + ".readList", criteria);
+	public List<PostVO> readList(SearchCriteria searchCriteria) throws Exception {
+		return getSqlSession().selectList(namespace + ".readList", searchCriteria);
 	}
 	
 	@Override
-	public int countPaging(Criteria criteria) throws Exception {
-		return getSqlSession().selectOne(namespace + ".countPaging", criteria);
+	public int countPaging(SearchCriteria searchCriteria) throws Exception {
+		return getSqlSession().selectOne(namespace + ".countPaging", searchCriteria);
 	}
 
 }

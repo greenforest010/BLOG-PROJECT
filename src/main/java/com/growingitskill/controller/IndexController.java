@@ -9,26 +9,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PageMaker;
+import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.service.PostService;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 	
 	@Autowired
 	private PostService postService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public String index(Criteria criteria, Model model) throws Exception {
-		model.addAttribute("list", postService.findList(criteria));
+	public String index(SearchCriteria searchCriteria, Model model) throws Exception {
+		model.addAttribute("list", postService.findList(searchCriteria));
+		
+		LOGGER.info("list is " + postService.findList(searchCriteria).isEmpty());
 		
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(postService.countCriteria(criteria));
+		pageMaker.setCriteria(searchCriteria);
+		pageMaker.setTotalCount(postService.countCriteria(searchCriteria));
 		
 		model.addAttribute("pageMaker", pageMaker);
 		
