@@ -1,6 +1,8 @@
 package com.growingitskill.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -45,6 +47,24 @@ public class PostDAOImpl extends SqlSessionDaoSupport implements PostMapper {
 	@Override
 	public int countPaging(SearchCriteria searchCriteria) throws Exception {
 		return getSqlSession().selectOne(namespace + ".countPaging", searchCriteria);
+	}
+
+	@Override
+	public List<PostVO> readListByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("slugTerm", slugTerm);
+		map.put("criteria", searchCriteria);
+		
+		return getSqlSession().selectList(namespace + ".readListByCategory", map);
+	}
+
+	@Override
+	public int countPagingByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("slugTerm", slugTerm);
+		map.put("criteria", searchCriteria);
+		
+		return getSqlSession().selectOne(namespace + ".countPagingByCategory", map);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.growingitskill.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -79,6 +80,39 @@ public class PostViewController {
 		pageMaker.setCriteria(searchCriteria);
 		pageMaker.setDisplayPageNum(10);
 		pageMaker.setTotalCount(postService.countCriteria(searchCriteria));
+
+		model.addAttribute("pageMaker", pageMaker);
+
+		return "admin/post/list";
+	}
+
+	@RequestMapping(value = "category/{slugTerm}", method = RequestMethod.GET)
+	public String indexByCategory(@PathVariable("slugTerm") String slugTerm, SearchCriteria searchCriteria, Model model)
+			throws Exception {
+		int requestPerPageNum = searchCriteria.getPerPageNum();
+
+		if (requestPerPageNum < 20) {
+			requestPerPageNum = 20;
+		}
+
+		searchCriteria.setPerPageNum(requestPerPageNum);
+		
+		model.addAttribute("categoryList", categoryService.listAll());
+
+		List<PostVO> list = postService.findListByCategory(slugTerm, searchCriteria);
+
+		int countCriteria = postService.countCriteriaByCategory(slugTerm, searchCriteria);
+
+		return makeListPage(list, searchCriteria, countCriteria, model);
+	}
+
+	private String makeListPage(List<PostVO> list, SearchCriteria searchCriteria, int countCriteria, Model model) {
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(searchCriteria);
+		pageMaker.setDisplayPageNum(10);
+		pageMaker.setTotalCount(countCriteria);
 
 		model.addAttribute("pageMaker", pageMaker);
 

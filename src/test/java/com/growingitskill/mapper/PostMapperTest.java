@@ -105,7 +105,7 @@ public class PostMapperTest {
 		}
 	}*/
 	
-	@Test
+	/*@Test
 	public void testDynamic1() throws Exception {
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setPage(1);
@@ -118,6 +118,22 @@ public class PostMapperTest {
 		}
 		
 		System.out.println("COUNT: " + postMapper.countPaging(searchCriteria));
+	}*/
+	
+	@Test
+	public void testDynamic2() throws Exception {
+		String slugTerm = "ss전체";
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setPage(1);
+		searchCriteria.setKeyword("후후");
+		
+		List<PostVO> list = postMapper.readListByCategory(slugTerm, searchCriteria);
+		
+		for (PostVO postVO : list) {
+			System.out.println(postVO.toString());
+		}
+		
+		System.out.println("COUNT: " + postMapper.countPagingByCategory(slugTerm, searchCriteria));
 	}
 
 }

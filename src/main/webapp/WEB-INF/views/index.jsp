@@ -34,11 +34,10 @@
 								<div class="blog_main">
 									<div class="b_left">
 										<h4 class="bg">
-											<img src="resources/images/note.jpg" alt="" />
+											<img src="/resources/images/note.jpg" alt="" />
 										</h4>
 									</div>
 									<div class="b_right">
-										<%-- <h4><a href="${postVO.slugTitle}">${postVO.title}</a></h4> --%>
 										<h4>
 											<a href="/post/${postVO.id}">${postVO.title}</a>
 										</h4>
@@ -111,13 +110,13 @@
 						<!-- start flicker images -->
 						<h4>ads 125x125</h4>
 						<ul class="ads_nav">
-							<li><a href="#"><img src="resources/images/ads_pic.jpg"
+							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
 									alt=""> </a></li>
-							<li><a href="#"><img src="resources/images/ads_pic.jpg"
+							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
 									alt=""> </a></li>
-							<li><a href="#"><img src="resources/images/ads_pic.jpg"
+							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
 									alt=""> </a></li>
-							<li><a href="#"><img src="resources/images/ads_pic.jpg"
+							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
 									alt=""> </a></li>
 							<div class="clear"></div>
 						</ul>
@@ -129,25 +128,7 @@
 	</div>
 </div>
 
-<%-- <form id="pageForm">
-	<input type='hidden' name="page"> <input type='hidden'
-		name="perPageNum" value="${pageMaker.criteria.perPageNum}">
-</form> --%>
-
-<script src="resources/js/jquery.min.js"></script>
-<!-- <script>
-	$(".pagination li a").on("click", function(event) {
-
-		event.preventDefault();
-
-		var targetPage = $(this).attr("href");
-
-		var pageForm = $("#pageForm");
-		pageForm.find("[name='page']").val(targetPage);
-		pageForm.attr("action", "/").attr("method", "get");
-		pageForm.submit();
-	});
-</script> -->
+<script src="/resources/js/jquery.min.js"></script>
 
 <script id="dsq-count-scr" src="//growingitskill.disqus.com/count.js"
 	async></script>
@@ -192,7 +173,15 @@
 		}
 	});
 
-	$('#category').jstree({
+	$('#category').on('changed.jstree', function(e, data) {
+		var i, j, r = [];
+
+		for (i = 0, j = data.selected.length; i < j; i++) {
+			r.push(data.instance.get_node(data.selected[i]).original.slugTerm);
+		}
+
+		location.href = "/category/" + r.join(", ");
+	}).jstree({
 		'core' : {
 			'data' : categoryData
 		},
