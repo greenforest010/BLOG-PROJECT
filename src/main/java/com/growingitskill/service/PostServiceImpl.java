@@ -61,4 +61,14 @@ public class PostServiceImpl implements PostService {
 		return postMapper.countPaging(searchCriteria);
 	}
 
+	@Override
+	public List<PostVO> findListByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		return postMapper.readListByCategory(slugTerm, searchCriteria);
+	}
+
+	@Override
+	public int countCriteriaByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		return postMapper.countPagingByCategory(slugTerm, searchCriteria);
+	}
+
 }

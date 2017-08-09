@@ -100,7 +100,7 @@ public class PostVO {
 		}
 
 		if (getCategoryVO() != null) {
-			category = ", categoryId: " + getCategoryVO().getId() + ", term: " + getCategoryVO().getTerm();
+			category = ", categoryId: " + getCategoryVO().getId() + ", term: " + getCategoryVO().getTerm() + ", slugTerm: " + getCategoryVO().getSlugTerm();
 		}
 		
 		if (member != null && category != null) {

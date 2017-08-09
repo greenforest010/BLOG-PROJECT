@@ -43,4 +43,16 @@ public interface PostMapper {
 
 	@Select("SELECT COUNT(id) FROM post WHERE id > 0 AND title LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%')")
 	int countPaging(SearchCriteria searchCriteria) throws Exception;
+
+	/*
+	 * xml mapper로 대체
+	 */
+	List<PostVO> readListByCategory(@Param("slugTerm") String slugTerm,
+			@Param("criteria") SearchCriteria searchCriteria) throws Exception;
+
+	/*
+	 * xml mapper로 대체
+	 */
+	int countPagingByCategory(@Param("slugTerm") String slugTerm, @Param("criteria") SearchCriteria searchCriteria)
+			throws Exception;
 }

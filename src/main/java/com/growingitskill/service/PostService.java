@@ -20,5 +20,9 @@ public interface PostService {
 	List<PostVO> findList(SearchCriteria searchCriteria) throws Exception;
 	
 	int countCriteria(SearchCriteria searchCriteria) throws Exception;
+	
+	List<PostVO> findListByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception;
+	
+	int countCriteriaByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception;
 
 }

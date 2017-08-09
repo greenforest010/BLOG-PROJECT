@@ -21,14 +21,28 @@
 		</div>
 
 		<div
-			class="col-md-5 col-sm-5 col-xs-8 form-group pull-right top_search">
-			<div class="input-group">
-				<input type="text" class="form-control" name="keyword"
-					placeholder="글 제목이나 내용을 입력하세요..." required> <span
-					class="input-group-btn">
-					<button id="searchButton" class="btn btn-default" type="button">Search!</button>
-				</span>
+			class="col-md-7 col-sm-7 col-xs-7 form-group pull-right top_search">
+			<div class="col-md-5">
+				<div class="form-group">
+					<select id="selectCategoryForSearch" class="form-control">
+						<option value="">카테고리로 글을 검색할 수 있습니다.</option>
+						<c:forEach items="${categoryList}" var="categoryVO">
+							<option value="${categoryVO.slugTerm}">${categoryVO.term}</option>
+						</c:forEach>
+					</select>
+				</div>
 			</div>
+
+			<div class="col-md-7">
+				<div class="input-group">
+					<input type="text" class="form-control" name="keyword"
+						placeholder="글 제목이나 내용을 입력하세요..." required> <span
+						class="input-group-btn">
+						<button id="searchButton" class="btn btn-default" type="button">Search!</button>
+					</span>
+				</div>
+			</div>
+
 		</div>
 	</div>
 
@@ -270,13 +284,23 @@
 
 						keywordInput.focus();
 					} else {
-						self.location = "post"
+						var currentPath = window.location.pathname;
+
+						location.href = currentPath
 								+ "${pageMaker.makeQuery(1)}"
 								+ "&keyword="
 								+ $(".top_search")
 										.find("input[name='keyword']").val();
 					}
 				});
+	});
+</script>
+
+<script type="text/javascript">
+	$("#selectCategoryForSearch").change(function() {
+		var slugTerm = $("#selectCategoryForSearch option:selected").val();
+
+		location.href = "/admin/post/category/" + slugTerm;
 	});
 </script>
 <!-- /page content -->
