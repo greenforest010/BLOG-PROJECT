@@ -60,5 +60,9 @@
 	<definition name="admin/tag" extends="adminBase">
 		<put-attribute name="content" value="/WEB-INF/views/admin/tag.jsp" />
 	</definition>
+	
+	<definition name="admin/profile" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/profile.jsp" />
+	</definition>
 
 </tiles-definitions>

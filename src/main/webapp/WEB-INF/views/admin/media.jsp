@@ -198,66 +198,67 @@
 	</div>
 </div>
 <!-- /page content -->
-
+	
 <script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
-
-<script
-	src="/resources/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 var attachmentId = 0;
 
-$("#mediaDetailModal").on("show.bs.modal", function(event) {
-	attachmentId = $(event.relatedTarget).data('attachmentid');
-	
-	$.getJSON("/attachments/" + attachmentId, function(data) {
-		$.each(data, function(key, value) {
-			function findInputOfMediaDetailModal(mediaDetailAttribute) {
-				return $(".modal-body").find('label[for="'+ mediaDetailAttribute+ '"]').parent().find("input");
-			}
-			
-			function makeDate(dateNumber) {
-				var dateObj = new Date(dateNumber);
-				var year = dateObj.getFullYear();
-				var month = dateObj.getMonth() + 1;
-				var date = dateObj.getDate();
-				var hours = dateObj.getHours();
-				var minutes = dateObj.getMinutes();
-				var seconds = dateObj.getSeconds();
-				
-				var result = year + "." + month + "."+ date + "." + " " + hours + ":" + minutes + ":" + seconds;
-				
-				return result;
-			}
-			
-			if (key == 'fullName') {
-				var fileUrl = "/resources/upload" + value;
-				
-				$(".modal-body").find("img").attr("src",function() {
-					return fileUrl;
-				});
-				
-				findInputOfMediaDetailModal('fileUrl').val(fileUrl);
-			} else if (key == 'registered') {
-				var registered = makeDate(value);
-				
-				value = registered;
-			} else if (key == 'updated') {
-				var updated = makeDate(value);
-				
-				value = updated;
-			}
-			
-			findInputOfMediaDetailModal(key).val(value);
-			
-			console.log("key: " + key + ", value: " + value);
-		});
-	}).fail(function(jqxhr, textStatus, error) {
-		var err = textStatus + ", " + error;
+$(function() {
+	$("#mediaDetailModal").on("show.bs.modal", function(event) {
+		attachmentId = $(event.relatedTarget).data('attachmentid');
 		
-		console.log("Request Failed: " + err);
+		$.getJSON("/attachments/" + attachmentId, function(data) {
+			$.each(data, function(key, value) {
+				function findInputOfMediaDetailModal(mediaDetailAttribute) {
+					return $(".modal-body").find('label[for="'+ mediaDetailAttribute+ '"]').parent().find("input");
+				}
+				
+				function makeDate(dateNumber) {
+					var dateObj = new Date(dateNumber);
+					var year = dateObj.getFullYear();
+					var month = dateObj.getMonth() + 1;
+					var date = dateObj.getDate();
+					var hours = dateObj.getHours();
+					var minutes = dateObj.getMinutes();
+					var seconds = dateObj.getSeconds();
+					
+					var result = year + "." + month + "."+ date + "." + " " + hours + ":" + minutes + ":" + seconds;
+					
+					return result;
+				}
+				
+				if (key == 'fullName') {
+					var fileUrl = "/resources/upload" + value;
+					
+					$(".modal-body").find("img").attr("src",function() {
+						return fileUrl;
+					});
+					
+					findInputOfMediaDetailModal('fileUrl').val(fileUrl);
+				} else if (key == 'registered') {
+					var registered = makeDate(value);
+					
+					value = registered;
+				} else if (key == 'updated') {
+					var updated = makeDate(value);
+					
+					value = updated;
+				}
+				
+				findInputOfMediaDetailModal(key).val(value);
+				
+				console.log("key: " + key + ", value: " + value);
+			});
+		}).fail(function(jqxhr, textStatus, error) {
+			var err = textStatus + ", " + error;
+			
+			console.log("Request Failed: " + err);
+			});
 		});
-	});
+});
+
+
 	
 $(function() {
 	$("#fileDetailUpdateButton").click(function(event) {
