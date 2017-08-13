@@ -53,7 +53,6 @@
 
 							<div class="form-group">
 								<label for="category">카테고리*</label>
-
 								<div class="row">
 									<div class="col-md-5 col-sm-5 col-xs-12">
 										<select class="form-control" name="categoryId" required>
@@ -76,10 +75,7 @@
 												value="${postVO.categoryVO.term}" readonly>
 										</div>
 									</div>
-
 								</div>
-
-
 							</div>
 
 							<div class="form-group">

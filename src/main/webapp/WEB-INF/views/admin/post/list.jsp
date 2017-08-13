@@ -184,10 +184,11 @@
 		</div>
 	</div>
 </div>
-
+	
 <script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
-<script
-	src="/resources/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- <script
+	src="/resources/admin/vendors/bootstrap/dist/js/bootstrap.min.js"></script> -->
 
 <script type="text/javascript">
 	var result = '${msg}';
@@ -210,14 +211,16 @@
 <script type="text/javascript">
 	var postId = 0;
 
-	$("#categorySelectModal").on(
-			"show.bs.modal",
-			function(event) {
-				postId = $(event.relatedTarget).data('postid');
+	$(function() {
+		$("#categorySelectModal").on(
+				"show.bs.modal",
+				function(event) {
+					postId = $(event.relatedTarget).data('postid');
 
-				$(this).find('.modal-title').html(
-						"카테고리를 선택하세요. <small>(글 번호: " + postId + ")</small>"); // $(this): modal
-			});
+					$(this).find('.modal-title').html(
+							"카테고리를 선택하세요. <small>(글 번호: " + postId + ")</small>"); // $(this): modal
+				});
+	});
 
 	$(function() {
 		$("#categorySelectButton").click(function(event) {

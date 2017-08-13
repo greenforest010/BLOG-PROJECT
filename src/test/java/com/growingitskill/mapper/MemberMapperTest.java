@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.growingitskill.config.MybatisJndiConfig;
+import com.growingitskill.domain.MemberVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes=MybatisJndiConfig.class)
@@ -31,12 +32,31 @@ public class MemberMapperTest {
 	@Autowired
 	private MemberMapper memberMapper;
 	
-	@Test
+	/*@Test
 	public void getIdByLoginId() throws Exception {
 		String loginId = "testuser";
 		
-		long id = memberMapper.readIdByLoginId(loginId);
+		System.out.println("id: " + memberMapper.readIdByLoginId(loginId));
+	}
+	
+	@Test
+	public void getMemberByLoginId() throws Exception {
+		String loginId = "testuser";
 		
-		System.out.println("id: " + id);
+		System.out.println(memberMapper.readMemberByLoginId(loginId).toString());
+	}*/
+	
+	@Test
+	public void updateMember() throws Exception {
+		String loginId = "testuser";
+		
+		MemberVO memberVO = new MemberVO();
+		memberVO.setDisplayName(loginId);
+		memberVO.setLoginId(loginId);
+		memberVO.setNickname(loginId);
+		
+		memberMapper.updateMemberByLoginId(memberVO);
+		
+		System.out.println(memberMapper.readMemberByLoginId(loginId).toString());
 	}
 }

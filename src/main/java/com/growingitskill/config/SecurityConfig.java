@@ -37,9 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/categories/**", "/posts/**", "/attachments/**").hasAuthority("ROLE_ADMIN").and()
 				.headers().frameOptions().sameOrigin().and().httpBasic();
 
-		http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password").and()
-				.authorizeRequests().antMatchers("/admin/**").authenticated().and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
+		http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password")
+				.defaultSuccessUrl("/admin").and().authorizeRequests().antMatchers("/admin/**").authenticated().and()
+				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 	}
 
 	@Override

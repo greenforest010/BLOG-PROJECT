@@ -39,7 +39,8 @@
 					<div class="menu_section">
 						<h3>메뉴</h3>
 						<ul class="nav side-menu">
-							<li><a href="/admin/post"><i class="fa fa-pencil-square-o"></i>글</a></li>
+							<li><a href="/admin/post"><i
+									class="fa fa-pencil-square-o"></i>글</a></li>
 							<li><a href="#"><i class="fa fa-comments"></i>댓글</a></li>
 							<li><a href="/admin/category"><i class="fa fa-folder"></i>카테고리</a></li>
 							<li><a href="/admin/tag"><i class="fa fa-tags"></i>태그</a></li>
@@ -60,66 +61,22 @@
 					<div class="nav toggle">
 						<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 					</div>
-
 					<ul class="nav navbar-nav navbar-right">
-						<li class=""><a href="javascript:;"
+						<li class="dropdown"><a href="javascript:;"
 							class="user-profile dropdown-toggle" data-toggle="dropdown"
 							aria-expanded="false"> <img
-								src="/resources/admin/images/img.jpg" alt="">John Doe <span
+								src="/resources/admin/images/img.jpg" alt=""> <sec:authentication
+									property="principal.username" /> <span
 								class=" fa fa-angle-down"></span>
 						</a>
 							<ul class="dropdown-menu dropdown-usermenu pull-right">
-								<li><a href="javascript:;"> Profile</a></li>
+								<li><a href="/admin/profile">프로필</a></li>
 								<li><a href="javascript:;"> <span
 										class="badge bg-red pull-right">50%</span> <span>Settings</span>
 								</a></li>
 								<li><a href="javascript:;">Help</a></li>
-								<li><a href="login.html"><i
-										class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-							</ul></li>
-
-						<li role="presentation" class="dropdown"><a
-							href="javascript:;" class="dropdown-toggle info-number"
-							data-toggle="dropdown" aria-expanded="false"> <i
-								class="fa fa-envelope-o"></i> <span class="badge bg-green">6</span>
-						</a>
-							<ul id="menu1" class="dropdown-menu list-unstyled msg_list"
-								role="menu">
-								<li><a> <span class="image"><img
-											src="/resources/admin/images/img.jpg" alt="Profile Image" /></span>
-										<span> <span>John Smith</span> <span class="time">3
-												mins ago</span>
-									</span> <span class="message"> Film festivals used to be
-											do-or-die moments for movie makers. They were where... </span>
-								</a></li>
-								<li><a> <span class="image"><img
-											src="/resources/admin/images/img.jpg" alt="Profile Image" /></span>
-										<span> <span>John Smith</span> <span class="time">3
-												mins ago</span>
-									</span> <span class="message"> Film festivals used to be
-											do-or-die moments for movie makers. They were where... </span>
-								</a></li>
-								<li><a> <span class="image"><img
-											src="/resources/admin/images/img.jpg" alt="Profile Image" /></span>
-										<span> <span>John Smith</span> <span class="time">3
-												mins ago</span>
-									</span> <span class="message"> Film festivals used to be
-											do-or-die moments for movie makers. They were where... </span>
-								</a></li>
-								<li><a> <span class="image"><img
-											src="/resources/admin/images/img.jpg" alt="Profile Image" /></span>
-										<span> <span>John Smith</span> <span class="time">3
-												mins ago</span>
-									</span> <span class="message"> Film festivals used to be
-											do-or-die moments for movie makers. They were where... </span>
-								</a></li>
-								<li>
-									<div class="text-center">
-										<a> <strong>See All Alerts</strong> <i
-											class="fa fa-angle-right"></i>
-										</a>
-									</div>
-								</li>
+								<li><a href="/logout"><i
+										class="fa fa-sign-out pull-right"></i> 로그아웃</a></li>
 							</ul></li>
 					</ul>
 				</nav>
