@@ -86,7 +86,7 @@ public class CategoryController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		categoryService.removeCategory(id);
+		categoryService.removeCategoryById(id);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

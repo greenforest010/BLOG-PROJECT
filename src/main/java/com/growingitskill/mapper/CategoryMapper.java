@@ -36,9 +36,7 @@ public interface CategoryMapper {
 	@Update("UPDATE category SET parent = #{parent} WHERE id = #{id}")
 	void updateParentById(@Param("id") long id, @Param("parent") long parent) throws Exception;
 
-	@Delete("DELETE FROM category WHERE id IN " + "(SELECT id FROM "
-			+ "(SELECT * FROM category WHERE id = #{id} OR id IN "
-			+ "((SELECT id FROM category WHERE parent = #{id}))) as c)")
-	void deleteById(long id) throws Exception;
+	@Delete("DELETE FROM category WHERE id = #{id}")
+	void deleteCategoryById(long id) throws Exception;
 
 }

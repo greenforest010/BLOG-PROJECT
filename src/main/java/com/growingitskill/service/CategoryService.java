@@ -18,6 +18,6 @@ public interface CategoryService {
 	
 	void moveCategory(long id, long parent) throws  Exception;
 	
-	void removeCategory(long id) throws Exception;
+	void removeCategoryById(long id) throws Exception;
 
 }

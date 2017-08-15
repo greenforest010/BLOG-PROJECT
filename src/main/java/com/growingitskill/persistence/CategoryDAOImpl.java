@@ -56,7 +56,7 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	}
 
 	@Override
-	public void deleteById(long id) throws Exception {
+	public void deleteCategoryById(long id) throws Exception {
 		getSqlSession().delete(namespace + ".deleteById", id);
 	}
 
