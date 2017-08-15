@@ -45,8 +45,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
-	public void removeCategory(long id) throws Exception {
-		categoryMapper.deleteById(id);
+	public void removeCategoryById(long id) throws Exception {
+		categoryMapper.deleteCategoryById(id);
 	}
 
 }

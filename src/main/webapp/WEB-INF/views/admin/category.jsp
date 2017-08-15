@@ -174,7 +174,7 @@
 	}).on('delete_node.jstree', function(e, data) {
 		console.log("delete: " + data.node.id);
 
-		if (data.node.parent == '#') {
+		if (data.node.id == 1 || data.node.id == 2) {
 			alert("이 카테고리는 삭제 할 수 없습니다.");
 
 			return false;

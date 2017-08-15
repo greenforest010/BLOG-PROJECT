@@ -91,9 +91,9 @@ public class CategoryMapperTest {
 	
 	@Test
 	public void deleteCategory() throws Exception {
-		long id = 4;
+		long id = 13;
 		
-		categoryMapper.deleteById(id);
+		categoryMapper.deleteCategoryById(id);
 	}
 
 }
