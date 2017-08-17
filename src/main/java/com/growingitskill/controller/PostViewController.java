@@ -138,7 +138,7 @@ public class PostViewController {
 
 	@RequestMapping(value = "new", method = RequestMethod.GET)
 	public void newPage(@ModelAttribute Criteria criteria, Model model) throws Exception {
-		model.addAttribute("categoryList", categoryService.listAll());
+		model.addAttribute("categoryList", categoryService.listLeafCategory());
 	}
 
 	@RequestMapping(value = "new", method = RequestMethod.POST)
@@ -164,7 +164,7 @@ public class PostViewController {
 	public String editPage(@PathVariable("id") long id, @ModelAttribute Criteria criteria, Model model)
 			throws Exception {
 		model.addAttribute(postService.findById(id));
-		model.addAttribute("categoryList", categoryService.listAll());
+		model.addAttribute("categoryList", categoryService.listLeafCategory());
 
 		return "admin/post/edit";
 	}

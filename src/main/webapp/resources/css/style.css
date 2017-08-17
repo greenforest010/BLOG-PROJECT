@@ -301,7 +301,7 @@ body {
 }
 /*start slider */
 .slider_bg{
-	background: url('../images/slider_bg.jpg');
+	background: url('../images/tree.png');
 }
 .slider{
 	padding: 8% 4%;
@@ -319,7 +319,8 @@ body {
 }
 /*start main */
 .main_bg{
-	background: #34495E;
+	/* background: #34495E; */
+	 background: #466380;
 }
 .main{
 	padding: 4%;

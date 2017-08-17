@@ -19,5 +19,7 @@ public interface CategoryService {
 	void moveCategory(long id, long parent) throws  Exception;
 	
 	void removeCategoryById(long id) throws Exception;
+	
+	List<CategoryVO> listLeafCategory() throws Exception;
 
 }
