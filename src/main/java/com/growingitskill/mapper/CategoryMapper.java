@@ -38,5 +38,8 @@ public interface CategoryMapper {
 
 	@Delete("DELETE FROM category WHERE id = #{id}")
 	void deleteCategoryById(long id) throws Exception;
+	
+	@Select("SELECT c1.* FROM category c1 LEFT JOIN category c2 ON c1.id = c2.parent WHERE c2.id IS NULL")
+	List<CategoryVO> listLeafCategory() throws Exception;
 
 }

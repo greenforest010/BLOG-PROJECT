@@ -89,11 +89,16 @@ public class CategoryMapperTest {
 		categoryMapper.updateParentById(id, parent);
 	}*/
 	
-	@Test
+	/*@Test
 	public void deleteCategory() throws Exception {
 		long id = 13;
 		
 		categoryMapper.deleteCategoryById(id);
+	}*/
+	
+	@Test
+	public void listLeafCategory() throws Exception {
+		System.out.println(categoryMapper.listLeafCategory());
 	}
 
 }

@@ -49,4 +49,9 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryMapper.deleteCategoryById(id);
 	}
 
+	@Override
+	public List<CategoryVO> listLeafCategory() throws Exception {
+		return categoryMapper.listLeafCategory();
+	}
+
 }

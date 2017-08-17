@@ -60,4 +60,9 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 		getSqlSession().delete(namespace + ".deleteById", id);
 	}
 
+	@Override
+	public List<CategoryVO> listLeafCategory() throws Exception {
+		return getSqlSession().selectList(namespace + ".listLeafCategory");
+	}
+
 }
