@@ -3,6 +3,7 @@ package com.growingitskill.persistence;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -50,9 +51,9 @@ public class PostDAOImpl extends SqlSessionDaoSupport implements PostMapper {
 	}
 
 	@Override
-	public List<PostVO> readListByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+	public List<PostVO> readListByCategory(Set<Long> categoryLevelSet, SearchCriteria searchCriteria) throws Exception {
 		Map<String, Object> map = new HashMap<>();
-		map.put("slugTerm", slugTerm);
+		map.put("categoryLevelSet", categoryLevelSet);
 		map.put("criteria", searchCriteria);
 		
 		return getSqlSession().selectList(namespace + ".readListByCategory", map);

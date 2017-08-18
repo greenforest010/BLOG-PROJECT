@@ -1,6 +1,8 @@
 package com.growingitskill.mapper;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.NamingException;
 
@@ -14,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.growingitskill.config.MybatisJndiConfig;
+import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.domain.SearchCriteria;
@@ -37,6 +40,9 @@ public class PostMapperTest {
 
 	@Autowired
 	private PostMapper postMapper;
+	
+	@Autowired
+	private CategoryMapper categoryMapper;
 
 	/*@Test
 	public void insertPost() throws Exception {
@@ -122,18 +128,39 @@ public class PostMapperTest {
 	
 	@Test
 	public void testDynamic2() throws Exception {
-		String slugTerm = "ss전체";
+		String slugTerm = "전체";
+		Set<Long> categoryLevelSet = makeCategoryLevelSet(slugTerm);
+		
 		SearchCriteria searchCriteria = new SearchCriteria();
 		searchCriteria.setPage(1);
-		searchCriteria.setKeyword("후후");
+		searchCriteria.setKeyword("");
 		
-		List<PostVO> list = postMapper.readListByCategory(slugTerm, searchCriteria);
+		List<PostVO> list = postMapper.readListByCategory(categoryLevelSet, searchCriteria);
 		
 		for (PostVO postVO : list) {
 			System.out.println(postVO.toString());
 		}
 		
 		System.out.println("COUNT: " + postMapper.countPagingByCategory(slugTerm, searchCriteria));
+	}
+	
+	private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
+		List<CategoryLevel> listCategoryLevel = categoryMapper.listCategoryLevel(slugTerm);
+		
+		Set<Long> set = new HashSet<>();
+		
+		for (CategoryLevel categoryLevel : listCategoryLevel) {
+			set.add(categoryLevel.getLevel1());
+			set.add(categoryLevel.getLevel2());
+			set.add(categoryLevel.getLevel3());
+			set.add(categoryLevel.getLevel4());
+		}
+		
+		if (set.contains((long) 0)) {
+			set.remove((long) 0);
+		}
+		
+		return set;
 	}
 
 }

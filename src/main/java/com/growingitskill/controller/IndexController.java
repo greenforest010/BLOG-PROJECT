@@ -1,6 +1,8 @@
 package com.growingitskill.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.PageMaker;
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.domain.SearchCriteria;
+import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.PostService;
 
 @Controller
@@ -24,6 +28,9 @@ public class IndexController {
 
 	@Autowired
 	private PostService postService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(SearchCriteria searchCriteria, Model model) throws Exception {
@@ -49,7 +56,9 @@ public class IndexController {
 	@RequestMapping(value = "/category/{slugTerm}", method = RequestMethod.GET)
 	public String indexByCategory(@PathVariable("slugTerm") String slugTerm, SearchCriteria searchCriteria, Model model)
 			throws Exception {
-		List<PostVO> list = postService.findListByCategory(slugTerm, searchCriteria);
+		Set<Long> categoryLevelSet = makeCategoryLevelSet(slugTerm);
+		
+		List<PostVO> list = postService.findListByCategory(categoryLevelSet, searchCriteria);
 
 		int countCriteria = postService.countCriteriaByCategory(slugTerm, searchCriteria);
 
@@ -66,6 +75,25 @@ public class IndexController {
 		model.addAttribute("pageMaker", pageMaker);
 
 		return "index";
+	}
+	
+	private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
+		List<CategoryLevel> listCategoryLevel = categoryService.listCategoryLevel(slugTerm);
+		
+		Set<Long> set = new HashSet<>();
+		
+		for (CategoryLevel categoryLevel : listCategoryLevel) {
+			set.add(categoryLevel.getLevel1());
+			set.add(categoryLevel.getLevel2());
+			set.add(categoryLevel.getLevel3());
+			set.add(categoryLevel.getLevel4());
+		}
+		
+		if (set.contains((long) 0)) {
+			set.remove((long) 0);
+		}
+		
+		return set;
 	}
 
 }

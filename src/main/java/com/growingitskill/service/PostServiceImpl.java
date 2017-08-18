@@ -1,6 +1,7 @@
 package com.growingitskill.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,8 +63,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostVO> findListByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception {
-		return postMapper.readListByCategory(slugTerm, searchCriteria);
+	public List<PostVO> findListByCategory(Set<Long> categoryLevelSet, SearchCriteria searchCriteria) throws Exception {
+		return postMapper.readListByCategory(categoryLevelSet, searchCriteria);
 	}
 
 	@Override

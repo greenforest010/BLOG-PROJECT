@@ -1,5 +1,9 @@
 package com.growingitskill.mapper;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.naming.NamingException;
 
 import org.junit.BeforeClass;
@@ -14,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.growingitskill.config.MybatisJndiConfig;
+import com.growingitskill.domain.CategoryLevel;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = MybatisJndiConfig.class)
@@ -96,9 +101,32 @@ public class CategoryMapperTest {
 		categoryMapper.deleteCategoryById(id);
 	}*/
 	
-	@Test
+	/*@Test
 	public void listLeafCategory() throws Exception {
 		System.out.println(categoryMapper.listLeafCategory());
+	}*/
+	
+	@Test
+	public void listCategoryLevel() throws Exception {
+		String slugTerm = "전체";
+		
+		List<CategoryLevel> list = categoryMapper.listCategoryLevel(slugTerm);
+		Set<Long> set = new HashSet<>();
+		
+		for (CategoryLevel categoryLevel : list) {
+			set.add(categoryLevel.getLevel1());
+			set.add(categoryLevel.getLevel2());
+			set.add(categoryLevel.getLevel3());
+			set.add(categoryLevel.getLevel4());
+			
+			System.out.println(categoryLevel);
+		}
+		
+		if (set.contains((long) 0)) {
+			set.remove((long) 0);
+		}
+		
+		System.out.println(set);
 	}
 
 }

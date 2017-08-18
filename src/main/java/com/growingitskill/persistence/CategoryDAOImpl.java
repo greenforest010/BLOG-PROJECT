@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.mapper.CategoryMapper;
 
@@ -63,6 +64,11 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	@Override
 	public List<CategoryVO> listLeafCategory() throws Exception {
 		return getSqlSession().selectList(namespace + ".listLeafCategory");
+	}
+
+	@Override
+	public List<CategoryLevel> listCategoryLevel(String slugTerm) throws Exception {
+		return getSqlSession().selectList(namespace + ".listCategoryLevel", slugTerm);
 	}
 
 }
