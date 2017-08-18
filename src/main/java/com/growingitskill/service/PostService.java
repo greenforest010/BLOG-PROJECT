@@ -1,6 +1,7 @@
 package com.growingitskill.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.domain.SearchCriteria;
@@ -21,7 +22,7 @@ public interface PostService {
 	
 	int countCriteria(SearchCriteria searchCriteria) throws Exception;
 	
-	List<PostVO> findListByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception;
+	List<PostVO> findListByCategory(Set<Long> categoryLevelSet, SearchCriteria searchCriteria) throws Exception;
 	
 	int countCriteriaByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception;
 

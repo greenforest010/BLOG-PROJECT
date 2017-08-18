@@ -65,16 +65,22 @@
 	<!-- 2가지 이상의 파라미터로 매핑시 매핑 이름을 구체적으로 기입 -->
 	<select id="readListByCategory" resultMap="resultPost">
 		SELECT p.id, title,
-		author, content, term, published, login_id, slug_title,
+		author, content, term, published, login_id,
+		slug_title,
 		c.id as
 		categoryId, slug_term FROM post p
-		LEFT JOIN category_relation cr ON
+		LEFT JOIN
+		category_relation cr ON
 		p.id = cr.post_id
-		LEFT JOIN category c ON cr.category_id = c.id
+		LEFT JOIN category c ON
+		cr.category_id = c.id
 		LEFT
 		JOIN member m ON p.author = m.id
-		WHERE p.id > 0 AND slug_term LIKE
-		#{slugTerm} AND (title LIKE CONCAT('%', #{criteria.keyword}, '%') OR
+		WHERE p.id >
+		0 AND c.id IN
+		<foreach collection="categoryLevelSet" item="item" index="index"
+			open="(" separator="," close=")">#{item}</foreach>
+		AND (title LIKE CONCAT('%', #{criteria.keyword}, '%') OR
 		content
 		LIKE
 		CONCAT('%', #{criteria.keyword}, '%'))

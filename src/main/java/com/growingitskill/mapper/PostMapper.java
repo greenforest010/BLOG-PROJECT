@@ -1,6 +1,7 @@
 package com.growingitskill.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
@@ -47,7 +48,7 @@ public interface PostMapper {
 	/*
 	 * xml mapper로 대체
 	 */
-	List<PostVO> readListByCategory(@Param("slugTerm") String slugTerm,
+	List<PostVO> readListByCategory(@Param("categoryLevelSet") Set<Long> categoryLevelSet,
 			@Param("criteria") SearchCriteria searchCriteria) throws Exception;
 
 	/*

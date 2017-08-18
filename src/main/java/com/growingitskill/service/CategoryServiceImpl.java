@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.mapper.CategoryMapper;
 
@@ -52,6 +53,11 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<CategoryVO> listLeafCategory() throws Exception {
 		return categoryMapper.listLeafCategory();
+	}
+
+	@Override
+	public List<CategoryLevel> listCategoryLevel(String slugTerm) throws Exception {
+		return categoryMapper.listCategoryLevel(slugTerm);
 	}
 
 }

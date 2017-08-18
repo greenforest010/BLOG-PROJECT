@@ -1,8 +1,10 @@
 package com.growingitskill.controller;
 
 import java.net.URI;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.growingitskill.domain.AttachmentVO;
+import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PageMaker;
@@ -98,8 +101,10 @@ public class PostViewController {
 		searchCriteria.setPerPageNum(requestPerPageNum);
 		
 		model.addAttribute("categoryList", categoryService.listAll());
+		
+		Set<Long> categoryLevelSet = makeCategoryLevelSet(slugTerm);
 
-		List<PostVO> list = postService.findListByCategory(slugTerm, searchCriteria);
+		List<PostVO> list = postService.findListByCategory(categoryLevelSet, searchCriteria);
 
 		int countCriteria = postService.countCriteriaByCategory(slugTerm, searchCriteria);
 
@@ -223,6 +228,25 @@ public class PostViewController {
 		model.addAttribute("fileUrl", "/resources/upload" + fullName);
 
 		return "admin/post/upload";
+	}
+	
+	private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
+		List<CategoryLevel> listCategoryLevel = categoryService.listCategoryLevel(slugTerm);
+		
+		Set<Long> set = new HashSet<>();
+		
+		for (CategoryLevel categoryLevel : listCategoryLevel) {
+			set.add(categoryLevel.getLevel1());
+			set.add(categoryLevel.getLevel2());
+			set.add(categoryLevel.getLevel3());
+			set.add(categoryLevel.getLevel4());
+		}
+		
+		if (set.contains((long) 0)) {
+			set.remove((long) 0);
+		}
+		
+		return set;
 	}
 
 }
