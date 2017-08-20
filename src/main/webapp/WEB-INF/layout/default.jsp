@@ -23,6 +23,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <link href="/resources/glyphicons-only-bootstrap/css/bootstrap.min.css"
 	rel="stylesheet" type="text/css" />
+	
+<link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
 
 <!-- <!-- jsTree  -->
 <link rel="stylesheet"

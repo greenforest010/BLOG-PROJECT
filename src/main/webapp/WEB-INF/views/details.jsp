@@ -6,11 +6,12 @@
 <div class="slider_bg">
 	<div class="wrap">
 		<div class="slider">
-			<h2>Growing IT Skill</h2>
-			<h3>Welcome, green010's BLOG</h3>
+			<h2>Welcome, green010's BLOG</h2>
+			<h3>Hope you get Good Inspiration!</h3>
 		</div>
 	</div>
 </div>
+
 <!-- start main -->
 <div class="main_bg">
 	<div class="wrap">

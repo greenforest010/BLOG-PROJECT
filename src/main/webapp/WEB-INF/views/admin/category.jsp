@@ -195,7 +195,7 @@
 		},
 		'types' : {
 			'default' : {
-				'icon' : "glyphicon glyphicon-tag"
+				'icon' : "fa fa-archive"
 			}
 		},
 		'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd', 'changed', 'types' ]
