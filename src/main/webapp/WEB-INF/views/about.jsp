@@ -4,8 +4,8 @@
 <div class="slider_bg">
 <div class="wrap">
 	<div class="slider">
-		<h2>about me</h2>
-		<h3>Welcome, green010's BLOG</h3>
+		<h2>About Me</h2>
+		<h3>Thank you for your curiosity!</h3>
 	</div>
 </div>
 </div>
