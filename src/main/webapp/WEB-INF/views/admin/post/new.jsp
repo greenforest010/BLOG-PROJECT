@@ -62,6 +62,11 @@
 									</c:forEach>
 								</select>
 							</div>
+							
+							<div class="form-group">
+								<label for="tag">태그</label>
+								<textarea id="tag"></textarea>
+							</div>
 
 							<div class="form-group">
 								<label for="permalink">고유주소*</label>
@@ -86,10 +91,19 @@
 		</div>
 	</div>
 </div>
-<!-- /page content -->
 
+<!-- jQuery -->
 <script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
+
+<!-- ckeditor -->
 <script src="/resources/admin/vendors/ckeditor/ckeditor.js"></script>
+
+<!-- tagEditor  -->
+<script type="text/javascript"
+	src="/resources/admin/vendors/jQuery-tagEditor/jquery.tag-editor.min.js"></script>
+
+<script type="text/javascript"
+	src="/resources/admin/vendors/jQuery-tagEditor/jquery.caret.min.js"></script>
 
 <script type="text/javascript">
 	$(function() {
@@ -117,3 +131,12 @@
 		}
 	});
 </script>
+
+<script type="text/javascript">
+	$("#tag").tagEditor({
+		initialTags : [ 'Hello', 'World', 'Example', 'Tags' ],
+		delimiter : ', ', /* space and comma */
+		placeholder : 'Enter tags ...'
+	});
+</script>
+<!-- /page content -->

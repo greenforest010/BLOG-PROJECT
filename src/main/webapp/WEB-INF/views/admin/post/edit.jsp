@@ -77,6 +77,11 @@
 									</div>
 								</div>
 							</div>
+							
+							<div class="form-group">
+								<label for="tag">태그</label>
+								<textarea id="tag"></textarea>
+							</div>
 
 							<div class="form-group">
 								<label for="permalink">고유주소*</label>
@@ -104,8 +109,22 @@
 </div>
 <!-- /page content -->
 
+<!-- jQuery -->
 <script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
+
+<!-- ckeditor -->
 <script src="/resources/admin/vendors/ckeditor/ckeditor.js"></script>
+
+<!-- jQuery -->
+<script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
+
+<!-- tagEditor  -->
+<script type="text/javascript"
+	src="/resources/admin/vendors/jQuery-tagEditor/jquery.tag-editor.min.js"></script>
+
+<script type="text/javascript"
+	src="/resources/admin/vendors/jQuery-tagEditor/jquery.caret.min.js"></script>
+
 <script type="text/javascript">
 	$(function() {
 		$(".btn-danger").on("click", function() {
@@ -130,5 +149,13 @@
 			dialogDefinition.removeContents('Link');
 			dialogDefinition.removeContents('advanced');
 		}
+	});
+</script>
+
+<script type="text/javascript">
+	$("#tag").tagEditor({
+		initialTags : [ 'Hello', 'World', 'Example', 'Tags' ],
+		delimiter : ', ', /* space and comma */
+		placeholder : 'Enter tags ...'
 	});
 </script>
