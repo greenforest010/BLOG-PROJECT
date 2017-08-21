@@ -26,7 +26,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	
 <link rel="stylesheet" href="/resources/font-awesome/css/font-awesome.min.css">
 
-<!-- <!-- jsTree  -->
+<!-- jsTree  -->
 <link rel="stylesheet"
 	href="/resources/js/jsTree/dist/themes/default/style.min.css" />
 

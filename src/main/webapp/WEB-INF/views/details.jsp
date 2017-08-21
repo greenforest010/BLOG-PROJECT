@@ -24,7 +24,37 @@
 					<fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 						value="${postVO.published}" />
 					<div class="det_text">${postVO.content}</div>
-
+					
+					<!-- start tag  -->
+					<div class="tag">
+					<h2>태그</h2>
+						<ul>
+							<li><a href="#">art</a></li>
+							<li><a href="#">awesome</a></li>
+							<li><a href="#">classic</a></li>
+							<li><a href="#">photo</a></li>
+							<li><a href="#">wordpress</a></li>
+							<li><a href="#">videos</a></li>
+							<li><a href="#">wordpress</a></li>
+							<li><a href="#">videos</a></li>
+							<li><a href="#">standard</a></li>
+							<li><a href="#">gaming</a></li>
+							<li><a href="#">photo</a></li>
+							<li><a href="#">music</a></li>
+							<li><a href="#">data</a></li>
+							<li><a href="#">classic</a></li>
+							<li><a href="#">photo</a></li>
+							<li><a href="#">wordpress</a></li>
+							<li><a href="#">videos</a></li>
+							<li><a href="#">wordpress</a></li>
+							<li><a href="#">videos</a></li>
+							<li><a href="#">standard</a></li>
+							<li><a href="#">gaming</a></li>
+							<li><a href="#">photo</a></li>
+						</ul>
+					</div>
+					
+					<!-- start comment  -->
 					<div id="disqus_thread"></div>
 					<script>
 						/**
@@ -33,11 +63,12 @@
 						var disqus_config = function() {
 							var url = window.location.href;
 							var path = window.location.pathname;
-							
+
 							var identifier = path.split("/")[2];
-							
-							console.log("url: " + url + ", identifier: " + identifier);
-							
+
+							console.log("url: " + url + ", identifier: "
+									+ identifier);
+
 							this.page.url = url; // Replace PAGE_URL with your page's canonical URL variable
 							this.page.identifier = identifier; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 						};
@@ -57,8 +88,6 @@
 				</div>
 				<!-- end details -->
 			</div>
-
-
 		</div>
 	</div>
 </div>

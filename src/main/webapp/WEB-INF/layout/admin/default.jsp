@@ -34,6 +34,10 @@
 <link rel="stylesheet"
 	href="/resources/admin/vendors/jsTree/dist/themes/default/style.min.css" />
 	
+<!-- tagEditor  -->	
+<link rel="stylesheet"
+	href="/resources/admin/vendors/jQuery-tagEditor/jquery.tag-editor.css">
+	
 <!-- Dropzone  -->
 <link rel="stylesheet"
 	href="/resources/admin/vendors/dropzone/dist/min/dropzone.min.css" />
