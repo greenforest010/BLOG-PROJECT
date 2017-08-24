@@ -78,7 +78,7 @@ public class CategoryController {
 		return responseFindCategoryById(id);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> remove(@PathVariable long id) throws Exception {
 		CategoryVO categoryVO = categoryService.findCategoryById(id);
 		

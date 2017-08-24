@@ -86,10 +86,114 @@
 	src="/resources/admin/vendors/jQuery-tagEditor/jquery.caret.min.js"></script>
 
 <script type="text/javascript">
-	$("#tag").tagEditor({
-		initialTags : [ 'Hello', 'World', 'Example', 'Tags' ],
-		delimiter : ', ', /* space and comma */
-		placeholder : 'Enter tags ...'
+	function getTagListId(tagList, val) {
+		var id = 0;
+
+		$.each(tagList, function(tagListKey, tagListVal) {
+			if (tagListVal.term == val) {
+				id = tagListVal.id;
+			}
+		});
+
+		return id;
+	}
+
+	var tagList;
+	var tagTermList = [];
+
+	$.ajax({
+		async : false,
+		url : "/tags",
+		method : "GET",
+		dataType : "json",
+		success : function(data) {
+			tagList = data;
+
+			for (i in data) {
+				tagTermList.push(data[i].term);
+			}
+		}
+	});
+
+	$("#tag").tagEditor(
+			{
+				initialTags : tagTermList,
+				placeholder : 'Enter tags ...',
+				onChange : function(field, editor, tags) {
+				},
+				beforeTagSave : function(field, editor, tags, tag, val) {
+					if (!tag) {
+						$.post('/tags', {
+							'term' : val,
+						}).done(
+								function(data) {
+									console.log("data: " + data
+											+ ", data.term: " + data.term
+											+ ", data.slugTerm: "
+											+ data.slugTerm);
+								}).fail(function() {
+						});
+
+						alert("태그를 생성했습니다.");
+					} else {
+						var id = getTagListId(tagList, tag);
+
+						$.ajax({
+							url : "/tags/" + id,
+							method : "PUT",
+							contentType : 'application/json',
+							data : JSON.stringify({
+								term : val
+							})
+						}).done(function(data) {
+							$.each(tagList, function(tagListKey, tagListVal) {
+								if (tagListVal.id == id) {
+									tagListVal.term = data.term;
+
+									$("#tagName").val(tagListVal.term);
+								}
+							});
+						});
+					}
+				},
+				beforeTagDelete : function(field, editor, tags, val) {
+					var id = getTagListId(tagList, val);
+
+					$.ajax({
+						url : "/tags/" + id,
+						method : "DELETE"
+					}).done(function() {
+						alert("삭제 하였습니다.");
+					}).fail(function() {
+					});
+				}
+			});
+
+	$(".tag-editor-tag").click(function() {
+		$("#tagName").val($(this).text());
+	});
+
+	$('#changeTagPermalink').on('click', function() {
+		var value = $('#tagPermalinkInput').val();
+
+		if (!value) {
+			alert("내용을 입력하세요");
+		} else {
+			var tagId = getTagListId(tagList, $("#tagName").val());
+
+			if (tagId != 0) {
+				$.ajax({
+					method : 'PUT',
+					url : '/tags/' + tagId,
+					contentType : 'application/json',
+					data : JSON.stringify({
+						slugTerm : value
+					})
+				}).done(function() {
+					alert("성공 했습니다.");
+				});
+			}
+		}
 	});
 </script>
 <!-- /page content -->
