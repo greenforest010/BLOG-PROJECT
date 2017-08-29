@@ -77,10 +77,10 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="form-group">
 								<label for="tag">태그</label>
-								<textarea id="tag"></textarea>
+								<textarea id="tag" name="tags"></textarea>
 							</div>
 
 							<div class="form-group">
@@ -128,7 +128,15 @@
 <script type="text/javascript">
 	$(function() {
 		$(".btn-danger").on("click", function() {
-			self.location = "/admin/post?page=" + ${criteria.page} + "&perPageNum=" + ${criteria.perPageNum};
+			self.location = "/admin/post?page=" + $
+			{
+				criteria.page
+			}
+			+"&perPageNum=" + $
+			{
+				criteria.perPageNum
+			}
+			;
 		});
 	});
 </script>
@@ -152,10 +160,14 @@
 	});
 </script>
 
+
+
 <script type="text/javascript">
+	var tagList = ${tagList};
+
 	$("#tag").tagEditor({
-		initialTags : [ 'Hello', 'World', 'Example', 'Tags' ],
-		delimiter : ', ', /* space and comma */
+		initialTags : tagList,
+		delimiter : ', ',
 		placeholder : 'Enter tags ...'
 	});
 </script>

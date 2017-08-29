@@ -22,10 +22,35 @@ public interface TagMapper {
 	@Insert("INSERT INTO tag(term, slug_term) VALUES(#{term}, #{slugTerm})")
 	@SelectKey(statement = { "SELECT LAST_INSERT_ID()" }, keyProperty = "id", before = false, resultType = long.class)
 	void createTag(TagVO tagVO) throws Exception;
+	
+	/*
+	 * xml로 대체
+	 */
+	void createTags(@Param("tags") List<TagVO> tags) throws Exception;
 
 	@Select("SELECT * FROM tag WHERE id = #{id}")
 	@Results(@Result(property = "slugTerm", column = "slug_term"))
 	TagVO readTagById(long id) throws Exception;
+	
+	/*
+	 * xml로 대체
+	 */
+	List<TagVO> readTagByPostId(long postId) throws Exception;
+	
+	/*
+	 * xml로 대체
+	 */
+	List<String> readTagTermByPostId(long postId) throws Exception;
+	
+	/*
+	 * xml로 대체
+	 */
+	List<Long> readTagIdByTerms(@Param("terms") String[] terms) throws Exception;
+	
+	/*
+	 * xml로 대체
+	 */
+	List<String> readTagTermByTerms(@Param("terms") String[] terms) throws Exception;
 
 	@Update("UPDATE tag SET term = #{term} WHERE id = #{id}")
 	void updateTermById(@Param("id") long id, @Param("term") String term) throws Exception;

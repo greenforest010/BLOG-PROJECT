@@ -8,7 +8,7 @@
 	<div class="wrap">
 		<div class="slider">
 			<h2>Welcome, green010's BLOG</h2>
-			<h3>I Hope you get Good Inspiration!</h3>
+			<h3>I Hope You Get Good Inspiration!</h3>
 		</div>
 	</div>
 </div>
@@ -22,65 +22,28 @@
 				<!-- start blog_left -->
 				<div class="blog_left">
 					<c:choose>
-						<c:when test="${empty list}">
+						<c:when test="${empty tagList}">
 							<div class="blog_main">
 								<div class="b_right">
-									<p>검색 결과가 없습니다.</p>
+									<p>태그가 없습니다.</p>
 								</div>
 							</div>
 						</c:when>
 						<c:otherwise>
-							<c:forEach items="${list}" var="postVO">
-								<div class="blog_main">
-									<div class="b_left">
-										<h4 class="bg">
-											<img src="/resources/images/note.jpg" alt="" />
-										</h4>
+							<div class="blog_main">
+								<div class="b_right">
+									<div class="tag">
+										<h2>태그</h2>
+										<ul>
+											<c:forEach items="${tagList}" var="tag">
+												<li><a href="/tag/${tag.slugTerm}">${tag.term}</a></li>
+											</c:forEach>
+										</ul>
 									</div>
-									<div class="b_right">
-										<h4>
-											<a href="/post/${postVO.id}">${postVO.title}</a>
-										</h4>
-										<div class="blog_list">
-											<ul>
-												<li><a href="#"> <i class="date"> </i><span>${postVO.memberVO.loginId}</span></a></li>
-												<li><a href="#"> <i class="date"> </i><span><fmt:formatDate
-																pattern="yyyy-MM-dd HH:mm" value="${postVO.published}" />
-													</span></a></li>
-												<li><a href="#"> <i class="views"> </i><span>124
-															views</span></a></li>
-												<li><a href="/post/${postVO.id}#disqus_thread"> <i
-														class="comment"> </i> <span>Comments</span></a></li>
-											</ul>
-											<div class="clear"></div>
-										</div>
-									</div>
-									<div class="clear"></div>
-									<p>${postVO.content}</p>
 								</div>
-							</c:forEach>
+							</div>
 						</c:otherwise>
 					</c:choose>
-
-					<div class="txt-center">
-						<ul class="pagination">
-							<c:if test="${pageMaker.previous}">
-								<li><a
-									href="${pageMaker.makeSearch(pageMaker.startPage -  1)}">&laquo;</a></li>
-							</c:if>
-							<c:forEach begin="${pageMaker.startPage}"
-								end="${pageMaker.endPage}" var="idx">
-								<li
-									<c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}" />><a
-									href="${pageMaker.makeSearch(idx)}">${idx}</a></li>
-							</c:forEach>
-							<c:if test="${pageMaker.next && (pageMaker.endPage > 0)}">
-								<li><a
-									href="${pageMaker.makeSearch(pageMaker.endPage + 1)}">&raquo;</a></li>
-							</c:if>
-						</ul>
-					</div>
-
 				</div>
 
 				<!-- start blog_sidebar -->

@@ -11,6 +11,7 @@ import com.growingitskill.domain.PostVO;
 import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.mapper.CategoryRelationMapper;
 import com.growingitskill.mapper.PostMapper;
+import com.growingitskill.mapper.TagRelationMapper;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -20,6 +21,8 @@ public class PostServiceImpl implements PostService {
 	
 	@Autowired
 	private CategoryRelationMapper categoryRelationMapper;
+	
+	@Autowired TagRelationMapper tagRelationMapper;
 
 	@Transactional
 	@Override
@@ -27,6 +30,10 @@ public class PostServiceImpl implements PostService {
 		postMapper.create(postVO);
 		
 		categoryRelationMapper.create(postVO);
+		
+		if (postVO.getTagList() != null && postVO.getTagList().size() > 0) {
+			tagRelationMapper.create(postVO);
+		}
 	}
 
 	@Override
@@ -40,6 +47,10 @@ public class PostServiceImpl implements PostService {
 		postMapper.update(postVO);
 		
 		categoryRelationMapper.update(postVO);
+		
+		if (postVO.getTagList() != null && postVO.getTagList().size() > 0) {
+			tagRelationMapper.create(postVO);
+		}
 	}
 
 	@Override
@@ -70,6 +81,16 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public int countCriteriaByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception {
 		return postMapper.countPagingByCategory(slugTerm, searchCriteria);
+	}
+
+	@Override
+	public List<PostVO> findListByTag(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		return postMapper.readListByTag(slugTerm, searchCriteria);
+	}
+
+	@Override
+	public int countCriteriaByTag(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		return postMapper.countPagingByTag(slugTerm, searchCriteria);
 	}
 
 }

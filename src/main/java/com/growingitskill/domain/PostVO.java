@@ -1,6 +1,7 @@
 package com.growingitskill.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class PostVO {
 
@@ -14,6 +15,8 @@ public class PostVO {
 
 	private MemberVO memberVO;
 	private CategoryVO categoryVO;
+	
+	private List<TagVO> tagList;
 
 	public long getId() {
 		return id;
@@ -86,6 +89,14 @@ public class PostVO {
 	public void setCategoryVO(CategoryVO categoryVO) {
 		this.categoryVO = categoryVO;
 	}
+	
+	public void setTagList(List<TagVO> tagList) {
+		this.tagList = tagList;
+	}
+	
+	public List<TagVO> getTagList() {
+		return tagList;
+	}
 
 	@Override
 	public String toString() {
@@ -94,6 +105,7 @@ public class PostVO {
 
 		String member = null;
 		String category = null;
+		String tag = null;
 
 		if (getMemberVO() != null) {
 			member = ", loginId: " + getMemberVO().getLoginId();
@@ -103,12 +115,31 @@ public class PostVO {
 			category = ", categoryId: " + getCategoryVO().getId() + ", term: " + getCategoryVO().getTerm() + ", slugTerm: " + getCategoryVO().getSlugTerm();
 		}
 		
-		if (member != null && category != null) {
+		if (getTagList() != null) {
+			tag = ", Tags[";
+			
+			for (TagVO tagVO : tagList) {
+				tag += tagVO.toString();
+			}
+			
+			tag += "]";
+			
+		}
+		
+		if (member != null && category != null && tag != null) {
+			return post + member + category + tag;
+		}  else if (member != null && category != null && tag == null) {
 			return post + member + category;
-		} else if (member != null && category == null) {
+		} else if (member == null && category != null && tag != null) {
+			return post + category + tag;
+		} else if (member != null && category == null && tag != null) {
+			return post + member + tag;
+		} else if (member != null && category == null && tag == null) {
 			return post + member;
-		} else if (member == null && category != null) {
+		} else if (member == null && category != null && tag == null) {
 			return post + category;
+		} else if (member == null && category == null && tag != null) {
+			return post + tag;
 		} else {
 			return post;
 		}

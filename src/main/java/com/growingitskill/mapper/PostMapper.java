@@ -56,4 +56,16 @@ public interface PostMapper {
 	 */
 	int countPagingByCategory(@Param("slugTerm") String slugTerm, @Param("criteria") SearchCriteria searchCriteria)
 			throws Exception;
+
+	/*
+	 * xml mapper로 대체
+	 */
+	List<PostVO> readListByTag(@Param("slugTerm") String slugTerm, @Param("criteria") SearchCriteria searchCriteria)
+			throws Exception;
+	
+	/*
+	 * xml mapper로 대체
+	 */
+	int countPagingByTag(@Param("slugTerm") String slugTerm, @Param("criteria") SearchCriteria searchCriteria)
+			throws Exception;
 }

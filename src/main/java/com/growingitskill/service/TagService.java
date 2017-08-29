@@ -10,7 +10,17 @@ public interface TagService {
 	
 	void addTag(TagVO tagVO) throws Exception;
 	
+	void addTags(List<TagVO> tags) throws Exception;
+	
 	TagVO findTagById(long id) throws Exception;
+	
+	List<TagVO> findTagByPostId(long postId) throws Exception;
+	
+	List<String> findTagTermByPostId(long postId) throws Exception;
+	
+	List<Long> findTagIdByTerms(String[] terms) throws Exception;
+	
+	List<String> findTagTermByTerms(String[] terms) throws Exception;
 	
 	void modifyTermById(long id, String term) throws Exception;
 	

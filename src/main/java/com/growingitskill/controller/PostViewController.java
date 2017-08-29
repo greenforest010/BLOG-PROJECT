@@ -1,6 +1,8 @@
 package com.growingitskill.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.CategoryVO;
@@ -33,11 +36,13 @@ import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PageMaker;
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.domain.SearchCriteria;
+import com.growingitskill.domain.TagVO;
 import com.growingitskill.mapper.CategoryRelationMapper;
 import com.growingitskill.service.AttachmentService;
 import com.growingitskill.service.CategoryService;
-import com.growingitskill.service.MemberService;
 import com.growingitskill.service.PostService;
+import com.growingitskill.service.TagRelationService;
+import com.growingitskill.service.TagService;
 import com.growingitskill.util.UploadFileUtils;
 
 @Controller
@@ -53,9 +58,6 @@ public class PostViewController {
 	private PostService postService;
 
 	@Autowired
-	private MemberService memberService;
-
-	@Autowired
 	private CategoryService categoryService;
 
 	@Autowired
@@ -63,6 +65,12 @@ public class PostViewController {
 
 	@Autowired
 	private AttachmentService attachmentService;
+
+	@Autowired
+	private TagService tagService;
+
+	@Autowired
+	private TagRelationService tagRelationService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String listPage(@ModelAttribute("criteria") SearchCriteria searchCriteria, Model model) throws Exception {
@@ -99,9 +107,9 @@ public class PostViewController {
 		}
 
 		searchCriteria.setPerPageNum(requestPerPageNum);
-		
+
 		model.addAttribute("categoryList", categoryService.listAll());
-		
+
 		Set<Long> categoryLevelSet = makeCategoryLevelSet(slugTerm);
 
 		List<PostVO> list = postService.findListByCategory(categoryLevelSet, searchCriteria);
@@ -141,42 +149,71 @@ public class PostViewController {
 		return result;
 	}
 
-	@RequestMapping(value = "new", method = RequestMethod.GET)
-	public void newPage(@ModelAttribute Criteria criteria, Model model) throws Exception {
-		model.addAttribute("categoryList", categoryService.listLeafCategory());
-	}
-
-	@RequestMapping(value = "new", method = RequestMethod.POST)
-	public String newPagePOST(PostVO postVO, @RequestParam("loginId") String loginId,
-			@RequestParam("categoryId") long categoryId, RedirectAttributes redirectAttributes) throws Exception {
-		CategoryVO categoryVO = new CategoryVO();
-		categoryVO.setId(categoryId);
-
-		postVO.setCategoryVO(categoryVO);
-
-		postVO.setAuthor(memberService.findIdByLoginId(loginId));
-
-		LOGGER.info(postVO.toString());
-
-		postService.regist(postVO);
-
-		redirectAttributes.addFlashAttribute("msg", "success");
-
-		return "redirect:/admin/post";
-	}
-
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public String editPage(@PathVariable("id") long id, @ModelAttribute Criteria criteria, Model model)
 			throws Exception {
 		model.addAttribute(postService.findById(id));
 		model.addAttribute("categoryList", categoryService.listLeafCategory());
 
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonTagList = objectMapper.writeValueAsString(tagService.findTagTermByPostId(id));
+
+		model.addAttribute("tagList", jsonTagList);
+
 		return "admin/post/edit";
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public String editPagePUT(PostVO postVO, @RequestParam("categoryId") long categoryId, Criteria criteria,
-			RedirectAttributes redirectAttributes) throws Exception {
+	public String editPagePUT(PostVO postVO, @RequestParam("categoryId") long categoryId,
+			@RequestParam("tags") String tags, Criteria criteria, RedirectAttributes redirectAttributes)
+			throws Exception {
+		LOGGER.info("tags[" + tags + "]");
+
+		if (tags != null && !tags.isEmpty()) {
+			String[] tagTerms = tags.split(",");
+
+			// 새로운 태그들 생성
+			List<String> existentTagTermList = tagService.findTagTermByTerms(tagTerms);
+
+			List<String> newTermList = new ArrayList<>();
+			Collections.addAll(newTermList, tagTerms);
+
+			for (String term : existentTagTermList) {
+				newTermList.remove(term);
+			}
+
+			List<TagVO> newTagList = new ArrayList<>();
+
+			for (String term : newTermList) {
+				TagVO tagVO = new TagVO();
+				tagVO.setTerm(term);
+				tagVO.setSlugTerm(term);
+
+				newTagList.add(tagVO);
+			}
+
+			if (newTagList.size() > 0) {
+				tagService.addTags(newTagList);
+			}
+			
+			// 글에 연계된 모든 태그 삭제
+			tagRelationService.removeByPostId(postVO.getId());
+
+			// 글-태그 연결
+			List<TagVO> tagList = new ArrayList<>();
+			
+			List<Long> tagIdList = tagService.findTagIdByTerms(tagTerms);
+
+			for (Long id : tagIdList) {
+				TagVO tagVO = new TagVO();
+				tagVO.setId(id);
+
+				tagList.add(tagVO);
+			}
+
+			postVO.setTagList(tagList);
+		}
+
 		CategoryVO categoryVO = new CategoryVO();
 		categoryVO.setId(categoryId);
 
@@ -229,23 +266,23 @@ public class PostViewController {
 
 		return "admin/post/upload";
 	}
-	
+
 	private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
 		List<CategoryLevel> listCategoryLevel = categoryService.listCategoryLevel(slugTerm);
-		
+
 		Set<Long> set = new HashSet<>();
-		
+
 		for (CategoryLevel categoryLevel : listCategoryLevel) {
 			set.add(categoryLevel.getLevel1());
 			set.add(categoryLevel.getLevel2());
 			set.add(categoryLevel.getLevel3());
 			set.add(categoryLevel.getLevel4());
 		}
-		
+
 		if (set.contains((long) 0)) {
 			set.remove((long) 0);
 		}
-		
+
 		return set;
 	}
 

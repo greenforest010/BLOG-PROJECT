@@ -126,7 +126,7 @@ public class PostMapperTest {
 		System.out.println("COUNT: " + postMapper.countPaging(searchCriteria));
 	}*/
 	
-	@Test
+	/*@Test
 	public void testDynamic2() throws Exception {
 		String slugTerm = "전체";
 		Set<Long> categoryLevelSet = makeCategoryLevelSet(slugTerm);
@@ -142,9 +142,9 @@ public class PostMapperTest {
 		}
 		
 		System.out.println("COUNT: " + postMapper.countPagingByCategory(slugTerm, searchCriteria));
-	}
+	}*/
 	
-	private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
+	/*private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
 		List<CategoryLevel> listCategoryLevel = categoryMapper.listCategoryLevel(slugTerm);
 		
 		Set<Long> set = new HashSet<>();
@@ -161,6 +161,23 @@ public class PostMapperTest {
 		}
 		
 		return set;
+	}*/
+	
+	@Test
+	public void findListByTag() throws Exception {
+		String slugTerm = "옐로우";
+		
+		SearchCriteria searchCriteria = new SearchCriteria();
+		searchCriteria.setPage(1);
+		searchCriteria.setKeyword("");
+		
+		List<PostVO> list = postMapper.readListByTag(slugTerm, searchCriteria);
+		
+		for (PostVO postVO : list) {
+			System.out.println(postVO.toString());
+		}
+		
+		System.out.println("COUNT: " + postMapper.countPagingByTag(slugTerm, searchCriteria));
 	}
 
 }

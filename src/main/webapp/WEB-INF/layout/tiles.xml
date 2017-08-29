@@ -21,6 +21,10 @@
 	<definition name="details" extends="base">
 		<put-attribute name="content" value="/WEB-INF/views/details.jsp" />
 	</definition>
+	
+	<definition name="tags" extends="base">
+		<put-attribute name="content" value="/WEB-INF/views/tags.jsp" />
+	</definition>
 
 	<!-- 로그인 영역 템플릿 설정 -->
 	<definition name="login" template="/WEB-INF/views/login.jsp" />
