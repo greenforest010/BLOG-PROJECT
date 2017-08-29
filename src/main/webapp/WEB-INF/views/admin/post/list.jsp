@@ -16,7 +16,7 @@
 	<div class="row">
 		<div class="col-md-1 col-sm-1 col-xs-1">
 			<a class="btn btn-primary"
-				href="/admin/post/new?page=${criteria.page}&perPageNum=${criteria.perPageNum}"
+				href="/admin/post/new"
 				role="button">글 쓰기</a>
 		</div>
 

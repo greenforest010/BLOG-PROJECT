@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!-- start slider -->
@@ -7,7 +8,7 @@
 	<div class="wrap">
 		<div class="slider">
 			<h2>Welcome, green010's BLOG</h2>
-			<h3>Hope you get Good Inspiration!</h3>
+			<h3>I Hope you get Good Inspiration!</h3>
 		</div>
 	</div>
 </div>
@@ -24,36 +25,17 @@
 					<fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 						value="${postVO.published}" />
 					<div class="det_text">${postVO.content}</div>
-					
+
 					<!-- start tag  -->
 					<div class="tag">
-					<h2>태그</h2>
+						<h2>태그</h2>
 						<ul>
-							<li><a href="#">art</a></li>
-							<li><a href="#">awesome</a></li>
-							<li><a href="#">classic</a></li>
-							<li><a href="#">photo</a></li>
-							<li><a href="#">wordpress</a></li>
-							<li><a href="#">videos</a></li>
-							<li><a href="#">wordpress</a></li>
-							<li><a href="#">videos</a></li>
-							<li><a href="#">standard</a></li>
-							<li><a href="#">gaming</a></li>
-							<li><a href="#">photo</a></li>
-							<li><a href="#">music</a></li>
-							<li><a href="#">data</a></li>
-							<li><a href="#">classic</a></li>
-							<li><a href="#">photo</a></li>
-							<li><a href="#">wordpress</a></li>
-							<li><a href="#">videos</a></li>
-							<li><a href="#">wordpress</a></li>
-							<li><a href="#">videos</a></li>
-							<li><a href="#">standard</a></li>
-							<li><a href="#">gaming</a></li>
-							<li><a href="#">photo</a></li>
+							<c:forEach items="${tagList}" var="tag">
+								<li><a href="/tag/${tag.slugTerm}">${tag.term}</a></li>
+							</c:forEach>
 						</ul>
 					</div>
-					
+
 					<!-- start comment  -->
 					<div id="disqus_thread"></div>
 					<script>

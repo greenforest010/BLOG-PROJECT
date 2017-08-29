@@ -65,7 +65,7 @@
 							
 							<div class="form-group">
 								<label for="tag">태그</label>
-								<textarea id="tag"></textarea>
+								<textarea id="tag" name="tags"></textarea>
 							</div>
 
 							<div class="form-group">
@@ -134,9 +134,8 @@
 
 <script type="text/javascript">
 	$("#tag").tagEditor({
-		initialTags : [ 'Hello', 'World', 'Example', 'Tags' ],
 		delimiter : ', ', /* space and comma */
-		placeholder : 'Enter tags ...'
+		placeholder : '태그를 입력할 수 있습니다.'
 	});
 </script>
 <!-- /page content -->

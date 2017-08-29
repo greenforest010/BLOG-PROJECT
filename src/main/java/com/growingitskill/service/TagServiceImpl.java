@@ -23,10 +23,35 @@ public class TagServiceImpl implements TagService{
 	public void addTag(TagVO tagVO) throws Exception {
 		tagMapper.createTag(tagVO);
 	}
+	
+	@Override
+	public void addTags(List<TagVO> tags) throws Exception {
+		tagMapper.createTags(tags);
+	}
 
 	@Override
 	public TagVO findTagById(long id) throws Exception {
 		return tagMapper.readTagById(id);
+	}
+	
+	@Override
+	public List<TagVO> findTagByPostId(long postId) throws Exception {
+		return tagMapper.readTagByPostId(postId);
+	}
+	
+	@Override
+	public List<String> findTagTermByPostId(long postId) throws Exception {
+		return tagMapper.readTagTermByPostId(postId);
+	}
+	
+	@Override
+	public List<Long> findTagIdByTerms(String[] terms) throws Exception {
+		return tagMapper.readTagIdByTerms(terms);
+	}
+	
+	@Override
+	public List<String> findTagTermByTerms(String[] terms) throws Exception {
+		return tagMapper.readTagTermByTerms(terms);
 	}
 
 	@Override

@@ -68,4 +68,22 @@ public class PostDAOImpl extends SqlSessionDaoSupport implements PostMapper {
 		return getSqlSession().selectOne(namespace + ".countPagingByCategory", map);
 	}
 
+	@Override
+	public List<PostVO> readListByTag(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("slugTerm", slugTerm);
+		map.put("criteria", searchCriteria);
+		
+		return getSqlSession().selectList(namespace + ".readListByTag", map);
+	}
+
+	@Override
+	public int countPagingByTag(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("slugTerm", slugTerm);
+		map.put("criteria", searchCriteria);
+		
+		return getSqlSession().selectOne(namespace + ".countPaginByTag", map);
+	}
+
 }

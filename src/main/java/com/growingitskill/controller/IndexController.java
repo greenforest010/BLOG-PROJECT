@@ -19,6 +19,7 @@ import com.growingitskill.domain.PostVO;
 import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.PostService;
+import com.growingitskill.service.TagService;
 
 @Controller
 @RequestMapping("/")
@@ -31,6 +32,9 @@ public class IndexController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private TagService tagService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(SearchCriteria searchCriteria, Model model) throws Exception {
@@ -48,7 +52,9 @@ public class IndexController {
 
 	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
 	public String read(@PathVariable("id") long id, Model model) throws Exception {
+		
 		model.addAttribute(postService.findById(id));
+		model.addAttribute("tagList", tagService.findTagByPostId(id));
 
 		return "details";
 	}
@@ -63,18 +69,6 @@ public class IndexController {
 		int countCriteria = postService.countCriteriaByCategory(slugTerm, searchCriteria);
 
 		return makeIndex(list, searchCriteria, countCriteria, model);
-	}
-
-	private String makeIndex(List<PostVO> list, SearchCriteria searchCriteria, int countCriteria, Model model) {
-		model.addAttribute("list", list);
-
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(searchCriteria);
-		pageMaker.setTotalCount(countCriteria);
-
-		model.addAttribute("pageMaker", pageMaker);
-
-		return "index";
 	}
 	
 	private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
@@ -94,6 +88,36 @@ public class IndexController {
 		}
 		
 		return set;
+	}
+	
+	@RequestMapping(value = "/tag", method = RequestMethod.GET)
+	public String tag(Model model) throws Exception {
+		model.addAttribute("tagList", tagService.findTagList());
+		
+		return "tags";
+	}
+	
+	@RequestMapping(value = "/tag/{slugTerm}", method = RequestMethod.GET)
+	public String tagBySlugTerm(@PathVariable("slugTerm") String slugTerm, SearchCriteria searchCriteria, Model model) throws Exception {
+		List<PostVO> list = postService.findListByTag(slugTerm, searchCriteria);
+		
+		int countCriteria = postService.countCriteriaByTag(slugTerm, searchCriteria);
+		
+		LOGGER.info("tag count: " + countCriteria);
+		
+		return makeIndex(list, searchCriteria, countCriteria, model);
+	}
+	
+	private String makeIndex(List<PostVO> list, SearchCriteria searchCriteria, int countCriteria, Model model) {
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(searchCriteria);
+		pageMaker.setTotalCount(countCriteria);
+
+		model.addAttribute("pageMaker", pageMaker);
+
+		return "index";
 	}
 
 }

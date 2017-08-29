@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.growingitskill.mapper.TagMapper">
+	<resultMap type="tagVO" id="resultTag">
+		<id property="id" column="id" />
+		<result property="term" column="term" />
+		<result property="scheme" column="scheme" />
+		<result property="label" column="label" />
+		<result property="slugTerm" column="slug_term" />
+	</resultMap>
+
+	<select id="readTagByPostId" resultMap="resultTag">
+		SELECT * FROM tag WHERE
+		id IN (SELECT tag_id FROM
+		tag_relation WHERE
+		post_id = #{postId}) ORDER
+		BY term ASC
+	</select>
+
+	<select id="readTagTermByPostId" resultType="String">
+		SELECT term FROM tag
+		WHERE id IN (SELECT tag_id FROM
+		tag_relation WHERE
+		post_id = #{postId})
+		ORDER BY term ASC
+	</select>
+
+	<select id="readTagIdByTerms" resultType="long">
+		SELECT id FROM tag WHERE term IN
+		<foreach collection="terms" item="item" index="index" open="("
+			separator="," close=")">#{item}</foreach>
+	</select>
+
+	<select id="readTagTermByTerms" resultType="String">
+		SELECT term FROM tag WHERE term IN
+		<foreach collection="terms" item="item" index="index" open="("
+			separator="," close=")">#{item}</foreach>
+	</select>
+
+	<insert id="createTags">
+		INSERT INTO tag(term, slug_term) VALUES
+		<foreach collection="tags" item="item" index="index"
+			separator=",">(#{item.term}, #{item.slugTerm})</foreach>
+	</insert>
+
+</mapper>
