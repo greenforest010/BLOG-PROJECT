@@ -24,6 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.slugify.Slugify;
 import com.growingitskill.domain.NaverPapagoNMT;
 import com.growingitskill.domain.TagVO;
 import com.growingitskill.service.OpenApiService;
@@ -52,7 +53,9 @@ public class TagController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<TagVO> register(TagVO tagVO, UriComponentsBuilder uriComponentsBuilder) throws Exception {
-		tagVO.setSlugTerm(translate(tagVO.getTerm(), "ko", "en"));
+		String translatedTerm = translate(tagVO.getTerm(), "ko", "en");
+		
+		tagVO.setSlugTerm(slug(translatedTerm));
 
 		tagService.addTag(tagVO);
 
@@ -142,6 +145,12 @@ public class TagController {
 		}
 
 		return translatedText;
+	}
+	
+	private String slug(String text) {
+		Slugify slugify = new Slugify();
+		
+		return slugify.slugify(text);
 	}
 
 }

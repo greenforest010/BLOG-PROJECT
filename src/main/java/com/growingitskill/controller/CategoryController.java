@@ -24,6 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.slugify.Slugify;
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.domain.NaverPapagoNMT;
 import com.growingitskill.service.CategoryService;
@@ -76,9 +77,10 @@ public class CategoryController {
 		if (map.get("term") != null) {
 			String term = (String) map.get("term");
 			String translatedTerm = translate(term, "ko", "en");
+			String slugTerm = slug(translatedTerm);
 
 			categoryService.renameCategoryById(id, term);
-			categoryService.modifyCategorySlugTermById(id, translatedTerm);
+			categoryService.modifyCategorySlugTermById(id, slugTerm);
 		} else if (map.get("slugTerm") != null) {
 			String slugTerm = (String) map.get("slugTerm");
 
@@ -157,6 +159,12 @@ public class CategoryController {
 		}
 
 		return translatedText;
+	}
+	
+	private String slug(String text) {
+		Slugify slugify = new Slugify();
+		
+		return slugify.slugify(text);
 	}
 
 }

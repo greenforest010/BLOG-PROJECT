@@ -25,6 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.slugify.Slugify;
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.NaverPapagoNMT;
@@ -87,9 +88,11 @@ public class PostNewController {
 				TagVO tagVO = new TagVO();
 				tagVO.setTerm(term);
 
-				String translateSlugTerm = translate(term, "ko", "en");
+				String translatedTerm = translate(term, "ko", "en");
+				
+				String slugTerm = slug(translatedTerm);
 
-				tagVO.setSlugTerm(translateSlugTerm);
+				tagVO.setSlugTerm(slugTerm);
 
 				newTagList.add(tagVO);
 			}
@@ -121,8 +124,10 @@ public class PostNewController {
 		postVO.setAuthor(memberService.findIdByLoginId(loginId));
 
 		String translatedSlugTitle = translate(postVO.getSlugTitle(), "ko", "en");
+		
+		String slugTitle = slug(translatedSlugTitle);
 
-		postVO.setSlugTitle(translatedSlugTitle);
+		postVO.setSlugTitle(slugTitle);
 
 		LOGGER.info(postVO.toString());
 
@@ -177,6 +182,12 @@ public class PostNewController {
 		}
 
 		return translatedText;
+	}
+	
+	private String slug(String text) {
+		Slugify slugify = new Slugify();
+		
+		return slugify.slugify(text);
 	}
 
 }
