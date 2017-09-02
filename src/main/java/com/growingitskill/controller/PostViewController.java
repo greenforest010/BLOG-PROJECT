@@ -37,6 +37,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.slugify.Slugify;
 import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.CategoryVO;
@@ -202,8 +203,10 @@ public class PostViewController {
 				tagVO.setTerm(term);
 				
 				String translateSlugTerm = translate(term, "ko", "en");
+				
+				String slugTerm = slug(translateSlugTerm);
 
-				tagVO.setSlugTerm(translateSlugTerm);
+				tagVO.setSlugTerm(slugTerm);
 
 				newTagList.add(tagVO);
 			}
@@ -346,6 +349,12 @@ public class PostViewController {
 		}
 
 		return translatedText;
+	}
+	
+	private String slug(String text) {
+		Slugify slugify = new Slugify();
+		
+		return slugify.slugify(text);
 	}
 
 }
