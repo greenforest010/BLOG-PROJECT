@@ -46,6 +46,9 @@
 							<li><a href="/admin/tag"><i class="fa fa-tags"></i>태그</a></li>
 							<li><a href="/admin/media"><i class="fa fa-picture-o"></i>미디어
 									리소스</a></li>
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<li><a href="/admin/about-edit"><i class="fa fa-picture-o"></i>블로그 소개 편집</a></li>
+							</sec:authorize>
 							<li><a href="/"><i class="fa fa-home"></i>블로그 페이지로 이동</a></li>
 						</ul>
 					</div>

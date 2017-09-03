@@ -17,6 +17,7 @@ import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.PageMaker;
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.domain.SearchCriteria;
+import com.growingitskill.service.AboutService;
 import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.PostService;
 import com.growingitskill.service.TagService;
@@ -35,6 +36,9 @@ public class IndexController {
 	
 	@Autowired
 	private TagService tagService;
+	
+	@Autowired
+	private AboutService aboutService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(SearchCriteria searchCriteria, Model model) throws Exception {
@@ -46,7 +50,9 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "about", method = RequestMethod.GET)
-	public String about() {
+	public String about(Model model) throws Exception {
+		model.addAttribute("content", aboutService.find());
+		
 		return "about";
 	}
 
