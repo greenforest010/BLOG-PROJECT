@@ -1,6 +1,7 @@
 package com.growingitskill.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class AttachmentController {
 	private AttachmentService attachmentService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<AttachmentVO>> listAll() throws Exception {
+	public ResponseEntity<List<AttachmentVO>> findAttachments() throws Exception {
 		List<AttachmentVO> list = attachmentService.listAll();
 
 		HttpStatus status = (list != null) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
@@ -49,24 +50,17 @@ public class AttachmentController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ResponseEntity<AttachmentVO> read(@PathVariable long id) throws Exception {
-		return responseFindAttachmentById(id);
+	public ResponseEntity<AttachmentVO> findAttachment(@PathVariable long id) throws Exception {
+		return responseFindAttachment(id);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<String> create(@RequestPart("file") MultipartFile file,
+	public ResponseEntity<String> registerAttachment(@RequestPart("file") MultipartFile file,
 			UriComponentsBuilder uriComponentsBuilder) throws Exception {
-		LOGGER.info("originalFilename: " + file.getOriginalFilename());
-		LOGGER.info("contentType: " + file.getContentType());
-		LOGGER.info("name: " + file.getName());
-		LOGGER.info("byte: " + file.getBytes());
-		LOGGER.info("size: " + file.getSize());
+		printUploadFileInfo(file);
 
-		String path = servletContext.getRealPath("/resources/upload");
-
-		LOGGER.info("path: " + path);
-
-		String fullName = UploadFileUtils.uploadFile(path, file.getOriginalFilename(), file.getBytes());
+		String fullName = UploadFileUtils.uploadFile(getUploadPath(),
+				file.getOriginalFilename(), file.getBytes());
 
 		AttachmentVO attachmentVO = new AttachmentVO();
 		attachmentVO.setFullName(fullName);
@@ -74,53 +68,64 @@ public class AttachmentController {
 
 		attachmentService.addAttachment(attachmentVO);
 
-		HttpHeaders headers = new HttpHeaders();
 		URI locationUri = uriComponentsBuilder.path("/attachments/").path(String.valueOf(attachmentVO.getId())).build()
 				.toUri();
 
+		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(locationUri);
 
 		return new ResponseEntity<>(fullName, headers, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public ResponseEntity<AttachmentVO> modify(@PathVariable long id, @RequestBody Map<String, String> map)
+	public ResponseEntity<AttachmentVO> modifyAttachment(@PathVariable long id, @RequestBody Map<String, String> map)
 			throws Exception {
+		
+		String alternateText = map.get("alternateText");
+		String description = map.get("description");
 
-		if (map.get("alternateText") != null) {
-			attachmentService.modifyAlternateTextById(id, map.get("alternateText"));
+		if (alternateText != null) {
+			attachmentService.modifyAlternateTextById(id, alternateText);
 		}
 
-		if (map.get("description") != null) {
-			attachmentService.modifyDescriptionById(id, map.get("description"));
+		if (description != null) {
+			attachmentService.modifyDescriptionById(id, description);
 		}
 
-		return responseFindAttachmentById(id);
+		return responseFindAttachment(id);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void remove(@RequestParam("ids") long[] ids) throws Exception {
-		String path = servletContext.getRealPath("/resources/upload");
-
+	public void removeAttachment(@RequestParam("ids") long[] ids) throws Exception {
 		for (long id : ids) {
 			AttachmentVO attachmentVO = attachmentService.findAttachmentById(id);
 
 			if (attachmentVO != null) {
-				String fullName = attachmentVO.getFullName();
-
-				new File(path + fullName).delete();
+				new File(getUploadPath() + attachmentVO.getFullName()).delete();
 			}
 		}
 
 		attachmentService.removeAttachmentByIds(ids);
 	}
+	
+	private String getUploadPath() {
+		return servletContext.getRealPath("/resources/upload");
+	}
 
-	private ResponseEntity<AttachmentVO> responseFindAttachmentById(long id) throws Exception {
+	private ResponseEntity<AttachmentVO> responseFindAttachment(long id) throws Exception {
 		AttachmentVO attachmentVO = attachmentService.findAttachmentById(id);
 
 		HttpStatus status = (attachmentVO != null) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
 
 		return new ResponseEntity<>(attachmentVO, status);
+	}
+
+	private void printUploadFileInfo(MultipartFile file) throws IOException {
+		LOGGER.info("originalFilename: " + file.getOriginalFilename());
+		LOGGER.info("contentType: " + file.getContentType());
+		LOGGER.info("name: " + file.getName());
+		LOGGER.info("byte: " + file.getBytes());
+		LOGGER.info("size: " + file.getSize());
 	}
 
 }

@@ -59,8 +59,8 @@ public class CategoryVO {
 
 	@Override
 	public String toString() {
-		return "category " + "id: " + getId() + ", term: " + getTerm() + ", scheme: " + getScheme() + ", label: "
-				+ getLabel() + ", slugTerm: " + getSlugTerm() + ", parent: " + getParent();
+		return "Category[" + "id: " + getId() + ", term: " + getTerm() + ", scheme: " + getScheme() + ", label: "
+				+ getLabel() + ", slugTerm: " + getSlugTerm() + ", parent: " + getParent() + "]";
 	}
 
 }

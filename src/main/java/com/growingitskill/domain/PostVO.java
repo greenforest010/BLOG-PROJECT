@@ -100,7 +100,7 @@ public class PostVO {
 
 	@Override
 	public String toString() {
-		String post = "id: " + getId() + ", title: " + getTitle() + ", author: " + getAuthor() + ", content: "
+		String post = "Post[" + "id: " + getId() + ", title: " + getTitle() + ", author: " + getAuthor() + ", content: "
 				+ getContent() + ", published: " + getPublished() + ", slugTitle: " + getSlugTitle();
 
 		String member = null;

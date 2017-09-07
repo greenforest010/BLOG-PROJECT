@@ -36,7 +36,7 @@ public interface AttachmentMapper {
 	@Update("UPDATE attachment SET description = #{description} WHERE id = #{id}")
 	void updateDescriptionById(@Param("id") long id, @Param("description") String description) throws Exception;
 
-	@DeleteProvider(type = AttachmentSqlProvider.class, method = "deleteByIds")
+	@DeleteProvider(type = AttachmentSqlProvider.class, method = "delete")
 	void deleteByIds(@Param("ids") long[] ids) throws Exception;
 
 }

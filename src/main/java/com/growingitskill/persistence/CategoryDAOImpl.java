@@ -15,13 +15,13 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	private static final String namespace = "com.growingitskill.mapper.CategoryMapper";
 
 	@Override
-	public List<CategoryVO> listAll() throws Exception {
-		return getSqlSession().selectList(namespace + ".listAll");
+	public List<CategoryVO> readCategories() throws Exception {
+		return getSqlSession().selectList(namespace + ".readCategories");
 	}
 
 	@Override
-	public void create(CategoryVO categoryVO) throws Exception {
-		getSqlSession().insert(namespace + ".create", categoryVO);
+	public void createCategory(CategoryVO categoryVO) throws Exception {
+		getSqlSession().insert(namespace + ".createCategory", categoryVO);
 	}
 
 	@Override
@@ -30,25 +30,31 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	}
 
 	@Override
-	public void updateTermById(long id, String term) throws Exception {
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("term", term);
-
-		getSqlSession().update(namespace + ".updateTermById", map);
+	public CategoryVO readCategoryBySlugTerm(String slugTerm) throws Exception {
+		return getSqlSession().selectOne(namespace + ".readCategoryBySlugTerm", slugTerm);
 	}
 
 	@Override
-	public void updateSlugTermById(long id, String slugTerm) throws Exception {
+	public void updateCategoryTermAndSlugTermById(long id, String term, String slugTerm) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("term", term);
+		map.put("slugTerm", slugTerm);
+
+		getSqlSession().update(namespace + ".updateCategoryTermAndSlugTermById", map);
+	}
+
+	@Override
+	public void updateCategorySlugTermById(long id, String slugTerm) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("slugTerm", slugTerm);
 
-		getSqlSession().update(namespace + ".updateSlugTermById", map);
+		getSqlSession().update(namespace + ".updateCategorySlugTermById", map);
 	}
 
 	@Override
-	public void updateParentById(long id, long parent) throws Exception {
+	public void updateCategoryParentById(long id, long parent) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("parent", parent);
@@ -62,13 +68,13 @@ public class CategoryDAOImpl extends SqlSessionDaoSupport implements CategoryMap
 	}
 
 	@Override
-	public List<CategoryVO> listLeafCategory() throws Exception {
-		return getSqlSession().selectList(namespace + ".listLeafCategory");
+	public List<CategoryVO> readLeafCategories() throws Exception {
+		return getSqlSession().selectList(namespace + ".readLeafCategories");
 	}
 
 	@Override
-	public List<CategoryLevel> listCategoryLevel(String slugTerm) throws Exception {
-		return getSqlSession().selectList(namespace + ".listCategoryLevel", slugTerm);
+	public List<CategoryLevel> readCategoryLevel(String slugTerm) throws Exception {
+		return getSqlSession().selectList(namespace + ".readCategoryLevel", slugTerm);
 	}
 
 }

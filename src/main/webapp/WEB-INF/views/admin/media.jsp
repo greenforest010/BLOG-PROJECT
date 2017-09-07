@@ -1,6 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <!-- Dropzone  -->
 <script src="/resources/admin/vendors/dropzone/dist/min/dropzone.min.js"></script>
@@ -38,6 +40,8 @@
 					<div class="x_content">
 						<form class="dropzone" action="/attachments" method="post"
 							enctype="multipart/form-data" style="border: 2px dashed;">
+							<sec:csrfInput />
+							
 							<div class="dz-message" data-dz-message>
 								<h4>
 									<span>이 영역을 <strong>Click</strong> 또는 파일을 <strong>Drag
@@ -71,7 +75,6 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-
 						<div
 							class="col-md-offset-8 col-md-4 col-sm-4 col-xs-12 form-group pull-right top_search">
 							<div class="input-group">
@@ -82,7 +85,7 @@
 								</span>
 							</div>
 						</div>
-						
+
 						<c:forEach items="${list}" var="attachmentVO">
 							<div class="col-md-55">
 								<div class="thumbnail">
@@ -94,7 +97,9 @@
 											<div class="tools tools-bottom">
 												<a href="#mediaDetailModal" data-toggle="modal"
 													data-attachmentid="${attachmentVO.id}"><i
-													class="fa fa-pencil"></i></a> <a class="mediaDelete" href="#" onclick="return false;" data-attachmentid="${attachmentVO.id}"><i
+													class="fa fa-pencil"></i></a> <a class="mediaDelete" href="#"
+													onclick="return false;"
+													data-attachmentid="${attachmentVO.id}"><i
 													class="fa fa-times"></i></a>
 											</div>
 										</div>
@@ -107,7 +112,7 @@
 								</div>
 							</div>
 						</c:forEach>
-						
+
 
 						<!-- Small modal -->
 						<div class="modal fade" id="mediaDetailModal" tabindex="-1"
@@ -122,7 +127,7 @@
 										</button>
 										<h4 class="modal-title" id="mediaDetailModalLabel">파일 상세</h4>
 									</div>
-									
+
 									<div class="modal-body">
 										<div class="container-fluid">
 											<div class="row">
@@ -183,14 +188,15 @@
 											</div>
 										</div>
 									</div>
-									
+
 									<div class="modal-footer">
-									<button type="button" class="btn btn-primary" id="fileDetailUpdateButton" data-dismiss="modal">확인</button>
+										<button type="button" class="btn btn-primary"
+											id="fileDetailUpdateButton" data-dismiss="modal">확인</button>
 									</div>
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>
@@ -198,109 +204,182 @@
 	</div>
 </div>
 <!-- /page content -->
-	
+
 <script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
 
 <script type="text/javascript">
-var attachmentId = 0;
-
-$(function() {
-	$("#mediaDetailModal").on("show.bs.modal", function(event) {
-		attachmentId = $(event.relatedTarget).data('attachmentid');
+	$(function() {
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 		
-		$.getJSON("/attachments/" + attachmentId, function(data) {
-			$.each(data, function(key, value) {
-				function findInputOfMediaDetailModal(mediaDetailAttribute) {
-					return $(".modal-body").find('label[for="'+ mediaDetailAttribute+ '"]').parent().find("input");
-				}
-				
-				function makeDate(dateNumber) {
-					var dateObj = new Date(dateNumber);
-					var year = dateObj.getFullYear();
-					var month = dateObj.getMonth() + 1;
-					var date = dateObj.getDate();
-					var hours = dateObj.getHours();
-					var minutes = dateObj.getMinutes();
-					var seconds = dateObj.getSeconds();
-					
-					var result = year + "." + month + "."+ date + "." + " " + hours + ":" + minutes + ":" + seconds;
-					
-					return result;
-				}
-				
-				if (key == 'fullName') {
-					var fileUrl = "/resources/upload" + value;
-					
-					$(".modal-body").find("img").attr("src",function() {
-						return fileUrl;
-					});
-					
-					findInputOfMediaDetailModal('fileUrl').val(fileUrl);
-				} else if (key == 'registered') {
-					var registered = makeDate(value);
-					
-					value = registered;
-				} else if (key == 'updated') {
-					var updated = makeDate(value);
-					
-					value = updated;
-				}
-				
-				findInputOfMediaDetailModal(key).val(value);
-				
-				console.log("key: " + key + ", value: " + value);
-			});
-		}).fail(function(jqxhr, textStatus, error) {
-			var err = textStatus + ", " + error;
-			
-			console.log("Request Failed: " + err);
-			});
-		});
-});
-
-
-	
-$(function() {
-	$("#fileDetailUpdateButton").click(function(event) {
-		if (attachmentId != 0) {
-			var alternateText = $(".modal-body").find('label[for="alternateText"]').parent().find("input").val();
-			var description = $(".modal-body").find('label[for="description"]').parent().find("input").val();
-			
-			$.ajax({
-				method : 'PUT',
-				url : "/attachments/" + attachmentId,
-				contentType : 'application/json',
-				data : JSON.stringify({
-					alternateText : alternateText,
-					description : description
-				})
-			}).done(function(data) {
-				alert("파일 정보를 변경했습니다.");
-				}).fail(function(jqxhr, textStatus, error) {
-				var err = textStatus + ", " + error;
-				
-				console.log("Request Failed: " + err);
-				});
-			}
+		$(document).ajaxSend(function(e, xhr, options) {
+			xhr.setRequestHeader(header, token);
 		});
 	});
 </script>
 
 <script type="text/javascript">
-$(".mediaDelete").click(function(event) {
-	attachmentId = $(this).data("attachmentid");
-	
-	$.ajax({
-		method : 'DELETE',
-		url : "/attachments?ids=" + attachmentId,
-	}).done(function() {
-		$(event.target).parents(".col-md-55").remove();
-		
-		alert("해당 파일을 삭제했습니다.");
+	var attachmentId = 0;
+
+	$(function() {
+		$("#mediaDetailModal")
+				.on(
+						"show.bs.modal",
+						function(event) {
+							attachmentId = $(event.relatedTarget).data(
+									'attachmentid');
+
+							$
+									.getJSON(
+											"/attachments/" + attachmentId,
+											function(data) {
+												$
+														.each(
+																data,
+																function(key,
+																		value) {
+																	function findInputOfMediaDetailModal(
+																			mediaDetailAttribute) {
+																		return $(
+																				".modal-body")
+																				.find(
+																						'label[for="'
+																								+ mediaDetailAttribute
+																								+ '"]')
+																				.parent()
+																				.find(
+																						"input");
+																	}
+
+																	function makeDate(
+																			dateNumber) {
+																		var dateObj = new Date(
+																				dateNumber);
+																		var year = dateObj
+																				.getFullYear();
+																		var month = dateObj
+																				.getMonth() + 1;
+																		var date = dateObj
+																				.getDate();
+																		var hours = dateObj
+																				.getHours();
+																		var minutes = dateObj
+																				.getMinutes();
+																		var seconds = dateObj
+																				.getSeconds();
+
+																		var result = year
+																				+ "."
+																				+ month
+																				+ "."
+																				+ date
+																				+ "."
+																				+ " "
+																				+ hours
+																				+ ":"
+																				+ minutes
+																				+ ":"
+																				+ seconds;
+
+																		return result;
+																	}
+
+																	if (key == 'fullName') {
+																		var fileUrl = "/resources/upload"
+																				+ value;
+
+																		$(
+																				".modal-body")
+																				.find(
+																						"img")
+																				.attr(
+																						"src",
+																						function() {
+																							return fileUrl;
+																						});
+
+																		findInputOfMediaDetailModal(
+																				'fileUrl')
+																				.val(
+																						fileUrl);
+																	} else if (key == 'registered') {
+																		var registered = makeDate(value);
+
+																		value = registered;
+																	} else if (key == 'updated') {
+																		var updated = makeDate(value);
+
+																		value = updated;
+																	}
+
+																	findInputOfMediaDetailModal(
+																			key)
+																			.val(
+																					value);
+
+																	console
+																			.log("key: "
+																					+ key
+																					+ ", value: "
+																					+ value);
+																});
+											}).fail(
+											function(jqxhr, textStatus, error) {
+												var err = textStatus + ", "
+														+ error;
+
+												console.log("Request Failed: "
+														+ err);
+											});
+						});
+	});
+
+	$(function() {
+		$("#fileDetailUpdateButton").click(
+				function(event) {
+					if (attachmentId != 0) {
+						var alternateText = $(".modal-body").find(
+								'label[for="alternateText"]').parent().find(
+								"input").val();
+						var description = $(".modal-body").find(
+								'label[for="description"]').parent().find(
+								"input").val();
+
+						$.ajax({
+							method : 'PUT',
+							url : "/attachments/" + attachmentId,
+							contentType : 'application/json',
+							data : JSON.stringify({
+								alternateText : alternateText,
+								description : description
+							})
+						}).done(function(data) {
+							alert("파일 정보를 변경했습니다.");
+						}).fail(function(jqxhr, textStatus, error) {
+							var err = textStatus + ", " + error;
+
+							console.log("Request Failed: " + err);
+						});
+					}
+				});
+	});
+</script>
+
+<script type="text/javascript">
+	$(".mediaDelete").click(function(event) {
+		attachmentId = $(this).data("attachmentid");
+
+		$.ajax({
+			method : 'DELETE',
+			url : "/attachments?ids=" + attachmentId,
+		}).done(function() {
+			$(event.target).parents(".col-md-55").remove();
+
+			alert("해당 파일을 삭제했습니다.");
 		}).fail(function(jqxhr, textStatus, error) {
-		var err = textStatus + ", " + error;
-		
-		console.log("Request Failed: " + err);
+			var err = textStatus + ", " + error;
+
+			console.log("Request Failed: " + err);
 		});
-});
+	});
 </script>

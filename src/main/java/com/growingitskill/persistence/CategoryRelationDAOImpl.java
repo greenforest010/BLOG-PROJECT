@@ -10,13 +10,13 @@ public class CategoryRelationDAOImpl extends SqlSessionDaoSupport implements Cat
 	private static final String namespace = "com.growingitskill.mapper.CategoryRelationMapper";
 	
 	@Override
-	public void create(PostVO postVO) throws Exception {
-		getSqlSession().insert(namespace + ".create", postVO);
+	public void createCategoryRelation(PostVO postVO) throws Exception {
+		getSqlSession().insert(namespace + ".createCategoryRelation", postVO);
 	}
 
 	@Override
-	public void update(PostVO postVO) throws Exception {
-		getSqlSession().update(namespace + ".update", postVO);
+	public void updateCategoryRelation(PostVO postVO) throws Exception {
+		getSqlSession().update(namespace + ".updateCategoryRelation", postVO);
 	}
 
 }

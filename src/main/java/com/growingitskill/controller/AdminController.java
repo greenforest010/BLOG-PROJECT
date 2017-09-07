@@ -1,5 +1,7 @@
 package com.growingitskill.controller;
 
+import java.security.Principal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.growingitskill.service.AboutService;
 import com.growingitskill.service.AttachmentService;
+import com.growingitskill.util.MemberUtils;
 
 @Controller
 @RequestMapping("/admin")
@@ -19,46 +22,59 @@ public class AdminController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
 
 	@Autowired
-	private AttachmentService attachmentService;
-
-	@Autowired
 	private AboutService aboutService;
 
+	@Autowired
+	private AttachmentService attachmentService;
+	
+	@Autowired
+	private MemberUtils memberUtils;
+
 	@RequestMapping(method = RequestMethod.GET)
-	public String index() {
+	public String moveIndex(Model model, Principal principal) throws Exception {
+		memberUtils.makeMemberModel(model, principal.getName());
+
 		return "admin/main";
 	}
 
 	@RequestMapping(value = "category", method = RequestMethod.GET)
-	public String category() {
+	public String moveCategory(Model model, Principal principal) throws Exception {
+		memberUtils.makeMemberModel(model, principal.getName());
+		
 		return "admin/category";
 	}
 
 	@RequestMapping(value = "tag", method = RequestMethod.GET)
-	public String tag() {
+	public String moveTag(Model model, Principal principal) throws Exception {
+		memberUtils.makeMemberModel(model, principal.getName());
+		
 		return "admin/tag";
 	}
 
 	@RequestMapping(value = "media", method = RequestMethod.GET)
-	public String media(Model model) throws Exception {
+	public String moveMedia(Model model, Principal principal) throws Exception {
+		memberUtils.makeMemberModel(model, principal.getName());
+		
 		model.addAttribute("list", attachmentService.listAll());
 
 		return "admin/media";
 	}
 
 	@RequestMapping(value = "about-edit", method = RequestMethod.GET)
-	public String aboutEdit(Model model) throws Exception {
-		model.addAttribute("content", aboutService.find());
+	public String moveAboutEdit(Model model, Principal principal) throws Exception {
+		memberUtils.makeMemberModel(model, principal.getName());
+		
+		model.addAttribute("content", aboutService.findAbout());
 
 		return "admin/about-edit";
 	}
 
 	@RequestMapping(value = "about-edit", method = RequestMethod.PUT)
-	public String aboutEditPUT(String content, RedirectAttributes redirectAttributes) throws Exception {
-		aboutService.modify(content);
-		
+	public String modifyContentInAboutEdit(String content, RedirectAttributes redirectAttributes) throws Exception {
+		aboutService.modifyAboutContent(content);
+
 		redirectAttributes.addFlashAttribute("msg", "success");
-		
+
 		return "redirect:/admin/about-edit";
 	}
 

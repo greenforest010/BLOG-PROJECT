@@ -5,7 +5,7 @@ import org.apache.ibatis.jdbc.SQL;
 
 public class AttachmentSqlProvider {
 
-	public String deleteByIds(@Param("ids") final long[] ids) {
+	public String delete(@Param("ids") final long[] ids) {
 		StringBuffer inQuery = new StringBuffer();
 		inQuery.append("(");
 

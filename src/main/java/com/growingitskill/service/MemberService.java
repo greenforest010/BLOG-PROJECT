@@ -4,7 +4,7 @@ import com.growingitskill.domain.MemberVO;
 
 public interface MemberService {
 	
-	long findIdByLoginId(String loginId) throws Exception;
+	long findMemberIdByLoginId(String loginId) throws Exception;
 	
 	MemberVO findMemberByLoginId(String loginId) throws Exception;
 	

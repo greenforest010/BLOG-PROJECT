@@ -16,23 +16,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.growingitskill.domain.MemberVO;
 import com.growingitskill.service.MemberService;
+import com.growingitskill.util.MemberUtils;
 
 @Controller
 @RequestMapping("/admin/profile")
 public class ProfileController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProfileController.class);
-
+	
 	@Autowired
-	private MemberService memberService;
+	private MemberUtils memberUtils;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String profilePage(Model model, Principal principal) throws Exception {
 		String loginId = principal.getName();
-
-		LOGGER.info("loginId: " + loginId);
-
-		model.addAttribute("member", memberService.findMemberByLoginId(loginId));
+		
+		memberUtils.makeMemberModel(model, loginId);
+		
+		model.addAttribute(memberUtils.getMemberByLoginId(loginId));
 
 		return "admin/profile";
 	}
@@ -47,7 +48,7 @@ public class ProfileController {
 		
 		LOGGER.info(memberVO.toString());
 		
-		memberService.modifyMemberByLoginId(memberVO);
+		memberUtils.modifyMemberByLoginId(memberVO);
 		
 		redirectAttributes.addFlashAttribute("msg", "success");
 		

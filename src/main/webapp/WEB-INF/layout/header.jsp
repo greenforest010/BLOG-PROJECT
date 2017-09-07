@@ -9,7 +9,7 @@
 		<div class="header">
 			<div class="logo">
 				<h1>
-					<a href="/"><img src="/resources/images/logo.png" alt="" /></a>
+					<a href="/"><img src="/resources/images/logo.png" alt="Logo Not Found" /></a>
 				</h1>
 			</div>
 			<div class="h_right">
@@ -24,7 +24,7 @@
 					</sec:authorize>
 				</ul>
 				<div id="sb-search" class="sb-search">
-					<form>
+					<form action="/">
 						<input class="sb-search-input"
 							placeholder="Enter your search term..." type="text" value=""
 							name="keyword" id="search"> <input

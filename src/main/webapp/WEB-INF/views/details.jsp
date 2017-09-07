@@ -8,7 +8,7 @@
 	<div class="wrap">
 		<div class="slider">
 			<h2>Welcome, green010's BLOG</h2>
-			<h3>I Hope you get Good Inspiration!</h3>
+			<h3>I Hope you get a Good Inspiration!</h3>
 		</div>
 	</div>
 </div>
@@ -20,10 +20,18 @@
 			<div class="content">
 				<!-- start details -->
 				<div class="details">
-					<h2>${postVO.title}</h2>
-					${postVO.memberVO.loginId},
-					<fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-						value="${postVO.published}" />
+					<h1>${postVO.title}</h1>
+
+					<div class="info">
+						<i class="fa fa-pencil"></i>
+						<fmt:formatDate pattern="yyyy-MM-dd HH:mm"
+							value="${postVO.published}" />
+						<a href="/category/${postVO.categoryVO.slugTerm}"><i
+							class="fa fa-archive"></i> ${postVO.categoryVO.term}</a>
+					</div>
+
+					<hr />
+
 					<div class="det_text">${postVO.content}</div>
 
 					<!-- start tag  -->

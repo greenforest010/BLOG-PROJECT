@@ -13,8 +13,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberMapper memberMapper;
 
 	@Override
-	public long findIdByLoginId(String loginId) throws Exception {
-		return memberMapper.readIdByLoginId(loginId);
+	public long findMemberIdByLoginId(String loginId) throws Exception {
+		return memberMapper.readMemberIdByLoginId(loginId);
 	}
 
 	@Override

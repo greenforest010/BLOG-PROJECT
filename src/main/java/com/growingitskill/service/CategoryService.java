@@ -7,13 +7,15 @@ import com.growingitskill.domain.CategoryVO;
 
 public interface CategoryService {
 	
-	List<CategoryVO> listAll() throws Exception;
+	List<CategoryVO> findCategories() throws Exception;
 	
 	void addCategory(CategoryVO categoryVO) throws Exception;
 	
 	CategoryVO findCategoryById(long id) throws Exception;
 	
-	void renameCategoryById(long id, String term) throws Exception;
+	CategoryVO findCategoryBySlugTerm(String slugTerm) throws Exception;
+	
+	void renameCategoryById(long id, String term, String slugTerm) throws Exception;
 	
 	void modifyCategorySlugTermById(long id, String slugTerm) throws Exception;
 	
@@ -21,8 +23,8 @@ public interface CategoryService {
 	
 	void removeCategoryById(long id) throws Exception;
 	
-	List<CategoryVO> listLeafCategory() throws Exception;
+	List<CategoryVO> findLeafCategories() throws Exception;
 	
-	List<CategoryLevel> listCategoryLevel(String slugTerm) throws Exception;
+	List<CategoryLevel> findCategoryLevel(String slugTerm) throws Exception;
 
 }

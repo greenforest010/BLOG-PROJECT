@@ -9,6 +9,8 @@ import javax.naming.NamingException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mock.jndi.SimpleNamingContextBuilder;
@@ -21,11 +23,12 @@ import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
 import com.growingitskill.domain.SearchCriteria;
 
-import ch.qos.logback.classic.Logger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = MybatisJndiConfig.class)
 public class PostMapperTest {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(PostMapperTest.class);
 
 	@BeforeClass
 	public static void jndiBind() throws NamingException {
@@ -70,6 +73,15 @@ public class PostMapperTest {
 
 		System.out.println(postVO.toString());
 	}*/
+	
+	@Test
+	public void findPostBySlugTitle() throws Exception {
+		String slugTitle = "울랄라";
+
+		PostVO postVO = postMapper.readPostBySlugTitle(slugTitle);
+
+		LOGGER.info(postVO.toString());
+	}
 	
 	/*@Test
 	public void updatePostById() throws Exception {
@@ -163,7 +175,7 @@ public class PostMapperTest {
 		return set;
 	}*/
 	
-	@Test
+	/*@Test
 	public void findListByTag() throws Exception {
 		String slugTerm = "옐로우";
 		
@@ -178,6 +190,6 @@ public class PostMapperTest {
 		}
 		
 		System.out.println("COUNT: " + postMapper.countPagingByTag(slugTerm, searchCriteria));
-	}
+	}*/
 
 }
