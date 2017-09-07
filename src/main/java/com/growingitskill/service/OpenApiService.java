@@ -4,6 +4,6 @@ import com.growingitskill.domain.NaverPapagoNMT;
 
 public interface OpenApiService {
 	
-	NaverPapagoNMT findByApiName(String apiName) throws Exception;
+	NaverPapagoNMT findNaverPapagoNMTByApiName(String apiName) throws Exception;
 
 }

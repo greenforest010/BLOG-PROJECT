@@ -5,7 +5,6 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,9 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(encodingFilter, CsrfFilter.class);
 
-		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/categories/**").permitAll()
-				.antMatchers("/categories/**", "/posts/**", "/attachments/**", "/admin/about-edit").hasAuthority("ROLE_ADMIN")
-				.and().headers().frameOptions().sameOrigin().and().httpBasic();
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/categories/**", "/tags/**").permitAll()
+				.antMatchers("/attachments/**", "/categories/**", "/posts/**", "/tags/**", "/admin/about-edit")
+				.hasAuthority("ROLE_ADMIN").and().headers().frameOptions().sameOrigin().and().httpBasic();
 
 		http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password")
 				.defaultSuccessUrl("/admin").and().authorizeRequests().antMatchers("/admin/**").authenticated().and()

@@ -41,7 +41,7 @@ public class CategoryLevel {
 
 	@Override
 	public String toString() {
-		return "Category Level [level1: " + level1 + ", level2: " + level2 + ", level3: " + level3 + ", level4: "
+		return "Category Level[level1: " + level1 + ", level2: " + level2 + ", level3: " + level3 + ", level4: "
 				+ level4 + "]";
 	}
 

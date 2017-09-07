@@ -17,8 +17,8 @@ public class PostController {
 
 	// HTTP DELETE 메서드 요청시 body가 없으므로 /url?ids=?,?,? 형식으로 테스트 가능
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void removePosts(@RequestParam("ids") long[] ids) throws Exception {
-		postService.removeByIds(ids);
+	public void removePost(@RequestParam("ids") long[] ids) throws Exception {
+		postService.removePostByIds(ids);
 	}
 
 }

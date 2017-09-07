@@ -15,9 +15,9 @@ public interface TagRelationMapper {
 	/*
 	 * xml로 대체
 	 */
-	void create(PostVO postVO) throws Exception;
+	void createTagRelation(PostVO postVO) throws Exception;
 
 	@Delete("DELETE FROM tag_relation WHERE post_id = #{postId}")
-	void deleteByPostId(long postId) throws Exception;
+	void deleteTagRelationByPostId(long postId) throws Exception;
 
 }

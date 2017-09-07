@@ -8,7 +8,7 @@
 	<div class="wrap">
 		<div class="slider">
 			<h2>Welcome, green010's BLOG</h2>
-			<h3>I Hope you get Good Inspiration!</h3>
+			<h3>I Hope you get a Good Inspiration!</h3>
 		</div>
 	</div>
 </div>
@@ -39,17 +39,17 @@
 									</div>
 									<div class="b_right">
 										<h4>
-											<a href="/post/${postVO.id}">${postVO.title}</a>
+											<a href="/post/${postVO.slugTitle}">${postVO.title}</a>
 										</h4>
 										<div class="blog_list">
 											<ul>
-												<li><a href="#"> <i class="date"> </i><span>${postVO.memberVO.loginId}</span></a></li>
 												<li><a href="#"> <i class="date"> </i><span><fmt:formatDate
 																pattern="yyyy-MM-dd HH:mm" value="${postVO.published}" />
 													</span></a></li>
-												<li><a href="#"> <i class="views"> </i><span>124
-															views</span></a></li>
-												<li><a href="/post/${postVO.id}#disqus_thread"> <i
+												<li><a href="/category/${postVO.categoryVO.slugTerm}">
+														<i class="fa fa-archive fa-lg" style="background: none; margin-top: 5px"></i><span>${postVO.categoryVO.term} </span>
+												</a></li>
+												<li><a href="/post/${postVO.slugTitle}#disqus_thread"> <i
 														class="comment"> </i> <span>Comments</span></a></li>
 											</ul>
 											<div class="clear"></div>
@@ -91,25 +91,12 @@
 						<div id="category" style="margin: 8%;"></div>
 
 						<!-- start tag_nav -->
-						<h4>tags</h4>
+						<h4>Tag</h4>
 						<ul class="tag_nav">
 							<li><a href="/tag">태그 전체보기</a></li>
 							<div class="clear"></div>
 						</ul>
 
-						<!-- start flicker images -->
-						<h4>ads 125x125</h4>
-						<!-- <ul class="ads_nav">
-							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
-									alt=""> </a></li>
-							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
-									alt=""> </a></li>
-							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
-									alt=""> </a></li>
-							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
-									alt=""> </a></li>
-							<div class="clear"></div>
-						</ul> -->
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -145,6 +132,8 @@
 			var state = new Object();
 			state.opened = true;
 
+			var postCount = ${postCountByCategory};
+
 			$.each(data, function(key, val) {
 				var items = new Object();
 
@@ -153,7 +142,7 @@
 				}
 
 				items.id = val.id.toString();
-				items.text = val.term;
+				items.text = val.term + "(" + postCount[val.id] + ")";
 				items.parent = val.parent.toString();
 				items.slugTerm = val.slugTerm;
 				items.state = state;

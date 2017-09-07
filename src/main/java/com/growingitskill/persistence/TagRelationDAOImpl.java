@@ -17,13 +17,13 @@ public class TagRelationDAOImpl extends SqlSessionDaoSupport implements TagRelat
 	}
 
 	@Override
-	public void create(PostVO postVO) throws Exception {
-		getSqlSession().insert(namespace + ".create" + postVO);
+	public void createTagRelation(PostVO postVO) throws Exception {
+		getSqlSession().insert(namespace + ".createTagRelation" + postVO);
 	}
 
 	@Override
-	public void deleteByPostId(long postId) throws Exception {
-		getSqlSession().delete(namespace + ".deleteByPostId", postId);
+	public void deleteTagRelationByPostId(long postId) throws Exception {
+		getSqlSession().delete(namespace + ".deleteTagRelationByPostId", postId);
 	}
 
 }

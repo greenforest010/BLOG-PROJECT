@@ -14,8 +14,8 @@ public class TagDAOImpl extends SqlSessionDaoSupport implements TagMapper {
 	private static final String namaspace = "com.growingitskill.mapper.TagMapper";
 
 	@Override
-	public List<TagVO> listAll() throws Exception {
-		return getSqlSession().selectList(namaspace + ".listAll");
+	public List<TagVO> readTags() throws Exception {
+		return getSqlSession().selectList(namaspace + ".readTags");
 	}
 
 	@Override
@@ -31,6 +31,11 @@ public class TagDAOImpl extends SqlSessionDaoSupport implements TagMapper {
 	@Override
 	public TagVO readTagById(long id) throws Exception {
 		return getSqlSession().selectOne(namaspace + ".readTagById", id);
+	}
+	
+	@Override
+	public TagVO readTagBySlugTerm(String slugTerm) throws Exception {
+		return getSqlSession().selectOne(namaspace + ".readTagBySlugTerm", slugTerm);
 	}
 	
 	@Override
@@ -54,21 +59,22 @@ public class TagDAOImpl extends SqlSessionDaoSupport implements TagMapper {
 	}
 
 	@Override
-	public void updateTermById(long id, String term) throws Exception {
+	public void updateTagTermAndSlugTermById(long id, String term, String slugTerm) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("term", term);
+		map.put("slugTerm", slugTerm);
 		
-		getSqlSession().update(namaspace + ".updateTermById", map);
+		getSqlSession().update(namaspace + ".updateTagTermAndSlugTermById", map);
 	}
 
 	@Override
-	public void updateSlugTermById(long id, String slugTerm) throws Exception {
+	public void updateTagSlugTermById(long id, String slugTerm) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("slugTerm", slugTerm);
 		
-		getSqlSession().update(namaspace + ".updateSlugTermById", map);
+		getSqlSession().update(namaspace + ".updateTagSlugTermById", map);
 	}
 
 	@Override

@@ -69,9 +69,9 @@ public class AttachmentVO {
 
 	@Override
 	public String toString() {
-		return "attachment " + "id: " + getId() + ", fullname: " + getFullName() + ", registered: " + getRegistered()
+		return "Attachment[" + "id: " + getId() + ", fullname: " + getFullName() + ", registered: " + getRegistered()
 				+ ", updated: " + getUpdated() + ", mimeType: " + getMimeType() + ", alternateText: "
-				+ getAlternateText() + ", description: " + getDescription();
+				+ getAlternateText() + ", description: " + getDescription() + "]";
 
 	}
 

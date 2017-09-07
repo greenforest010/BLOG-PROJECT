@@ -82,7 +82,7 @@ public class TagRelationMapperTest {
 	public void remove() throws Exception {
 		long postId = 2;
 		
-		tagRelationMapper.deleteByPostId(postId);
+		tagRelationMapper.deleteTagRelationByPostId(postId);
 	}
 
 }

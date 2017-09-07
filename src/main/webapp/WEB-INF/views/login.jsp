@@ -39,7 +39,7 @@
 			<div class="animate form login_form">
 				<section class="login_content">
 					<sf:form method="post">
-						<h1>Login Form</h1>
+						<h1>Login</h1>
 						<div>
 							<input type="text" name="username" class="form-control"
 								placeholder="Username" required="" />
@@ -49,28 +49,29 @@
 								placeholder="Password" required="" />
 						</div>
 						<div>
-							<input type="submit" value="Log in" /> <a class="reset_pass"
-								href="#">Lost your password?</a>
+							<input type="submit" value="Go! Login" />
 						</div>
 
 						<div class="clearfix"></div>
 
 						<div class="separator">
-							<p class="change_link">
-								New to site? <a href="#signup" class="to_register"> Create
-									Account </a>
-							</p>
 
 							<div class="clearfix"></div>
 							<br />
 
 							<div>
-								<h1>
-									<i class="fa fa-paw"></i> GrowingITSkill
-								</h1>
-								&copy; <a href="/">www.growingitskill.com</a> All Rights
-								Reserved.
-								<p>Gentelella Alela! is a Bootstrap 3 template.</p>
+								<p>
+									<a href="/"><img src="/resources/images/logo.png"
+										alt="Logo Not Found" /></a>
+								</p>
+								<p>
+									&copy; <a href="/">www.growingitskill.com</a> All Rights
+									Reserved.
+								</p>
+								<p>
+									Gentelella - Bootstrap Admin Template by <a
+										href="https://colorlib.com">Colorlib</a>
+								</p>
 							</div>
 						</div>
 					</sf:form>

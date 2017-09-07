@@ -12,20 +12,9 @@
 		<id property="id" column="id" />
 	</resultMap>
 
-	<insert id="create">
+	<insert id="createTagRelation">
 		INSERT INTO tag_relation(post_id, tag_id) VALUES
 		<foreach collection="tagList" item="item" index="index"
 			separator=",">(#{id}, #{item.id})</foreach>
 	</insert>
-
-	<delete id="deleteByPostIdAndNotInTagTerms">
-		DELETE FROM tag_relation WHERE post_id = #{postId}
-		AND tag_id IN
-		(SELECT id FROM (SELECT id FROM tag WHERE id IN (SELECT
-		tag_id FROM
-		tag_relation WHERE post_id = #{postId}) AND term NOT IN
-		<foreach collection="tagTerms" item="item" index="index" open="("
-			separator="," close=")">#{item}</foreach>
-		) AS t);
-	</delete>
 </mapper>

@@ -12,8 +12,8 @@ public class TagRelationServiceImpl implements TagRelationService {
 	private TagRelationMapper tagRelationMapper;
 
 	@Override
-	public void removeByPostId(long postId) throws Exception {
-		tagRelationMapper.deleteByPostId(postId);
+	public void removeTagRelationByPostId(long postId) throws Exception {
+		tagRelationMapper.deleteTagRelationByPostId(postId);
 	}
 
 }

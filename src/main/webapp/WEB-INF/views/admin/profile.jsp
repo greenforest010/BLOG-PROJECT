@@ -49,13 +49,15 @@
 					<div class="x_content">
 						<form class="form-horizontal form-label-left" method="post"
 							data-parsley-validate>
-							<input type="hidden" name="_method" value="PUT" />
+							<input type="hidden" name="_method" value="PUT" /> <input
+								type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}" />
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="loginId">사용자 ID </label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input class="form-control col-md-7 col-xs-12" type="text"
-										name="loginId" value="${member.loginId}" readonly>
+										name="loginId" value="${memberVO.loginId}" readonly>
 								</div>
 							</div>
 							<div class="item form-group">
@@ -64,7 +66,7 @@
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<input class="form-control col-md-7 col-xs-12" type="text"
-										name="nickname" minlength="2" value="${member.nickname}"
+										name="nickname" minlength="2" value="${memberVO.nickname}"
 										placeholder="닉네임을 변경할 수 있습니다.">
 								</div>
 							</div>
@@ -75,7 +77,7 @@
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<select class="form-control" name="displayName" required>
 										<option value="">공개 표시 이름을 선택하세요.</option>
-										<option value="${member.loginId}">${member.loginId}</option>
+										<option value="${memberVO.loginId}">${memberVO.loginId}</option>
 										<option></option>
 									</select>
 								</div>
@@ -113,24 +115,29 @@
 </script>
 
 <script type="text/javascript">
-$("select[name='displayName']").focus(function() {
-	$("select[name='displayName'] option:nth-child(3)").remove();
-	
-	var nickname = $("input[name='nickname']").val();
-	
-	if (nickname) {
-		var option = "<option val='" + nickname + "'>" + nickname + "</option>";
+	$("select[name='displayName']").focus(
+			function() {
+				$("select[name='displayName'] option:nth-child(3)").remove();
 
-		$("select[name='displayName']").append(option);
-	}
-});
+				var nickname = $("input[name='nickname']").val();
+
+				if (nickname) {
+					var option = "<option val='" + nickname + "'>" + nickname
+							+ "</option>";
+
+					$("select[name='displayName']").append(option);
+				}
+			});
 </script>
 
 <!-- 공개 표시 이름 항목에서 닉네임을 클릭한 후 닉네임이 바뀌면 자동으로 공개 표시 이름 항목도 바뀜  -->
 <script type="text/javascript">
-$( "input[name='nickname']" ).on('input', function() {
-	var nickname = $("input[name='nickname']").val();
-	
-	$("select[name='displayName'] option:nth-child(3)").val(nickname).html(nickname);
-});
+	$("input[name='nickname']").on(
+			'input',
+			function() {
+				var nickname = $("input[name='nickname']").val();
+
+				$("select[name='displayName'] option:nth-child(3)").val(
+						nickname).html(nickname);
+			});
 </script>

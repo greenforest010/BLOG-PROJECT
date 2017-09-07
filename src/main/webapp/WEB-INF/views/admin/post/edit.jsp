@@ -33,7 +33,7 @@
 						</ul>
 						<div class="clearfix"></div>
 					</div>
-					<div class="x_content">
+					<div class="x_content center-margin " style="width: 80%">
 						<sf:form method="put">
 							<input type="hidden" name="id" value="${postVO.id}" />
 							<input type="hidden" name="page" value="${criteria.page}" />
@@ -96,9 +96,7 @@
 							</div>
 
 							<div class="form-group">
-								<input type="submit" class="btn btn-primary" value="수정">
-								<input type="button" class="btn btn-danger pull-right"
-									value="취소">
+								<input type="submit" class="btn btn-primary pull-right" value="수정">
 							</div>
 						</sf:form>
 					</div>
@@ -115,9 +113,6 @@
 <!-- ckeditor -->
 <script src="/resources/admin/vendors/ckeditor/ckeditor.js"></script>
 
-<!-- jQuery -->
-<script src="/resources/admin/vendors/jquery/dist/jquery.min.js"></script>
-
 <!-- tagEditor  -->
 <script type="text/javascript"
 	src="/resources/admin/vendors/jQuery-tagEditor/jquery.tag-editor.min.js"></script>
@@ -126,24 +121,9 @@
 	src="/resources/admin/vendors/jQuery-tagEditor/jquery.caret.min.js"></script>
 
 <script type="text/javascript">
-	$(function() {
-		$(".btn-danger").on("click", function() {
-			self.location = "/admin/post?page=" + $
-			{
-				criteria.page
-			}
-			+"&perPageNum=" + $
-			{
-				criteria.perPageNum
-			}
-			;
-		});
-	});
-</script>
-
-<script type="text/javascript">
 	CKEDITOR.replace('content', {
-		filebrowserUploadUrl : '/admin/post/upload'
+		filebrowserUploadUrl : '/admin/post/upload',
+		height: '25em'
 	});
 </script>
 
@@ -160,14 +140,12 @@
 	});
 </script>
 
-
-
 <script type="text/javascript">
 	var tagList = ${tagList};
 
 	$("#tag").tagEditor({
 		initialTags : tagList,
 		delimiter : ', ',
-		placeholder : 'Enter tags ...'
+		placeholder : '태그를 입력할 수 있습니다.'
 	});
 </script>

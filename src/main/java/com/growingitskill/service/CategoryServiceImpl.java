@@ -11,53 +11,58 @@ import com.growingitskill.mapper.CategoryMapper;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-	
+
 	@Autowired
 	private CategoryMapper categoryMapper;
 
 	@Override
-	public List<CategoryVO> listAll() throws Exception {
-		return categoryMapper.listAll();
+	public List<CategoryVO> findCategories() throws Exception {
+		return categoryMapper.readCategories();
 	}
-	
+
 	@Override
 	public CategoryVO findCategoryById(long id) throws Exception {
 		return categoryMapper.readCategoryById(id);
 	}
-	
+
 	@Override
-	public void addCategory(CategoryVO categoryVO) throws Exception {
-		categoryMapper.create(categoryVO);
+	public CategoryVO findCategoryBySlugTerm(String slugTerm) throws Exception {
+		return categoryMapper.readCategoryBySlugTerm(slugTerm);
 	}
 
 	@Override
-	public void renameCategoryById(long id, String term) throws Exception {
-		categoryMapper.updateTermById(id, term);
+	public void addCategory(CategoryVO categoryVO) throws Exception {
+		categoryMapper.createCategory(categoryVO);
+	}
+
+	@Override
+	public void renameCategoryById(long id, String term, String slugTerm) throws Exception {
+		categoryMapper.updateCategoryTermAndSlugTermById(id, term, slugTerm);
 	}
 
 	@Override
 	public void modifyCategorySlugTermById(long id, String slugTerm) throws Exception {
-		categoryMapper.updateSlugTermById(id, slugTerm);
+		categoryMapper.updateCategorySlugTermById(id, slugTerm);
 	}
-	
+
 	@Override
 	public void moveCategory(long id, long parent) throws Exception {
-		categoryMapper.updateParentById(id, parent);
+		categoryMapper.updateCategoryParentById(id, parent);
 	}
-	
+
 	@Override
 	public void removeCategoryById(long id) throws Exception {
 		categoryMapper.deleteCategoryById(id);
 	}
 
 	@Override
-	public List<CategoryVO> listLeafCategory() throws Exception {
-		return categoryMapper.listLeafCategory();
+	public List<CategoryVO> findLeafCategories() throws Exception {
+		return categoryMapper.readLeafCategories();
 	}
 
 	@Override
-	public List<CategoryLevel> listCategoryLevel(String slugTerm) throws Exception {
-		return categoryMapper.listCategoryLevel(slugTerm);
+	public List<CategoryLevel> findCategoryLevel(String slugTerm) throws Exception {
+		return categoryMapper.readCategoryLevel(slugTerm);
 	}
 
 }

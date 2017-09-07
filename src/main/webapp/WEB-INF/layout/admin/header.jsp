@@ -8,14 +8,13 @@
 		<div class="col-md-3 left_col">
 			<div class="left_col scroll-view">
 				<div class="navbar nav_title" style="border: 0;">
-					<a href="/admin" class="site_title"><i class="fa fa-paw"></i> <span>GrowingITSkill</span></a>
+					<a href="/admin" class="site_title"><i class="fa fa-level-up"></i> <span>GrowingITSkill</span></a>
 				</div>
 
 				<div class="clearfix"></div>
 
 				<!-- menu profile quick info -->
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<sec:authentication property="principal.username" var="loginId" />
 					<div class="profile">
 						<div class="profile_pic">
 							<img src="/resources/admin/images/img.jpg" alt="..."
@@ -24,7 +23,7 @@
 
 						<div class="profile_info">
 							<span>Welcome,</span>
-							<h2>${loginId}</h2>
+							<h2>${memberVO.displayName}</h2>
 						</div>
 					</div>
 				</sec:authorize>
@@ -47,7 +46,7 @@
 							<li><a href="/admin/media"><i class="fa fa-picture-o"></i>미디어
 									리소스</a></li>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
-								<li><a href="/admin/about-edit"><i class="fa fa-picture-o"></i>블로그 소개 편집</a></li>
+								<li><a href="/admin/about-edit"><i class="fa fa-user"></i>블로그 소개 편집</a></li>
 							</sec:authorize>
 							<li><a href="/"><i class="fa fa-home"></i>블로그 페이지로 이동</a></li>
 						</ul>
@@ -68,8 +67,7 @@
 						<li class="dropdown"><a href="javascript:;"
 							class="user-profile dropdown-toggle" data-toggle="dropdown"
 							aria-expanded="false"> <img
-								src="/resources/admin/images/img.jpg" alt=""> <sec:authentication
-									property="principal.username" /> <span
+								src="/resources/admin/images/img.jpg" alt="">${memberVO.displayName}<span
 								class=" fa fa-angle-down"></span>
 						</a>
 							<ul class="dropdown-menu dropdown-usermenu pull-right">

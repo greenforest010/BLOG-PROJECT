@@ -12,13 +12,13 @@ public class AboutServiceImpl implements AboutService {
 	private AboutMapper aboutMapper;
 
 	@Override
-	public String find() throws Exception {
-		return aboutMapper.read();
+	public String findAbout() throws Exception {
+		return aboutMapper.readAbout();
 	}
 
 	@Override
-	public void modify(String content) throws Exception {
-		aboutMapper.update(content);
+	public void modifyAboutContent(String content) throws Exception {
+		aboutMapper.updateAboutContent(content);
 	}
 	
 	

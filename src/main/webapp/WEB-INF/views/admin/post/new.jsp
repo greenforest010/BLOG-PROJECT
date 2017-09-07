@@ -35,13 +35,8 @@
 						</ul>
 						<div class="clearfix"></div>
 					</div>
-					<div class="x_content">
+					<div class="x_content center-margin " style="width: 80%">
 						<sf:form method="post">
-							<sec:authorize access="isAuthenticated()">
-								<sec:authentication property="principal.username" var="loginId" />
-								<input type="hidden" name="loginId" value="${loginId}">
-							</sec:authorize>
-
 							<div class="form-group">
 								<label for="title">제목*</label> <input type="text"
 									class="form-control" name="title" placeholder="제목을 입력해주세요."
@@ -80,9 +75,7 @@
 							</div>
 
 							<div class="form-group">
-								<input type="submit" class="btn btn-success" value="확인">
-								<input type="button" class="btn btn-danger pull-right"
-									value="취소">
+								<input type="submit" class="btn btn-success pull-right" value="확인">
 							</div>
 						</sf:form>
 					</div>
@@ -106,16 +99,9 @@
 	src="/resources/admin/vendors/jQuery-tagEditor/jquery.caret.min.js"></script>
 
 <script type="text/javascript">
-	$(function() {
-		$(".btn-danger").on("click", function() {
-			self.location = "/admin/post?page=" + ${criteria.page} +"&perPageNum=" + ${criteria.perPageNum};
-		});
-	});
-</script>
-
-<script type="text/javascript">
 	CKEDITOR.replace('content', {
-		filebrowserUploadUrl : '/admin/post/upload'
+		filebrowserUploadUrl : '/admin/post/upload',
+		height: '25em'
 	});
 </script>
 

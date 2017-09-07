@@ -13,8 +13,8 @@ public class OpenApiServiceImpl implements OpenApiService {
 	private OpenApiMapper openApiMapper;
 
 	@Override
-	public NaverPapagoNMT findByApiName(String apiName) throws Exception {
-		return openApiMapper.readByApiName(apiName);
+	public NaverPapagoNMT findNaverPapagoNMTByApiName(String apiName) throws Exception {
+		return openApiMapper.readNaverPapagoNMTByApiName(apiName);
 	}
 
 }

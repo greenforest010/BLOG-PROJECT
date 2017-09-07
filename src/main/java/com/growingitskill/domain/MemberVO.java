@@ -46,8 +46,8 @@ public class MemberVO {
 
 	@Override
 	public String toString() {
-		return "member " + "id: " + id + ", loginId: " + loginId + ", nickname: " + nickname + ", displayName: "
-				+ displayName;
+		return "Member[" + "id: " + id + ", loginId: " + loginId + ", nickname: " + nickname + ", displayName: "
+				+ displayName + "]";
 	}
 
 }

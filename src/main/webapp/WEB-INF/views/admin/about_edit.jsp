@@ -46,7 +46,7 @@
 						</ul>
 						<div class="clearfix"></div>
 					</div>
-					<div class="x_content">
+					<div class="x_content center-margin " style="width: 80%">
 						<sf:form method="put">
 							<div class="form-group">
 								<label for="content">내용*</label>
@@ -82,7 +82,8 @@
 
 <script type="text/javascript">
 	CKEDITOR.replace('content', {
-		filebrowserUploadUrl : '/admin/post/upload'
+		filebrowserUploadUrl : '/admin/post/upload',
+		height: '25em'
 	});
 </script>
 <!-- /page content -->

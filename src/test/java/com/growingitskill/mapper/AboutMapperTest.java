@@ -33,14 +33,14 @@ public class AboutMapperTest {
 	
 	@Test
 	public void find() throws Exception {
-		System.out.println(aboutMapper.read());
+		System.out.println(aboutMapper.readAbout());
 	}
 	
 	@Test
 	public void modify() throws Exception {
 		String content = "배드 가이즈";
 		
-		aboutMapper.update(content);
+		aboutMapper.updateAboutContent(content);
 	}
 
 }

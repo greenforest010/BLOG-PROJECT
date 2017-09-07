@@ -8,6 +8,8 @@ import javax.naming.NamingException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mock.jndi.SimpleNamingContextBuilder;
@@ -20,6 +22,8 @@ import com.growingitskill.domain.TagVO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = MybatisJndiConfig.class)
 public class TagMapperTest {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(TagMapperTest.class);
 
 	@BeforeClass
 	public static void jndiBind() throws NamingException {
@@ -58,12 +62,23 @@ public class TagMapperTest {
 	 * System.out.println(tagMapper.readTagById(id)); }
 	 */
 
-	/*
-	 * @Test public void modifyTermById() throws Exception { long id = 109;
-	 * String term = "부산";
-	 * 
-	 * tagMapper.updateTermById(id, term); }
-	 */
+	/*@Test
+	public void findTagBySlugTerm() throws Exception {
+		String slugTerm = "밤";
+
+		TagVO tagVO = tagMapper.readTagBySlugTerm(slugTerm);
+
+		LOGGER.info(tagVO.toString());
+	}*/
+
+	@Test
+	public void modifyTermAndSlugTermById() throws Exception {
+		long id = 123;
+		String term = "푸산";
+		String slugTerm = "busan";
+
+		tagMapper.updateTagTermAndSlugTermById(id, term, slugTerm);
+	}
 
 	/*
 	 * @Test public void modifySlugTermById() throws Exception { long id = 100;
@@ -116,15 +131,12 @@ public class TagMapperTest {
 	 * for (String string : terms) { System.out.println(string); } }
 	 */
 
-	@Test
-	public void findTagByPostId() throws Exception {
-		long postId = 3;
-
-		List<TagVO> tags = tagMapper.readTagByPostId(postId);
-
-		for (TagVO tagVO : tags) {
-			System.out.println(tagVO);
-		}
-	}
+	/*
+	 * @Test public void findTagByPostId() throws Exception { long postId = 3;
+	 * 
+	 * List<TagVO> tags = tagMapper.readTagByPostId(postId);
+	 * 
+	 * for (TagVO tagVO : tags) { System.out.println(tagVO); } }
+	 */
 
 }

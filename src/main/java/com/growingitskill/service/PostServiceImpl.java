@@ -15,82 +15,89 @@ import com.growingitskill.mapper.TagRelationMapper;
 
 @Service
 public class PostServiceImpl implements PostService {
-	
+
 	@Autowired
 	private PostMapper postMapper;
-	
+
 	@Autowired
 	private CategoryRelationMapper categoryRelationMapper;
-	
-	@Autowired TagRelationMapper tagRelationMapper;
+
+	@Autowired
+	TagRelationMapper tagRelationMapper;
 
 	@Transactional
 	@Override
-	public void regist(PostVO postVO) throws Exception {
-		postMapper.create(postVO);
-		
-		categoryRelationMapper.create(postVO);
-		
+	public void registPost(PostVO postVO) throws Exception {
+		postMapper.createPost(postVO);
+
+		categoryRelationMapper.createCategoryRelation(postVO);
+
 		if (postVO.getTagList() != null && postVO.getTagList().size() > 0) {
-			tagRelationMapper.create(postVO);
+			tagRelationMapper.createTagRelation(postVO);
 		}
 	}
 
 	@Override
-	public PostVO findById(long id) throws Exception {
-		return postMapper.readById(id);
+	public PostVO findPostById(long id) throws Exception {
+		return postMapper.readPostById(id);
+	}
+
+	@Override
+	public PostVO findPostBySlugTitle(String slugTitle) throws Exception {
+		return postMapper.readPostBySlugTitle(slugTitle);
 	}
 
 	@Transactional
 	@Override
-	public void modify(PostVO postVO) throws Exception {
-		postMapper.update(postVO);
-		
-		categoryRelationMapper.update(postVO);
-		
+	public void modifyPost(PostVO postVO) throws Exception {
+		postMapper.updatePost(postVO);
+
+		categoryRelationMapper.updateCategoryRelation(postVO);
+
 		if (postVO.getTagList() != null && postVO.getTagList().size() > 0) {
-			tagRelationMapper.create(postVO);
+			tagRelationMapper.createTagRelation(postVO);
 		}
 	}
 
 	@Override
-	public void removeByIds(long[] ids) throws Exception {
-		postMapper.deleteByIds(ids);
+	public void removePostByIds(long[] ids) throws Exception {
+		postMapper.deletePostByIds(ids);
 	}
 
 	@Override
-	public List<PostVO> listAll() throws Exception {
-		return postMapper.listAll();
-	}
-	
-	@Override
-	public List<PostVO> findList(SearchCriteria searchCriteria) throws Exception {
-		return postMapper.readList(searchCriteria);
-	}
-	
-	@Override
-	public int countCriteria(SearchCriteria searchCriteria) throws Exception {
-		return postMapper.countPaging(searchCriteria);
+	public List<PostVO> findPosts() throws Exception {
+		return postMapper.readPosts();
 	}
 
 	@Override
-	public List<PostVO> findListByCategory(Set<Long> categoryLevelSet, SearchCriteria searchCriteria) throws Exception {
-		return postMapper.readListByCategory(categoryLevelSet, searchCriteria);
+	public List<PostVO> findPostsWithCriteria(SearchCriteria searchCriteria) throws Exception {
+		return postMapper.readPostsWithCriteria(searchCriteria);
 	}
 
 	@Override
-	public int countCriteriaByCategory(String slugTerm, SearchCriteria searchCriteria) throws Exception {
-		return postMapper.countPagingByCategory(slugTerm, searchCriteria);
+	public int countPostWithCriteria(SearchCriteria searchCriteria) throws Exception {
+		return postMapper.countPostWithCriteriaPaging(searchCriteria);
 	}
 
 	@Override
-	public List<PostVO> findListByTag(String slugTerm, SearchCriteria searchCriteria) throws Exception {
-		return postMapper.readListByTag(slugTerm, searchCriteria);
+	public List<PostVO> findPostsWithCriteriaByCategory(Set<Long> categoryLevelSet, SearchCriteria searchCriteria)
+			throws Exception {
+		return postMapper.readPostsWithCriteriaByCategory(categoryLevelSet, searchCriteria);
 	}
 
 	@Override
-	public int countCriteriaByTag(String slugTerm, SearchCriteria searchCriteria) throws Exception {
-		return postMapper.countPagingByTag(slugTerm, searchCriteria);
+	public int countPostByCategory(Set<Long> categoryLevelSet) throws Exception {
+		return postMapper.countPostPagingByCategory(categoryLevelSet);
+	}
+
+	@Override
+	public List<PostVO> findPostsWithCriteriaByTag(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		return postMapper.readPostsWithCriteriaByTag(slugTerm, searchCriteria);
+	}
+
+	@Override
+	public int countPostWithCriteriaByTag(String slugTerm, SearchCriteria searchCriteria) throws Exception {
+		return postMapper.countPostWithCriteriaPagingByTag(slugTerm, searchCriteria);
 	}
 
 }

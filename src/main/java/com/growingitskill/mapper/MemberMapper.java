@@ -10,7 +10,7 @@ import com.growingitskill.domain.MemberVO;
 public interface MemberMapper {
 
 	@Select("SELECT id FROM member WHERE login_id LIKE #{loginId}")
-	long readIdByLoginId(String loginId) throws Exception;
+	long readMemberIdByLoginId(String loginId) throws Exception;
 
 	@Select("SELECT * FROM member WHERE login_id LIKE #{loginId}")
 	@Results({ @Result(property = "loginId", column = "login_id"),

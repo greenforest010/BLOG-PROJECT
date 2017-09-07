@@ -22,7 +22,7 @@
 				<!-- start blog_left -->
 				<div class="blog_left">
 					<c:choose>
-						<c:when test="${empty tagList}">
+						<c:when test="${empty tags}">
 							<div class="blog_main">
 								<div class="b_right">
 									<p>태그가 없습니다.</p>
@@ -35,7 +35,7 @@
 									<div class="tag">
 										<h2>태그</h2>
 										<ul>
-											<c:forEach items="${tagList}" var="tag">
+											<c:forEach items="${tags}" var="tag">
 												<li><a href="/tag/${tag.slugTerm}">${tag.term}</a></li>
 											</c:forEach>
 										</ul>
@@ -59,20 +59,7 @@
 							<li><a href="/tag">태그 전체보기</a></li>
 							<div class="clear"></div>
 						</ul>
-
-						<!-- start flicker images -->
-						<h4>ads 125x125</h4>
-						<!-- <ul class="ads_nav">
-							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
-									alt=""> </a></li>
-							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
-									alt=""> </a></li>
-							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
-									alt=""> </a></li>
-							<li><a href="#"><img src="/resources/images/ads_pic.jpg"
-									alt=""> </a></li>
-							<div class="clear"></div>
-						</ul> -->
+						
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -107,6 +94,8 @@
 		success : function(data) {
 			var state = new Object();
 			state.opened = true;
+			
+			var postCount = ${postCountByCategory};
 
 			$.each(data, function(key, val) {
 				var items = new Object();
@@ -116,7 +105,7 @@
 				}
 
 				items.id = val.id.toString();
-				items.text = val.term;
+				items.text = val.term + "(" + postCount[val.id] + ")";
 				items.parent = val.parent.toString();
 				items.slugTerm = val.slugTerm;
 				items.state = state;

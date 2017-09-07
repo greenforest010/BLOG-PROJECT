@@ -42,7 +42,7 @@ public class CategoryRelationMapperTest {
 		postVO.setId(24);
 		postVO.setCategoryVO(categoryVO);
 		
-		categoryRelationMapper.create(postVO);
+		categoryRelationMapper.createCategoryRelation(postVO);
 	}
 
 }

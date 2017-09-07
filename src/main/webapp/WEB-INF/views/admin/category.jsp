@@ -77,13 +77,13 @@
 <script src="/resources/admin/vendors/jsTree/dist/jstree.min.js"></script>
 
 <script type="text/javascript">
-	/* $(function() {
+	$(function() {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$(document).ajaxSend(function(e, xhr, options) {
 			xhr.setRequestHeader(header, token);
 		});
-	}); */
+	});
 
 	var categoryData = [];
 
@@ -94,7 +94,7 @@
 		success : function(data) {
 			var state = new Object();
 			state.opened = true;
-			
+
 			$.each(data, function(key, val) {
 				var items = new Object();
 
@@ -107,7 +107,7 @@
 				items.parent = val.parent.toString();
 				items.slugTerm = val.slugTerm;
 				items.state = state;
-				
+
 				/* console.log("id: " + items.id + ", text: " + items.text
 						+ ", parent: " + items.parent + ", slugTerm: "
 						+ items.slugTerm); */
@@ -188,18 +188,20 @@
 		}).fail(function() {
 			data.instance.refresh();
 		});
-	}).jstree({
-		'core' : {
-			'data' : categoryData,
-			'check_callback' : true
-		},
-		'types' : {
-			'default' : {
-				'icon' : "fa fa-archive"
-			}
-		},
-		'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd', 'changed', 'types' ]
-	});
+	}).jstree(
+			{
+				'core' : {
+					'data' : categoryData,
+					'check_callback' : true
+				},
+				'types' : {
+					'default' : {
+						'icon' : "fa fa-archive"
+					}
+				},
+				'plugins' : [ 'contextmenu', 'unique', 'sort', 'dnd',
+						'changed', 'types' ]
+			});
 
 	$('#changeCategoryPermalink').on('click', function() {
 		var value = $('#categoryPermalinkInput').val();

@@ -84,11 +84,9 @@
 												<th class="column-title">제목</th>
 												<th class="column-title">글쓴이</th>
 												<th class="column-title">등록일</th>
-												<th class="column-title">조회수</th>
-												<th class="column-title">댓글</th>
 												<th class="column-title">카테고리</th>
-												<th class="column-title no-link last"><span
-													class="nobr">태그</span></th>
+												<!-- <th class="column-title no-link last"><span
+													class="nobr">태그</span></th> -->
 												<th class="bulk-actions" colspan="8"><a class="antoo"
 													style="color: #fff; font-weight: 500;">Bulk Actions ( <span
 														class="action-cnt"> </span> ) <i
@@ -106,8 +104,6 @@
 													<td>${postVO.memberVO.loginId}</td>
 													<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 															value="${postVO.published}" /></td>
-													<td>Paid</td>
-													<td>Paid</td>
 													<c:if test="${postVO.categoryVO.term != null}">
 														<td id="categoryTermTd${postVO.id}">${postVO.categoryVO.term}</td>
 													</c:if>
@@ -117,7 +113,7 @@
 															data-toggle="modal"><span style="color: cyan;">카테고리를
 																	설정하세요.</span></a></td>
 													</c:if>
-													<td><a href="#">View</a></td>
+													<!-- <td><a href="#">View</a></td> -->
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -130,7 +126,7 @@
 				</div>
 
 				<c:if test="${not empty list}">
-					<button id="deletePost" class="btn btn-danger">삭제</button>
+					<button id="deletePost" class="btn btn-danger pull-right">삭제</button>
 				</c:if>
 
 				<div class="text-center">
@@ -199,13 +195,13 @@
 </script>
 
 <script type="text/javascript">
-	/* $(function() {
+	$(function() {
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$(document).ajaxSend(function(e, xhr, options) {
 			xhr.setRequestHeader(header, token);
 		});
-	}); */
+	});
 </script>
 
 <script type="text/javascript">
@@ -287,9 +283,9 @@
 
 						keywordInput.focus();
 					} else {
-						var currentPath = window.location.pathname;
+						var postListPath = "/admin/post";
 
-						location.href = currentPath
+						location.href = postListPath
 								+ "${pageMaker.makeQuery(1)}"
 								+ "&keyword="
 								+ $(".top_search")

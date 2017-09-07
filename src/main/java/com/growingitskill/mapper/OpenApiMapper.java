@@ -12,6 +12,6 @@ public interface OpenApiMapper {
 	@Select("SELECT * FROM openapi WHERE api_name LIKE #{apiName}")
 	@Results({ @Result(property = "apiName", column = "api_name"), @Result(property = "clientId", column = "client_id"),
 			@Result(property = "clientSecret", column = "client_secret") })
-	NaverPapagoNMT readByApiName(String apiName) throws Exception;
+	NaverPapagoNMT readNaverPapagoNMTByApiName(String apiName) throws Exception;
 
 }

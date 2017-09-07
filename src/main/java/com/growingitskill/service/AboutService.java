@@ -2,8 +2,8 @@ package com.growingitskill.service;
 
 public interface AboutService {
 	
-	String find() throws Exception;
+	String findAbout() throws Exception;
 	
-	void modify(String content) throws Exception;
+	void modifyAboutContent(String content) throws Exception;
 
 }

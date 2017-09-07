@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Update;
 public interface AboutMapper {
 	
 	@Select("SELECT * FROM about")
-	String read() throws Exception;
+	String readAbout() throws Exception;
 	
 	@Update("UPDATE about SET content = #{content}")
-	void update(String content) throws Exception;
+	void updateAboutContent(String content) throws Exception;
 
 }

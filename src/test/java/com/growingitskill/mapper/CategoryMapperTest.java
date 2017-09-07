@@ -19,12 +19,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.growingitskill.config.MybatisJndiConfig;
 import com.growingitskill.domain.CategoryLevel;
+import com.growingitskill.domain.CategoryVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = MybatisJndiConfig.class)
 public class CategoryMapperTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(CategoryMapperTest.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CategoryMapperTest.class);
 
 	@BeforeClass
 	public static void jndiBind() throws NamingException {
@@ -48,6 +49,15 @@ public class CategoryMapperTest {
 
 		logger.info(categoryVO.toString());
 	}*/
+	
+	@Test
+	public void findCategoryBySlugTerm() throws Exception {
+		String slugTerm = "전체";
+		
+		CategoryVO categoryVO = categoryMapper.readCategoryBySlugTerm(slugTerm);
+		
+		LOGGER.info(categoryVO.toString());
+	}
 
 	/*@Test
 	public void selectCategory() throws Exception {
@@ -72,10 +82,11 @@ public class CategoryMapperTest {
 	
 	/*@Test
 	public void updateTerm() throws Exception {
-		long id = 3;
+		long id = 8;
 		String term = "마자용";
+		String slugTerm = term;
 		
-		categoryMapper.updateTermById(id, term);
+		categoryMapper.updateTermAndSlugTermById(id, term, slugTerm);
 	}*/
 	
 	/*@Test
@@ -106,7 +117,7 @@ public class CategoryMapperTest {
 		System.out.println(categoryMapper.listLeafCategory());
 	}*/
 	
-	@Test
+	/*@Test
 	public void listCategoryLevel() throws Exception {
 		String slugTerm = "전체";
 		
@@ -127,6 +138,6 @@ public class CategoryMapperTest {
 		}
 		
 		System.out.println(set);
-	}
+	}*/
 
 }
