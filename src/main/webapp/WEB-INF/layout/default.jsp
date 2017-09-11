@@ -15,6 +15,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- google webmaster -->
+<meta name="google-site-verification" content="BSZPwiWKqIKaGroPJT3Sdq29cw3zhvQIObtCUUQCq8E" />
+
+<!-- naver webmaster  -->
+<meta name="naver-site-verification" content="4c67b605b799adb05834b5092cf3379269271b83"/>
+
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600'
 	rel='stylesheet' type='text/css'>
@@ -32,6 +39,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!--  jquery plguin -->
 <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
+
+<!-- google analytics  -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-90421095-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
