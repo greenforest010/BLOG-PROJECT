@@ -1,6 +1,11 @@
 package com.growingitskill.controller;
 
+import java.io.IOException;
+import java.net.URI;
 import java.security.Principal;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,17 +14,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.service.AboutService;
 import com.growingitskill.service.AttachmentService;
 import com.growingitskill.util.MemberUtils;
+import com.growingitskill.util.UploadFileUtils;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+	
+	@Autowired
+	private ServletContext servletContext;
 
 	@Autowired
 	private AboutService aboutService;
@@ -76,6 +90,49 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("msg", "success");
 
 		return "redirect:/admin/about-edit";
+	}
+	
+	/**
+	 * 
+	 * @param upload
+	 *            CKeditor의 파일 업로드는 Request Payload의 name에 따라 MultipartFile
+	 *            변수이름을 "upload"라 해준다. (다른 이름일 시 파일을 못 찾는 버그 발생)
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "upload", method = RequestMethod.POST)
+	public String uploadByCKEditor(@RequestPart("upload") MultipartFile file,
+			@RequestParam("CKEditorFuncNum") int number, UriComponentsBuilder uriComponentsBuilder, Model model,
+			HttpServletResponse response) throws Exception {
+		printUploadFileInfo(file);
+		LOGGER.info("number: " + number);
+
+		String path = servletContext.getRealPath("/resources/upload");
+
+		String fullName = UploadFileUtils.uploadFile(path, file.getOriginalFilename(), file.getBytes());
+
+		AttachmentVO attachmentVO = new AttachmentVO();
+		attachmentVO.setFullName(fullName);
+		attachmentVO.setMimeType(file.getContentType());
+
+		attachmentService.addAttachment(attachmentVO);
+
+		URI locationUri = uriComponentsBuilder.path("/attachments/").path(String.valueOf(attachmentVO.getId())).build()
+				.toUri();
+
+		response.setHeader("Location", locationUri.toString());
+
+		model.addAttribute("CKEditorFuncNum", number);
+		model.addAttribute("fileUrl", "/resources/upload" + fullName);
+
+		return "admin/upload";
+	}
+	
+	private void printUploadFileInfo(MultipartFile file) throws IOException {
+		LOGGER.info("originalFilename: " + file.getOriginalFilename());
+		LOGGER.info("contentType: " + file.getContentType());
+		LOGGER.info("name: " + file.getName());
+		LOGGER.info("byte: " + file.getBytes());
+		LOGGER.info("size: " + file.getSize());
 	}
 
 }

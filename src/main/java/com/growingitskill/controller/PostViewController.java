@@ -1,15 +1,10 @@
 package com.growingitskill.controller;
 
-import java.io.IOException;
-import java.net.URI;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.domain.CategoryLevel;
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.domain.Criteria;
@@ -39,25 +30,17 @@ import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.exception.CategoryNotFoundException;
 import com.growingitskill.exception.PostNotFoundException;
 import com.growingitskill.mapper.CategoryRelationMapper;
-import com.growingitskill.service.AttachmentService;
 import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.PostService;
 import com.growingitskill.service.TagService;
 import com.growingitskill.util.MemberUtils;
 import com.growingitskill.util.TagUtils;
-import com.growingitskill.util.UploadFileUtils;
 
 @Controller
 @RequestMapping("/admin/post")
 public class PostViewController {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(PostViewController.class);
-
-	@Autowired
-	private ServletContext servletContext;
-
-	@Autowired
-	private AttachmentService attachmentService;
 
 	@Autowired
 	private CategoryService categoryService;
@@ -180,41 +163,6 @@ public class PostViewController {
 		return makePostList(list, searchCriteria, countCriteria, model);
 	}
 
-	/**
-	 * 
-	 * @param upload
-	 *            CKeditor의 파일 업로드는 Request Payload의 name에 따라 MultipartFile
-	 *            변수이름을 "upload"라 해준다. (다른 이름일 시 파일을 못 찾는 버그 발생)
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "upload", method = RequestMethod.POST)
-	public String uploadByCKEditor(@RequestPart("upload") MultipartFile file,
-			@RequestParam("CKEditorFuncNum") int number, UriComponentsBuilder uriComponentsBuilder, Model model,
-			HttpServletResponse response) throws Exception {
-		printUploadFileInfo(file);
-		LOGGER.info("number: " + number);
-
-		String path = servletContext.getRealPath("/resources/upload");
-
-		String fullName = UploadFileUtils.uploadFile(path, file.getOriginalFilename(), file.getBytes());
-
-		AttachmentVO attachmentVO = new AttachmentVO();
-		attachmentVO.setFullName(fullName);
-		attachmentVO.setMimeType(file.getContentType());
-
-		attachmentService.addAttachment(attachmentVO);
-
-		URI locationUri = uriComponentsBuilder.path("/attachments/").path(String.valueOf(attachmentVO.getId())).build()
-				.toUri();
-
-		response.setHeader("Location", locationUri.toString());
-
-		model.addAttribute("CKEditorFuncNum", number);
-		model.addAttribute("fileUrl", "/resources/upload" + fullName);
-
-		return "admin/post/upload";
-	}
-
 	private String makePostList(List<PostVO> list, SearchCriteria searchCriteria, int countCriteria, Model model) {
 		model.addAttribute("list", list);
 
@@ -251,14 +199,6 @@ public class PostViewController {
 		int result = (searchCriteria.getPerPageNum() < 20) ? 20 : searchCriteria.getPerPageNum();
 
 		return result;
-	}
-
-	private void printUploadFileInfo(MultipartFile file) throws IOException {
-		LOGGER.info("originalFilename: " + file.getOriginalFilename());
-		LOGGER.info("contentType: " + file.getContentType());
-		LOGGER.info("name: " + file.getName());
-		LOGGER.info("byte: " + file.getBytes());
-		LOGGER.info("size: " + file.getSize());
 	}
 
 }
