@@ -122,7 +122,7 @@
 
 <script type="text/javascript">
 	CKEDITOR.replace('content', {
-		filebrowserUploadUrl : '/admin/post/upload',
+		filebrowserUploadUrl : '/admin/upload?${_csrf.parameterName}=${_csrf.token}',
 		height: '25em'
 	});
 </script>
