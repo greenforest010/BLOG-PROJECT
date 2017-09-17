@@ -25,11 +25,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup,
 	display: block;
 }
 
-ol, ul {
+/* ol, ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-}
+} */
 
 blockquote, q {
 	quotes: none;
@@ -127,8 +127,11 @@ body {
 }
 
 .menu {
+	list-style: none;
 	float: left;
+	margin: 0;
 	margin-right: 40px;
+	padding: 0;
 }
 
 .menu li {
@@ -820,6 +823,12 @@ body {
 	margin: 0 8%;
 }
 
+.about ul {
+	margin: 0;
+	line-height: 24px;
+	list-style-position: inside;
+}
+
 .cont-grid {
 	float: left;
 	width: 62.3333%;
@@ -980,6 +989,7 @@ p.para {
 /*start blog_list */
 .blog_list {
 	float: left;
+	font-size: 1.2em;
 }
 
 .blog_list ul li {
@@ -1085,9 +1095,14 @@ p.para {
 .blog_left p {
 	margin: 2% 0 4%;
 	font-size: 0.8725em;
-	color: #A1A8AF;
 	line-height: 24px;
-	font-weight: 600;
+}
+
+.blog_left ul {
+	margin: 0;
+	padding: 0;
+	font-size: 0.8725em;
+	list-style-position: inside;
 }
 /* Circular Content Carousel Style */
 .ca-container {
@@ -1314,6 +1329,14 @@ p.para {
 /* start custom tag */
 .tag {
 	margin: 8% 0;
+}
+
+.tag h2 {
+	font-size: 1.5em;
+}
+
+.tag ul {
+	padding: 0px;
 }
 
 .tag ul li {
