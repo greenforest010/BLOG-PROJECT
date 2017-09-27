@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.growingitskill.config.WebAppInitializer;
 import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.service.AboutService;
 import com.growingitskill.service.AttachmentService;
@@ -106,7 +107,7 @@ public class AdminController {
 		printUploadFileInfo(file);
 		LOGGER.info("number: " + number);
 
-		String path = servletContext.getRealPath("/resources/upload");
+		String path = WebAppInitializer.uploadPath;
 
 		String fullName = UploadFileUtils.uploadFile(path, file.getOriginalFilename(), file.getBytes());
 

@@ -173,13 +173,7 @@
 		});
 	}).on('delete_node.jstree', function(e, data) {
 		console.log("delete: " + data.node.id);
-
-		if (data.node.id == 1 || data.node.id == 2) {
-			alert("이 카테고리는 삭제 할 수 없습니다.");
-
-			return false;
-		}
-
+		
 		$.ajax({
 			method : 'DELETE',
 			url : '/categories/' + data.node.id
@@ -192,7 +186,17 @@
 			{
 				'core' : {
 					'data' : categoryData,
-					'check_callback' : true
+					'check_callback' : function(operation, node, parent, position, more) {
+						if (operation === "move_node" || "rename_node" || "delete_node") {
+							if (node.id === "1" || node.id === "2") {
+								alert("이 카테고리는 해당 작업을 할 수 없습니다.");
+
+								return false;
+							}
+						}
+
+						return true;
+					}
 				},
 				'types' : {
 					'default' : {
