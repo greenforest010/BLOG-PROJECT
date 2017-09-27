@@ -57,7 +57,7 @@
 									</c:forEach>
 								</select>
 							</div>
-							
+
 							<div class="form-group">
 								<label for="tag">태그</label>
 								<textarea id="tag" name="tags"></textarea>
@@ -75,7 +75,8 @@
 							</div>
 
 							<div class="form-group">
-								<input type="submit" class="btn btn-success pull-right" value="확인">
+								<input type="submit" class="btn btn-success pull-right"
+									value="확인">
 							</div>
 						</sf:form>
 					</div>
@@ -99,10 +100,11 @@
 	src="/resources/admin/vendors/jQuery-tagEditor/jquery.caret.min.js"></script>
 
 <script type="text/javascript">
-	CKEDITOR.replace('content', {
-		filebrowserUploadUrl : '/admin/upload?${_csrf.parameterName}=${_csrf.token}',
-		height: '25em'
-	});
+	CKEDITOR.replace('content',
+					{
+						filebrowserUploadUrl : '/admin/upload?${_csrf.parameterName}=${_csrf.token}',
+						height : '25em'
+					});
 </script>
 
 <script type="text/javascript">
@@ -122,6 +124,19 @@
 	$("#tag").tagEditor({
 		delimiter : ', ', /* space and comma */
 		placeholder : '태그를 입력할 수 있습니다.'
+	});
+</script>
+
+<script type="text/javascript">
+	$("form").submit(function(event) {
+		var content = CKEDITOR.instances.content;
+
+		if (!content.getData()) {
+			alert("내용을 입력해주세요.");
+
+			content.focus();
+			return false;
+		}
 	});
 </script>
 <!-- /page content -->

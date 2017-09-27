@@ -47,16 +47,22 @@
 																pattern="yyyy-MM-dd HH:mm" value="${postVO.published}" />
 													</span></a></li>
 												<li><a href="/category/${postVO.categoryVO.slugTerm}">
-														<i class="fa fa-archive fa-lg" style="background: none; margin-top: 5px"></i><span>${postVO.categoryVO.term} </span>
+														<i class="fa fa-archive fa-lg"
+														style="background: none; margin-top: 5px"></i><span>${postVO.categoryVO.term}
+													</span>
 												</a></li>
-												<li><a href="/post/${postVO.slugTitle}#disqus_thread"> <i
-														class="comment"> </i> <span>Comments</span></a></li>
+												<li><a href="/post/${postVO.slugTitle}#disqus_thread">
+														<i class="comment"> </i> <span>Comments</span>
+												</a></li>
 											</ul>
 											<div class="clear"></div>
 										</div>
 									</div>
 									<div class="clear"></div>
-									<p>${postVO.content}</p>
+
+									<div class="b_content">
+										<p>${postVO.content}</p>
+									</div>
 								</div>
 							</c:forEach>
 						</c:otherwise>

@@ -15,19 +15,19 @@
 
 <!-- Bootstrap -->
 <link
-	href="resources/admin/vendors/bootstrap/dist/css/bootstrap.min.css"
+	href="resources/login/vendors/bootstrap/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- Font Awesome -->
 <link
-	href="resources/admin/vendors/font-awesome/css/font-awesome.min.css"
+	href="resources/login/vendors/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
 <!-- Animate.css -->
 <!-- <link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet"> -->
-<link href="resources/admin/vendors/animate.css/animate.min.css"
+<link href="resources/login/vendors/animate.css/animate.min.css"
 	rel="stylesheet">
 
 <!-- Custom Theme Style -->
-<link href="resources/admin/build/css/custom.min.css" rel="stylesheet">
+<link href="resources/login/build/css/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="login">

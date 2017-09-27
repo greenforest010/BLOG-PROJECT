@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(encodingFilter, CsrfFilter.class);
 
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/categories/**", "/tags/**").permitAll()
-				.antMatchers("/attachments/**", "/categories/**", "/posts/**", "/tags/**", "/admin/about-edit")
+				.antMatchers("/attachments/**", "/categories/**", "/posts/**", "/tags/**", "/admin/about-edit", "/resources/admin/**")
 				.hasAuthority("ROLE_ADMIN").and().headers().frameOptions().sameOrigin().and().httpBasic();
 
 		http.formLogin().loginPage("/login").usernameParameter("username").passwordParameter("password")

@@ -30,7 +30,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup,
 	margin: 0;
 	padding: 0;
 } */
-
 blockquote, q {
 	quotes: none;
 }
@@ -826,7 +825,6 @@ body {
 .about ul {
 	margin: 0;
 	line-height: 24px;
-	list-style-position: inside;
 }
 
 .cont-grid {
@@ -986,10 +984,19 @@ p.para {
 	font-weight: 600;
 	margin-bottom: 2%;
 }
+
+.b_content {
+	line-height: 32px;
+}
 /*start blog_list */
 .blog_list {
 	float: left;
-	font-size: 1.2em;
+}
+
+.blog_list ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 .blog_list ul li {
@@ -1092,18 +1099,7 @@ p.para {
 	padding-left: 5px;
 }
 /* end blog_list */
-.blog_left p {
-	margin: 2% 0 4%;
-	font-size: 0.8725em;
-	line-height: 24px;
-}
 
-.blog_left ul {
-	margin: 0;
-	padding: 0;
-	font-size: 0.8725em;
-	list-style-position: inside;
-}
 /* Circular Content Carousel Style */
 .ca-container {
 	position: relative;
@@ -1854,6 +1850,10 @@ span.tab-img {
 	-webkit-box-shadow: 0px 0px 5px #DDDDDD;
 	-moz-box-shadow: 0px 0px 5px #DDDDDD;
 	-o-box-shadow: 0px 0px 5px #DDDDDD;
+}
+
+.det_text {
+	line-height: 32px;
 }
 /***** Media Quries *****/
 @media only screen and (max-width: 1366px) {

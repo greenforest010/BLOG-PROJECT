@@ -96,7 +96,8 @@
 							</div>
 
 							<div class="form-group">
-								<input type="submit" class="btn btn-primary pull-right" value="수정">
+								<input type="submit" class="btn btn-primary pull-right"
+									value="수정">
 							</div>
 						</sf:form>
 					</div>
@@ -121,10 +122,11 @@
 	src="/resources/admin/vendors/jQuery-tagEditor/jquery.caret.min.js"></script>
 
 <script type="text/javascript">
-	CKEDITOR.replace('content', {
-		filebrowserUploadUrl : '/admin/upload?${_csrf.parameterName}=${_csrf.token}',
-		height: '25em'
-	});
+	CKEDITOR.replace('content',
+					{
+						filebrowserUploadUrl : '/admin/upload?${_csrf.parameterName}=${_csrf.token}',
+						height : '25em'
+					});
 </script>
 
 <script type="text/javascript">
@@ -147,5 +149,18 @@
 		initialTags : tagList,
 		delimiter : ', ',
 		placeholder : '태그를 입력할 수 있습니다.'
+	});
+</script>
+
+<script type="text/javascript">
+	$("form").submit(function(event) {
+		var content = CKEDITOR.instances.content;
+
+		if (!content.getData()) {
+			alert("내용을 입력해주세요.");
+
+			content.focus();
+			return false;
+		}
 	});
 </script>
