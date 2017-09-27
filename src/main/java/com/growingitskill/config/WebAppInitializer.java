@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	
-	public static final String uploadPath = "/var/lib/tomcat8/webapps/BLOP-2017/resources/upload";
+	public static final String uploadPath = "/var/lib/tomcat8/webapps/upload";
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {

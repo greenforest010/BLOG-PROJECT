@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.growingitskill.config.WebAppInitializer;
 import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.service.AttachmentService;
 import com.growingitskill.util.UploadFileUtils;
@@ -33,9 +34,6 @@ import com.growingitskill.util.UploadFileUtils;
 public class AttachmentController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AttachmentController.class);
-
-	@Autowired
-	private ServletContext servletContext;
 
 	@Autowired
 	private AttachmentService attachmentService;
@@ -108,8 +106,8 @@ public class AttachmentController {
 		attachmentService.removeAttachmentByIds(ids);
 	}
 	
-	private String getUploadPath() {
-		return servletContext.getRealPath("/resources/upload");
+	private String getUploadPath() {		
+		return WebAppInitializer.uploadPath;
 	}
 
 	private ResponseEntity<AttachmentVO> responseFindAttachment(long id) throws Exception {
