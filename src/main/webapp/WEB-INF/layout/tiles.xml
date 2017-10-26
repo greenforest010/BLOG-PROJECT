@@ -55,6 +55,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/admin/about_edit.jsp" />
 	</definition>
 	
+	<definition name="admin/blog-info" extends="adminBase">
+		<put-attribute name="content" value="/WEB-INF/views/admin/blog_info.jsp" />
+	</definition>
+	
 	<definition name="admin/category" extends="adminBase">
 		<put-attribute name="content" value="/WEB-INF/views/admin/category.jsp" />
 	</definition>

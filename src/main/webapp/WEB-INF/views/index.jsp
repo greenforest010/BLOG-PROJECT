@@ -7,7 +7,7 @@
 <div class="slider_bg">
 	<div class="wrap">
 		<div class="slider">
-			<h2>Welcome, green010's BLOG</h2>
+			<h2>${blogInfo.subtitle}</h2>
 			<h3>I Hope you get a Good Inspiration!</h3>
 		</div>
 	</div>
@@ -102,6 +102,11 @@
 							<li><a href="/tag">태그 전체보기</a></li>
 							<div class="clear"></div>
 						</ul>
+
+						<!-- start subscribe -->
+						<h4>Subscribe</h4>
+						<a href="/feed"><i class="fa fa-rss-square fa-4x"
+							style="color: orange;"></i></a>
 
 					</div>
 				</div>

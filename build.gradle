@@ -70,5 +70,6 @@ dependencies {
     compile "org.springframework:spring-tx:$springVersion"
     compile "org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion"
     compile "com.github.slugify:slugify:$slugifyVersion"
+    compile "com.rometools:rome:$romeVersion"
     testImplementation "junit:junit:$junitVersion"
 }
