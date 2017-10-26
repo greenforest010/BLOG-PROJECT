@@ -26,6 +26,7 @@ import com.growingitskill.exception.CategoryNotFoundException;
 import com.growingitskill.exception.PostNotFoundException;
 import com.growingitskill.exception.TagNotFoundException;
 import com.growingitskill.service.AboutService;
+import com.growingitskill.service.BlogInfoService;
 import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.PostService;
 import com.growingitskill.service.TagService;
@@ -47,9 +48,14 @@ public class IndexController {
 
 	@Autowired
 	private AboutService aboutService;
+	
+	@Autowired
+	private BlogInfoService blogInfoService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String moveIndex(SearchCriteria searchCriteria, Model model) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		List<PostVO> list = postService.findPostsWithCriteria(searchCriteria);
 
 		int countPostWithCriteria = postService.countPostWithCriteria(searchCriteria);

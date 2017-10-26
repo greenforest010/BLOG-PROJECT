@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -22,8 +21,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.growingitskill.config.WebAppInitializer;
 import com.growingitskill.domain.AttachmentVO;
+import com.growingitskill.domain.BlogInfo;
 import com.growingitskill.service.AboutService;
 import com.growingitskill.service.AttachmentService;
+import com.growingitskill.service.BlogInfoService;
 import com.growingitskill.util.MemberUtils;
 import com.growingitskill.util.UploadFileUtils;
 
@@ -32,15 +33,15 @@ import com.growingitskill.util.UploadFileUtils;
 public class AdminController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
-	
-	@Autowired
-	private ServletContext servletContext;
 
 	@Autowired
 	private AboutService aboutService;
 
 	@Autowired
 	private AttachmentService attachmentService;
+	
+	@Autowired
+	private BlogInfoService blogInfoService;
 	
 	@Autowired
 	private MemberUtils memberUtils;
@@ -91,6 +92,22 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("msg", "success");
 
 		return "redirect:/admin/about-edit";
+	}
+	
+	@RequestMapping(value = "blog-info", method = RequestMethod.GET)
+	public String moveBlogInfo(Model model) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
+		return "admin/blog-info";
+	}
+	
+	@RequestMapping(value = "blog-info", method = RequestMethod.PUT)
+	public String modifyBlogInfo(BlogInfo blogInfo, RedirectAttributes redirectAttributes) throws Exception {
+		blogInfoService.modifyBlogInfo(blogInfo);
+		
+		redirectAttributes.addFlashAttribute("msg", "success");
+		
+		return "redirect:/admin/blog-info";
 	}
 	
 	/**

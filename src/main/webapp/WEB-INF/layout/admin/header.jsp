@@ -8,7 +8,8 @@
 		<div class="col-md-3 left_col">
 			<div class="left_col scroll-view">
 				<div class="navbar nav_title" style="border: 0;">
-					<a href="/admin" class="site_title"><i class="fa fa-level-up"></i> <span>GrowingITSkill</span></a>
+					<a href="/admin" class="site_title"><i class="fa fa-level-up"></i>
+						<span>GrowingITSkill</span></a>
 				</div>
 
 				<div class="clearfix"></div>
@@ -46,7 +47,10 @@
 							<li><a href="/admin/media"><i class="fa fa-picture-o"></i>미디어
 									리소스</a></li>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
-								<li><a href="/admin/about-edit"><i class="fa fa-user"></i>블로그 소개 편집</a></li>
+								<li><a href="/admin/blog-info"><i class="fa fa-info"></i>블로그
+										정보</a></li>
+								<li><a href="/admin/about-edit"><i class="fa fa-user"></i>블로그
+										소개 편집</a></li>
 							</sec:authorize>
 							<li><a href="/"><i class="fa fa-home"></i>블로그 페이지로 이동</a></li>
 						</ul>

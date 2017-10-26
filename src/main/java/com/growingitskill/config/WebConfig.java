@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.growingitskill.controller")
+@ComponentScan({"com.growingitskill.controller", "com.growingitskill.feed"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 	
 	@Bean
@@ -29,6 +30,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		tilesConfigurer.setCheckRefresh(true);
 		
 		return tilesConfigurer;
+	}
+	
+	@Bean
+	public ViewResolver beanNameViewResolver() {
+		return new BeanNameViewResolver();
 	}
 	
 	@Bean
