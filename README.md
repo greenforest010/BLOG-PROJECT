@@ -204,3 +204,5 @@
 
 - #### 2017.11.7
   - 블로그 페이지에서 "ol" tag layout 변경(들여쓰기)
+  - 글 에디터에 Code Snippet 적용(특정 언어 코드를 삽입 시 보기 좋게 함)
+  - 블로그 페이지에 Highlight 적용(특정 언어 코드를 Syntax Highlighting)

@@ -36,6 +36,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- jsTree  -->
 <link rel="stylesheet"
 	href="/resources/js/jsTree/dist/themes/default/style.min.css" />
+	
+<!-- highlight.js  -->
+<link rel="stylesheet" href="/resources/js/highlight/styles/monokai.css" />
+
+<script type="text/javascript" src="/resources/js/highlight/highlight.pack.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
 
 <!--  jquery plguin -->
 <script type="text/javascript" src="/resources/js/jquery.min.js"></script>
