@@ -13,10 +13,20 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberMapper 
 	public long readMemberIdByLoginId(String loginId) throws Exception {
 		return getSqlSession().selectOne(namespace + ".readMemberIdByLoginId", loginId);
 	}
+	
+	@Override
+	public MemberVO readMemberById(long id) throws Exception {
+		return getSqlSession().selectOne(namespace + ".readMemberById", id);
+	}
 
 	@Override
 	public MemberVO readMemberByLoginId(String loginId) throws Exception {
 		return getSqlSession().selectOne(namespace + ".readMemberByLoginId", loginId);
+	}
+	
+	@Override
+	public MemberVO readMemberByAdminRole() throws Exception {
+		return getSqlSession().selectOne(namespace + ".readMemberByRole");
 	}
 
 	@Override

@@ -1,12 +1,15 @@
 package com.growingitskill.feed;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.feed.AbstractAtomFeedView;
 
@@ -16,9 +19,13 @@ import com.rometools.rome.feed.atom.Content;
 import com.rometools.rome.feed.atom.Entry;
 import com.rometools.rome.feed.atom.Feed;
 import com.rometools.rome.feed.atom.Link;
+import com.rometools.rome.feed.atom.Person;
+import com.rometools.rome.feed.synd.SyndPerson;
 
 @Component
 public class FeedView extends AbstractAtomFeedView {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(FeedView.class);
 	
 	@Override
 	protected void buildFeedMetadata(Map<String, Object> model, Feed feed, HttpServletRequest request) {
@@ -27,9 +34,22 @@ public class FeedView extends AbstractAtomFeedView {
 		Content content = new Content();
 		content.setValue(feedInfo.getSubtitle());
 		
+		Link link = new Link();
+		
+		if (feedInfo.getLink() != null) {
+			String href = feedInfo.getLink().getProtocol() + "://" + feedInfo.getLink().getHost() + "/";
+			
+			link.setHref(href);
+		}
+		
+		SyndPerson person = new Person();
+		person.setName(feedInfo.getAuthor());
+		
 		feed.setId(feedInfo.getId());
 		feed.setTitle(feedInfo.getTitle());
 		feed.setSubtitle(content);
+		feed.setAlternateLinks(Arrays.asList(link));
+		feed.setAuthors(Arrays.asList(person));
 		feed.setCopyright(feedInfo.getRights());
 	}
 
@@ -44,10 +64,25 @@ public class FeedView extends AbstractAtomFeedView {
 			Entry entry = new Entry();
 			
 			Link link = new Link();
-			link.setHref(feedEntry.getLink());
+			
+			if (feedEntry.getLink() != null) {
+				String href = feedEntry.getLink().getProtocol() + "://" + feedEntry.getLink().getHost() + feedEntry.getLink().getPath();
+				
+				link.setHref(href);
+			}
+			
+			SyndPerson person = new Person();
+			person.setName(feedEntry.getAuthor());
+			
+			Content content = new Content();
+			content.setValue(feedEntry.getContent());
+			content.setType(Content.HTML);
 			
 			entry.setId(feedEntry.getId());
 			entry.setTitle(feedEntry.getTitle());
+			entry.setAuthors(Arrays.asList(person));
+			entry.setContents(Arrays.asList(content));
+			entry.setAlternateLinks(Arrays.asList(link));
 			entry.setUpdated(feedEntry.getUpdated());
 			entry.setPublished(feedEntry.getPublished());
 			

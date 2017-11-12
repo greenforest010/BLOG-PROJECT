@@ -16,17 +16,25 @@ public class MemberServiceImpl implements MemberService {
 	public long findMemberIdByLoginId(String loginId) throws Exception {
 		return memberMapper.readMemberIdByLoginId(loginId);
 	}
+	
+	@Override
+	public MemberVO findMemberById(long id) throws Exception {
+		return memberMapper.readMemberById(id);
+	}
 
 	@Override
 	public MemberVO findMemberByLoginId(String loginId) throws Exception {
 		return memberMapper.readMemberByLoginId(loginId);
+	}
+	
+	@Override
+	public MemberVO findMemberByAdminRole() throws Exception {
+		return memberMapper.readMemberByAdminRole();
 	}
 
 	@Override
 	public void modifyMemberByLoginId(MemberVO memberVO) throws Exception {
 		memberMapper.updateMemberByLoginId(memberVO);
 	}
-	
-	
 
 }

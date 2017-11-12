@@ -11,6 +11,7 @@ import org.springframework.mock.jndi.SimpleNamingContextBuilder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.growingitskill.config.MybatisJndiConfig;
 import com.growingitskill.domain.MemberVO;
 
@@ -37,16 +38,32 @@ public class MemberMapperTest {
 		String loginId = "testuser";
 		
 		System.out.println("id: " + memberMapper.readIdByLoginId(loginId));
-	}
+	}*/
+	
+	/*@Test
+	public void getMemberById() throws Exception {
+		long id = 1;
+		
+		MemberVO memberVO = memberMapper.readMemberById(id);
+		
+		System.out.println(memberVO.toString());
+	}*/
 	
 	@Test
+	public void getMemberByAdminRole() throws Exception {
+		MemberVO memberVO = memberMapper.readMemberByAdminRole();
+		
+		System.out.println(memberVO.toString());
+	}
+	
+	/*@Test
 	public void getMemberByLoginId() throws Exception {
 		String loginId = "testuser";
 		
 		System.out.println(memberMapper.readMemberByLoginId(loginId).toString());
 	}*/
 	
-	@Test
+	/*@Test
 	public void updateMember() throws Exception {
 		String loginId = "testuser";
 		
@@ -58,5 +75,5 @@ public class MemberMapperTest {
 		memberMapper.updateMemberByLoginId(memberVO);
 		
 		System.out.println(memberMapper.readMemberByLoginId(loginId).toString());
-	}
+	}*/
 }
