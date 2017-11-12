@@ -1,5 +1,6 @@
 package com.growingitskill.domain;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,9 @@ public class FeedEntry {
 	private Date updated;
 	
 	// recommended
-	private String link;
+	private String author;
+	private String content;
+	private URL link;
 	
 	// optional
 	private Date published;
@@ -46,12 +49,28 @@ public class FeedEntry {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
-
-	public String getLink() {
-		return link;
+	
+	public String getAuthor() {
+		return author;
+	}
+	
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	
+	public String getContent() {
+		return content;
+	}
+	
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public void setLink(String link) {
+	public URL getLink() {
+		return link;
+	}
+	
+	public void setLink(URL link) {
 		this.link = link;
 	}
 	
