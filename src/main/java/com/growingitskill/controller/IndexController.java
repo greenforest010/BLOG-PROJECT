@@ -73,6 +73,8 @@ public class IndexController {
 	@RequestMapping(value = "/post/{slugTitle}", method = RequestMethod.GET)
 	public String movePostDetailsBySlugTitle(@PathVariable("slugTitle") String slugTitle, Model model)
 			throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		PostVO postVO = postService.findPostBySlugTitle(slugTitle);
 
 		if (postVO == null) {
@@ -105,6 +107,8 @@ public class IndexController {
 
 	@RequestMapping(value = "/tag", method = RequestMethod.GET)
 	public String moveTag(Model model) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		model.addAttribute("tags", tagService.findTags());
 
 		model.addAttribute("postCountByCategory", getPostCountByCategory());
@@ -115,6 +119,8 @@ public class IndexController {
 	@RequestMapping(value = "/tag/{slugTerm}", method = RequestMethod.GET)
 	public String moveIndexByTagSlugTerm(@PathVariable("slugTerm") String slugTerm, SearchCriteria searchCriteria,
 			Model model) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		TagVO tagVO = tagService.findTagBySlugTerm(slugTerm);
 
 		if (tagVO == null) {

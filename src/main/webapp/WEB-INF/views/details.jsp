@@ -7,7 +7,7 @@
 <div class="slider_bg">
 	<div class="wrap">
 		<div class="slider">
-			<h2>Welcome, green010's BLOG</h2>
+			<h2>${blogInfo.subtitle}</h2>
 			<h3>I Hope you get a Good Inspiration!</h3>
 		</div>
 	</div>
