@@ -64,17 +64,6 @@
 							</div>
 
 							<div class="form-group">
-								<label for="permalink">고유주소*</label>
-								<div class="row">
-									<div class="col-md-5">
-										<input type="text" class="form-control" name="slugTitle"
-											placeholder="고유주소를 입력해주세요." required />
-									</div>
-									<div class="col-md-7"></div>
-								</div>
-							</div>
-
-							<div class="form-group">
 								<input type="submit" class="btn btn-success pull-right"
 									value="확인">
 							</div>
