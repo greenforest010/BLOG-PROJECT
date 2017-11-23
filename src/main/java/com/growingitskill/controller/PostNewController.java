@@ -60,7 +60,7 @@ public class PostNewController {
 			throws Exception {
 		tagUtils.connnectPostAndNewTagList(tags, postVO);
 
-		String slugTitle = slugUtils.slug(translationUtils.translate(postVO.getSlugTitle(), "ko", "en"));
+		String slugTitle = slugUtils.slug(translationUtils.translate(postVO.getTitle(), "ko", "en"));
 
 		CategoryVO categoryVO = new CategoryVO();
 		categoryVO.setId(categoryId);
