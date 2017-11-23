@@ -90,6 +90,8 @@ public class IndexController {
 	@RequestMapping(value = "/category/{slugTerm}", method = RequestMethod.GET)
 	public String moveIndexByCategory(@PathVariable("slugTerm") String slugTerm, SearchCriteria searchCriteria,
 			Model model) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		CategoryVO categoryVO = categoryService.findCategoryBySlugTerm(slugTerm);
 
 		if (categoryVO == null) {
