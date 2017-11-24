@@ -216,3 +216,6 @@
   - 블로그 페이지의 footer 영역에 CCL(Creative Commons License) 추가
   - 블로그 페이지에서 카테고리로 검색 시 블로그 부제목이 안나오는 문제 수정
   - 블로그 페이지에서 일부 글 내용의 길이가 길면 지정된 레이아웃을 벗어나는 문제 수정
+
+- #### 2017.11.25
+  - Enhanced Image Plugin(CKEditor Plugin) 추가
