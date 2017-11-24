@@ -987,6 +987,12 @@ p.para {
 
 .b_content {
 	line-height: 32px;
+	word-break: break-all;
+}
+
+.b_content pre code {
+  white-space: pre;
+  overflow-x: auto;
 }
 /*start blog_list */
 .blog_list {
