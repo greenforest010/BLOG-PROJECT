@@ -969,9 +969,13 @@ p.para {
 	margin: 4% 0;
 }
 
-.blog_main img {
-	width: 100%;
-	margin: 4% 0;
+.blog_main figure {
+	display: inline-block;
+}
+
+.blog_main figcaption {
+	font-size: 70%;
+	text-align: center;
 }
 
 .blog_main iframe {
@@ -1850,7 +1854,6 @@ span.tab-img {
 }
 
 .details img {
-	margin: 2% 0;
 	padding: 5px;
 	box-shadow: 0px 0px 5px #DDDDDD;
 	-webkit-box-shadow: 0px 0px 5px #DDDDDD;
@@ -1866,6 +1869,15 @@ span.tab-img {
 .det_text pre code {
   white-space: pre;
   overflow-x: auto;
+}
+
+.det_text figure{
+	display: inline-block;
+}
+
+.det_text figcaption {
+	font-size: 70%;
+	text-align: center;
 }
 /***** Media Quries *****/
 @media only screen and (max-width: 1366px) {
