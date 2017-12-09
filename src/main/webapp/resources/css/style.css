@@ -1860,6 +1860,12 @@ span.tab-img {
 
 .det_text {
 	line-height: 32px;
+	word-break: break-all;
+}
+
+.det_text pre code {
+  white-space: pre;
+  overflow-x: auto;
 }
 /***** Media Quries *****/
 @media only screen and (max-width: 1366px) {
