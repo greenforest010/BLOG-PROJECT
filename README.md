@@ -219,3 +219,6 @@
 
 - #### 2017.11.25
   - Enhanced Image Plugin(CKEditor Plugin) 추가
+
+- #### 2017.12.9
+  - 이미지의 캡션 스타일 조정
