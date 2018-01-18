@@ -8,8 +8,8 @@
 		<div class="col-md-3 left_col">
 			<div class="left_col scroll-view">
 				<div class="navbar nav_title" style="border: 0;">
-					<a href="/admin" class="site_title"><i class="fa fa-level-up"></i>
-						<span>GrowingITSkill</span></a>
+					<a href="/admin" class="site_title"><img
+						src="/resources/images/logo.png" alt="Logo Not Found" /></a>
 				</div>
 
 				<div class="clearfix"></div>
