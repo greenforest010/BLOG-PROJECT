@@ -17,6 +17,8 @@
 
 <title>GrowingITSkill</title>
 
+<link rel="shortcut icon" type="image/x-icon" href="/resources/admin/images/favicon.ico"/>
+
 <!-- Bootstrap -->
 <link
 	href="/resources/admin/vendors/bootstrap/dist/css/bootstrap.min.css"

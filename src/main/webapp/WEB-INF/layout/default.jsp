@@ -21,7 +21,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!-- naver webmaster  -->
 <meta name="naver-site-verification" content="4c67b605b799adb05834b5092cf3379269271b83"/>
-
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600'
 	rel='stylesheet' type='text/css'>
