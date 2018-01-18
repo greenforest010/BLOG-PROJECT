@@ -60,6 +60,11 @@
 							<div class="clear"></div>
 						</ul>
 						
+						<!-- start subscribe -->
+						<h4>Subscribe</h4>
+						<a href="/feed"><i class="fa fa-rss-square fa-4x"
+							style="color: orange;"></i></a>
+						
 					</div>
 				</div>
 				<div class="clear"></div>

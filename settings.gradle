@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'BLOP-2017'
+rootProject.name = 'BLOG-PROJECT'
