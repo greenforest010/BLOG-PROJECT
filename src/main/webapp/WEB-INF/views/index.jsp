@@ -59,10 +59,6 @@
 										</div>
 									</div>
 									<div class="clear"></div>
-
-									<div class="b_content">
-										<p>${postVO.content}</p>
-									</div>
 								</div>
 							</c:forEach>
 						</c:otherwise>
@@ -125,14 +121,6 @@
 <script src="/resources/js/jsTree/dist/jstree.min.js"></script>
 
 <script type="text/javascript">
-	/* $(function() {
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$(document).ajaxSend(function(e, xhr, options) {
-			xhr.setRequestHeader(header, token);
-		});
-	}); */
-
 	var categoryData = [];
 
 	$.ajax({
