@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.domain.Criteria;
 import com.growingitskill.domain.PostVO;
+import com.growingitskill.service.BlogInfoService;
 import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.PostService;
 import com.growingitskill.util.MemberUtils;
@@ -28,6 +29,9 @@ import com.growingitskill.util.TranslationUtils;
 public class PostNewController {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(PostNewController.class);
+	
+	@Autowired
+	private BlogInfoService blogInfoService;
 
 	@Autowired
 	private CategoryService categoryService;
@@ -49,6 +53,8 @@ public class PostNewController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public void movePostNew(@ModelAttribute Criteria criteria, Model model, Principal principal) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		model.addAttribute("categoryList", categoryService.findLeafCategories());

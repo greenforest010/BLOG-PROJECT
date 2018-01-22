@@ -1,9 +1,11 @@
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- footer content -->
 <footer>
 	<div class="pull-right">
-		&copy; <a href="/">www.growingitskill.com</a> All right reserved.
-		Gentelella - Bootstrap Admin Template by <a
+		${blogInfo.rights} Gentelella - Bootstrap Admin Template by <a
 			href="https://colorlib.com">Colorlib</a>
 	</div>
 	<div class="clearfix"></div>

@@ -65,6 +65,8 @@ public class IndexController {
 
 	@RequestMapping(value = "about", method = RequestMethod.GET)
 	public String moveAbout(Model model) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		model.addAttribute("content", aboutService.findAbout());
 
 		return "about";

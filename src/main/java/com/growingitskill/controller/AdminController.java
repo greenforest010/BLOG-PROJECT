@@ -48,6 +48,8 @@ public class AdminController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String moveIndex(Model model, Principal principal) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 
 		return "admin/main";
@@ -55,6 +57,8 @@ public class AdminController {
 
 	@RequestMapping(value = "category", method = RequestMethod.GET)
 	public String moveCategory(Model model, Principal principal) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		return "admin/category";
@@ -62,6 +66,8 @@ public class AdminController {
 
 	@RequestMapping(value = "tag", method = RequestMethod.GET)
 	public String moveTag(Model model, Principal principal) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		return "admin/tag";
@@ -69,6 +75,8 @@ public class AdminController {
 
 	@RequestMapping(value = "media", method = RequestMethod.GET)
 	public String moveMedia(Model model, Principal principal) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		model.addAttribute("list", attachmentService.listAll());
@@ -78,6 +86,8 @@ public class AdminController {
 
 	@RequestMapping(value = "about-edit", method = RequestMethod.GET)
 	public String moveAboutEdit(Model model, Principal principal) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		model.addAttribute("content", aboutService.findAbout());

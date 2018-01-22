@@ -30,6 +30,7 @@ import com.growingitskill.domain.SearchCriteria;
 import com.growingitskill.exception.CategoryNotFoundException;
 import com.growingitskill.exception.PostNotFoundException;
 import com.growingitskill.mapper.CategoryRelationMapper;
+import com.growingitskill.service.BlogInfoService;
 import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.PostService;
 import com.growingitskill.service.TagService;
@@ -41,6 +42,9 @@ import com.growingitskill.util.TagUtils;
 public class PostViewController {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(PostViewController.class);
+	
+	@Autowired
+	private BlogInfoService blogInfoService;
 
 	@Autowired
 	private CategoryService categoryService;
@@ -63,6 +67,8 @@ public class PostViewController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String movePost(@ModelAttribute("criteria") SearchCriteria searchCriteria, Model model, Principal principal)
 			throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		int requestPerPageNum = getRequestPerPageNum(searchCriteria);
@@ -98,6 +104,8 @@ public class PostViewController {
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public String moveEdit(@PathVariable("id") long id, @ModelAttribute Criteria criteria, Model model, Principal principal)
 			throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		PostVO postVO = postService.findPostById(id);
@@ -140,6 +148,8 @@ public class PostViewController {
 	@RequestMapping(value = "category/{slugTerm}", method = RequestMethod.GET)
 	public String movePostByCategory(@PathVariable("slugTerm") String slugTerm, SearchCriteria searchCriteria,
 			Model model, Principal principal) throws Exception {
+		model.addAttribute("blogInfo", blogInfoService.findBlogInfo());
+		
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		CategoryVO categoryVO = categoryService.findCategoryBySlugTerm(slugTerm);
