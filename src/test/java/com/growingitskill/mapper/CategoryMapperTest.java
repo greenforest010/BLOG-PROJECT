@@ -1,7 +1,9 @@
 package com.growingitskill.mapper;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.naming.NamingException;
@@ -39,105 +41,144 @@ public class CategoryMapperTest {
 	}
 
 	@Autowired
+	private PostMapper postMapper;
+	
+	@Autowired
 	private CategoryMapper categoryMapper;
 
+	/*
+	 * @Test public void selectCategoryById() throws Exception { long id = 2;
+	 * 
+	 * CategoryVO categoryVO = categoryMapper.readCategoryById(id);
+	 * 
+	 * logger.info(categoryVO.toString()); }
+	 */
+
 	/*@Test
-	public void selectCategoryById() throws Exception {
-		long id = 2;
-
-		CategoryVO categoryVO = categoryMapper.readCategoryById(id);
-
-		logger.info(categoryVO.toString());
-	}*/
-	
-	@Test
 	public void findCategoryBySlugTerm() throws Exception {
-		String slugTerm = "전체";
-		
+		String slugTerm = "all";
+
 		CategoryVO categoryVO = categoryMapper.readCategoryBySlugTerm(slugTerm);
-		
+
 		LOGGER.info(categoryVO.toString());
-	}
+	}*/
+
+	/*
+	 * @Test public void selectCategory() throws Exception { List<CategoryVO> lists
+	 * = categoryMapper.listAll();
+	 * 
+	 * for (CategoryVO categoryVO : lists) { logger.info(categoryVO.toString()); } }
+	 */
+
+	/*
+	 * @Test public void insertCategory() throws Exception { CategoryVO categoryVO =
+	 * new CategoryVO(); categoryVO.setTerm("카테고리다");
+	 * categoryVO.setSlugTerm("slug다"); categoryVO.setParent(2);
+	 * 
+	 * categoryMapper.create(categoryVO);
+	 * 
+	 * logger.info("id: " + categoryVO.getId()); }
+	 */
+
+	/*
+	 * @Test public void updateTerm() throws Exception { long id = 8; String term =
+	 * "마자용"; String slugTerm = term;
+	 * 
+	 * categoryMapper.updateTermAndSlugTermById(id, term, slugTerm); }
+	 */
+
+	/*
+	 * @Test public void updateSlugTerm() throws Exception { long id = 5; String
+	 * slugTerm = "fnfnfn";
+	 * 
+	 * categoryMapper.updateSlugTermById(id, slugTerm); }
+	 */
+
+	/*
+	 * @Test public void updateParent() throws Exception { long id = 5; long parent
+	 * = 4;
+	 * 
+	 * categoryMapper.updateParentById(id, parent); }
+	 */
+
+	/*
+	 * @Test public void deleteCategory() throws Exception { long id = 13;
+	 * 
+	 * categoryMapper.deleteCategoryById(id); }
+	 */
+
+	/*
+	 * @Test public void listLeafCategory() throws Exception {
+	 * System.out.println(categoryMapper.listLeafCategory()); }
+	 */
 
 	/*@Test
-	public void selectCategory() throws Exception {
-		List<CategoryVO> lists = categoryMapper.listAll();
+	public void readCategoryLevel() throws Exception {
+		String slugTerm = "all";
 
-		for (CategoryVO categoryVO : lists) {
-			logger.info(categoryVO.toString());
-		}
-	}*/
-	
-	/*@Test
-	public void insertCategory() throws Exception {
-		CategoryVO categoryVO = new CategoryVO();
-		categoryVO.setTerm("카테고리다");
-		categoryVO.setSlugTerm("slug다");
-		categoryVO.setParent(2);
-		
-		categoryMapper.create(categoryVO);
-		
-		logger.info("id: " + categoryVO.getId());
-	}*/
-	
-	/*@Test
-	public void updateTerm() throws Exception {
-		long id = 8;
-		String term = "마자용";
-		String slugTerm = term;
-		
-		categoryMapper.updateTermAndSlugTermById(id, term, slugTerm);
-	}*/
-	
-	/*@Test
-	public void updateSlugTerm() throws Exception {
-		long id = 5;
-		String slugTerm = "fnfnfn";
-		
-		categoryMapper.updateSlugTermById(id, slugTerm);
-	}*/
-	
-	/*@Test
-	public void updateParent() throws Exception {
-		long id = 5;
-		long parent = 4;
-		
-		categoryMapper.updateParentById(id, parent);
-	}*/
-	
-	/*@Test
-	public void deleteCategory() throws Exception {
-		long id = 13;
-		
-		categoryMapper.deleteCategoryById(id);
-	}*/
-	
-	/*@Test
-	public void listLeafCategory() throws Exception {
-		System.out.println(categoryMapper.listLeafCategory());
-	}*/
-	
-	/*@Test
-	public void listCategoryLevel() throws Exception {
-		String slugTerm = "전체";
-		
-		List<CategoryLevel> list = categoryMapper.listCategoryLevel(slugTerm);
+		List<CategoryLevel> list = categoryMapper.readCategoryLevel(slugTerm);
 		Set<Long> set = new HashSet<>();
-		
+
 		for (CategoryLevel categoryLevel : list) {
 			set.add(categoryLevel.getLevel1());
 			set.add(categoryLevel.getLevel2());
 			set.add(categoryLevel.getLevel3());
 			set.add(categoryLevel.getLevel4());
-			
+
 			System.out.println(categoryLevel);
 		}
-		
+
 		if (set.contains((long) 0)) {
 			set.remove((long) 0);
 		}
-		
+
 		System.out.println(set);
 	}*/
+
+	@Test
+	public void readCategoryUnderLevel2() throws Exception {
+		String parentCategoryLevelSlugTerm = "all";
+
+		List<CategoryLevel> parentCategoryLevelList = categoryMapper.readCategoryLevel(parentCategoryLevelSlugTerm);
+
+		Set<Long> level2Set = new HashSet<>();
+
+		for (CategoryLevel categoryLevel : parentCategoryLevelList) {
+			level2Set.add(categoryLevel.getLevel2());
+		}
+		
+		Map<String, Integer> map = new HashMap<>();
+		
+		for (Long id : level2Set) {
+			CategoryVO categoryVO = categoryMapper.readCategoryById(id);
+			
+			Set<Long> categoryLevelSet = makeCategoryLevelSet(categoryVO.getSlugTerm());
+
+			int countCategoryCriteria = postMapper.countPostPagingByCategory(categoryLevelSet);
+
+			map.put(categoryVO.getTerm(), countCategoryCriteria);
+		}
+		
+		System.out.println(map);
+	}
+	
+	private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
+		List<CategoryLevel> listCategoryLevel = categoryMapper.readCategoryLevel(slugTerm);
+
+		Set<Long> set = new HashSet<>();
+
+		for (CategoryLevel categoryLevel : listCategoryLevel) {
+			set.add(categoryLevel.getLevel1());
+			set.add(categoryLevel.getLevel2());
+			set.add(categoryLevel.getLevel3());
+			set.add(categoryLevel.getLevel4());
+		}
+
+		if (set.contains((long) 0)) {
+			set.remove((long) 0);
+		}
+
+		return set;
+	}
 
 }

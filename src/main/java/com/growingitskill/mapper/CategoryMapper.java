@@ -27,13 +27,14 @@ public interface CategoryMapper {
 	@Select("SELECT * FROM category WHERE id = #{id}")
 	@Results(@Result(property = "slugTerm", column = "slug_term"))
 	CategoryVO readCategoryById(long id) throws Exception;
-	
+
 	@Select("SELECT * FROM category WHERE slug_term LIKE #{slugTerm}")
 	@Results(@Result(property = "slugTerm", column = "slug_term"))
 	CategoryVO readCategoryBySlugTerm(String slugTerm) throws Exception;
 
 	@Update("UPDATE category SET term = #{term}, slug_term = #{slugTerm} WHERE id = #{id}")
-	void updateCategoryTermAndSlugTermById(@Param("id") long id, @Param("term") String term, @Param("slugTerm") String slugTerm) throws Exception;
+	void updateCategoryTermAndSlugTermById(@Param("id") long id, @Param("term") String term,
+			@Param("slugTerm") String slugTerm) throws Exception;
 
 	@Update("UPDATE category SET slug_term = #{slugTerm} WHERE id = #{id}")
 	void updateCategorySlugTermById(@Param("id") long id, @Param("slugTerm") String slugTerm) throws Exception;
