@@ -3,9 +3,15 @@ package com.growingitskill.controller;
 import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +25,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.growingitskill.config.WebAppInitializer;
 import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.domain.BlogInfo;
+import com.growingitskill.domain.CategoryLevel;
+import com.growingitskill.domain.CategoryVO;
 import com.growingitskill.service.AboutService;
 import com.growingitskill.service.AttachmentService;
 import com.growingitskill.service.BlogInfoService;
+import com.growingitskill.service.CategoryService;
+import com.growingitskill.service.PostService;
 import com.growingitskill.util.MemberUtils;
 import com.growingitskill.util.UploadFileUtils;
 
@@ -44,11 +55,19 @@ public class AdminController {
 	private BlogInfoService blogInfoService;
 	
 	@Autowired
+	private CategoryService categoryService;
+	
+	@Autowired
 	private MemberUtils memberUtils;
+	
+	@Autowired
+	private PostService postService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String moveIndex(Model model, Principal principal) throws Exception {
 		memberUtils.makeMemberModel(model, principal.getName());
+		
+		model.addAttribute("categoryLevel", getPostCountByCategoryUnderLevel2());
 
 		return "admin/main";
 	}
@@ -152,5 +171,57 @@ public class AdminController {
 		LOGGER.info("byte: " + file.getBytes());
 		LOGGER.info("size: " + file.getSize());
 	}
+	
+	private Set<Long> makeCategoryLevelSet(String slugTerm) throws Exception {
+		List<CategoryLevel> listCategoryLevel = categoryService.findCategoryLevel(slugTerm);
 
+		Set<Long> set = new HashSet<>();
+
+		for (CategoryLevel categoryLevel : listCategoryLevel) {
+			set.add(categoryLevel.getLevel1());
+			set.add(categoryLevel.getLevel2());
+			set.add(categoryLevel.getLevel3());
+			set.add(categoryLevel.getLevel4());
+		}
+
+		if (set.contains((long) 0)) {
+			set.remove((long) 0);
+		}
+
+		return set;
+	}
+	
+	private String getPostCountByCategoryUnderLevel2() throws Exception {
+		final String slugTermOfCategoryCalledAll = "all";
+		
+		String parentCategoryLevelSlugTerm = slugTermOfCategoryCalledAll;
+
+		List<CategoryLevel> parentCategoryLevelList = categoryService.findCategoryLevel(parentCategoryLevelSlugTerm);
+
+		Set<Long> level2Set = new HashSet<>();
+
+		for (CategoryLevel categoryLevel : parentCategoryLevelList) {
+			level2Set.add(categoryLevel.getLevel2());
+		}
+		
+		if (level2Set.contains((long) 0)) {
+			level2Set.remove((long) 0);
+		}
+		
+		Map<String, Integer> map = new HashMap<>();
+		
+		for (Long id : level2Set) {
+			CategoryVO categoryVO = categoryService.findCategoryById(id);
+			
+			Set<Long> categoryLevelSet = makeCategoryLevelSet(categoryVO.getSlugTerm());
+
+			int countCategoryCriteria = postService.countPostByCategory(categoryLevelSet);
+
+			map.put(categoryVO.getTerm(), countCategoryCriteria);
+		}
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		return objectMapper.writeValueAsString(map);
+	}
 }
