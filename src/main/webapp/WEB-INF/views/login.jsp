@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
 
 <!DOCTYPE html>
@@ -13,7 +14,8 @@
 
 <title>GrowingITSkill</title>
 
-<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
+<link rel="shortcut icon" type="image/x-icon"
+	href="/resources/images/favicon.ico" />
 
 <!-- Bootstrap -->
 <link
@@ -66,10 +68,7 @@
 									<a href="/"><img src="/resources/images/logo.png"
 										alt="Logo Not Found" /></a>
 								</p>
-								<p>
-									&copy; <a href="/">www.growingitskill.com</a> All Rights
-									Reserved.
-								</p>
+								<p>${blogInfo.rights}</p>
 								<p>
 									Gentelella - Bootstrap Admin Template by <a
 										href="https://colorlib.com">Colorlib</a>

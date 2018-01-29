@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="footer_bg">
 	<div class="wrap">
@@ -20,8 +21,7 @@
 			<div class="footer_top">
 				<div class="copy">
 					<p class="link">
-						<span>&copy; <a href="/">www.growingitskill.com</a> All
-							rights reserved | Template by&nbsp;<a
+						<span>${blogInfo.rights} | Template by&nbsp;<a
 							href="http://w3layouts.com/"> W3Layouts</a></span>
 					</p>
 				</div>

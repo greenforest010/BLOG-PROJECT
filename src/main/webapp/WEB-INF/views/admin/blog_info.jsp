@@ -31,7 +31,9 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>블로그 정보 <small>블로그 정보는 피드(FEED)에 반영됩니다.</small></h2>
+						<h2>
+							블로그 정보 <small>블로그 정보는 피드(FEED)에 반영됩니다.</small>
+						</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 							</li>
@@ -83,11 +85,9 @@
 								<label class="control-label col-md-3 col-sm-3 col-xs-12"
 									for="rights">저작권(rights) </label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input type="text" name="rights"
-										class="optional form-control col-md-7 col-xs-12"
-										value="${blogInfo.rights}"
-										placeholder="블로그의 저작권 내용을 입력할 수 있습니다.">
+									<textarea class="form-control" name="rights" required>${blogInfo.rights}</textarea>
 								</div>
+
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
@@ -116,5 +116,17 @@
 	if (result == 'success') {
 		alert("처리가 완료되었습니다.");
 	}
+</script>
+
+<script type="text/javascript">
+	/*remove auto p tag*/
+	CKEDITOR.config.autoParagraph = false;
+
+	CKEDITOR
+			.replace(
+					'rights',
+					{
+						customConfig : '/resources/admin/vendors/ckeditor/custom/basic_toolbar_config.js',
+					});
 </script>
 <!-- /page content -->
