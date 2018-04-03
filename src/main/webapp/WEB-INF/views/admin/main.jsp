@@ -49,7 +49,7 @@
 							<div class="col-md-4 col-sm-4 col-xs-12">
 								<div class="x_panel">
 									<div class="x_title">
-										<h2>차트 1</h2>
+										<h2>카테고리 비율</h2>
 										<ul class="nav navbar-right panel_toolbox">
 											<li><a class="collapse-link"><i
 													class="fa fa-chevron-up"></i></a></li>
@@ -71,10 +71,10 @@
 								</div>
 							</div>
 
-							<div class="col-md-4 col-sm-4 col-xs-12">
+							<div class="col-md-3 col-sm-3 col-xs-12">
 								<div class="x_panel">
 									<div class="x_title">
-										<h2>차트 2</h2>
+										<h2>방문자 통계</h2>
 										<ul class="nav navbar-right panel_toolbox">
 											<li><a class="collapse-link"><i
 													class="fa fa-chevron-up"></i></a></li>
@@ -90,8 +90,14 @@
 										</ul>
 										<div class="clearfix"></div>
 									</div>
-									<div class="x_content">
-										<div>준비중...</div>
+									<div class="x_content" style="background-color : #eeeeee">
+										<div class="row tile_count">
+											<div class="col-md-12 col-sm-12 col-xs-12 tile_stats_count">
+												<span class="count_top"><i class="fa fa-user"></i>
+													방문자 수</span>
+												<div class="count">${newVisitors}</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

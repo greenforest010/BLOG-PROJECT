@@ -11,7 +11,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.services.analyticsreporting.v4.AnalyticsReporting;
+import com.google.api.services.analyticsreporting.v4.model.GetReportsResponse;
 import com.growingitskill.config.WebAppInitializer;
 import com.growingitskill.domain.AttachmentVO;
 import com.growingitskill.domain.BlogInfo;
@@ -36,6 +37,7 @@ import com.growingitskill.service.AttachmentService;
 import com.growingitskill.service.BlogInfoService;
 import com.growingitskill.service.CategoryService;
 import com.growingitskill.service.PostService;
+import com.growingitskill.util.AnalyticsReportingUtils;
 import com.growingitskill.util.MemberUtils;
 import com.growingitskill.util.UploadFileUtils;
 
@@ -58,6 +60,9 @@ public class AdminController {
 	private CategoryService categoryService;
 	
 	@Autowired
+	private AnalyticsReportingUtils analyticsReportingUtils;
+	
+	@Autowired
 	private MemberUtils memberUtils;
 	
 	@Autowired
@@ -70,6 +75,11 @@ public class AdminController {
 		memberUtils.makeMemberModel(model, principal.getName());
 		
 		model.addAttribute("categoryLevel", getPostCountByCategoryUnderLevel2());
+		
+		AnalyticsReporting service = analyticsReportingUtils.initializeAnalyticsReporting();
+		GetReportsResponse response = analyticsReportingUtils.getReport(service);
+		
+		model.addAttribute("newVisitors", analyticsReportingUtils.getNewVisitors(response));
 
 		return "admin/main";
 	}

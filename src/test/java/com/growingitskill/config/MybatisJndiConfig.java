@@ -8,12 +8,14 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jndi.JndiObjectFactoryBean;
 
 @Configuration
-// MapperScan은 매퍼를 검색하고 자동 빈을 만들어 주기 때문에 매퍼를 구현한 DAOImpl는 Repository로 빈을 등록할 필요가
-// 없다
+@ComponentScan({"com.growingitskill.service", "com.growingitskill.util"})
+//MapperScan은 매퍼를 검색하고 자동 빈을 만들어 주기 때문에 매퍼를 구현한 DAOImpl는 Repository로 빈을 등록할 필요가
+//없다
 @MapperScan("com.growingitskill.mapper")
 public class MybatisJndiConfig {
 
