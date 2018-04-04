@@ -71,7 +71,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-3 col-sm-3 col-xs-12">
+							<div class="col-md-8 col-sm-8 col-xs-12">
 								<div class="x_panel">
 									<div class="x_title">
 										<h2>방문자 통계</h2>
@@ -90,12 +90,25 @@
 										</ul>
 										<div class="clearfix"></div>
 									</div>
-									<div class="x_content" style="background-color : #eeeeee">
-										<div class="row tile_count">
+									<div class="x_content">
+										<div class="row tile_count" style="background-color: #eeeeee">
 											<div class="col-md-12 col-sm-12 col-xs-12 tile_stats_count">
 												<span class="count_top"><i class="fa fa-user"></i>
 													방문자 수</span>
 												<div class="count">${newVisitors}</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12 col-sm-12 col-xs-12">
+												<div class="dashboard_graph x_panel">
+													<div class="row x_title">
+														<h3>지난 6개월 동안의 방문자 수</h3>
+													</div>
+													<div class="x_content">
+														<canvas id="myLineChart"></canvas>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -154,5 +167,37 @@
 								text : '전체 카테고리 중 글 수에 따른 상위 카테고리 비율'
 							}
 						}
+					});
+				</script>
+
+				<script>
+					var newUsersMonthOfYearWhile6Months = ${newUsersMonthOfYearWhile6Months};
+
+					var labels = [];
+					var data = [];
+
+					$.each(newUsersMonthOfYearWhile6Months,
+							function(key, value) {
+								labels.push(key);
+								data.push(value);
+							});
+
+					var ctx = $("#myLineChart");
+					var chart = new Chart(ctx, {
+						// The type of chart we want to create
+						type : 'line',
+
+						// The data for our dataset
+						data : {
+							datasets : [ {
+								label : '방문자 수',
+								data : data,
+								lineTension : 0.1,
+								fill : false,
+								borderColor : '#006865',
+								borderWidth : 3
+							} ],
+							labels : labels,
+						},
 					});
 				</script>

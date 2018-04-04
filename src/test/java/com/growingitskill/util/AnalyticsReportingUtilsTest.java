@@ -2,6 +2,8 @@ package com.growingitskill.util;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Map;
+
 import javax.naming.NamingException;
 
 import org.junit.BeforeClass;
@@ -56,6 +58,29 @@ public class AnalyticsReportingUtilsTest {
 		String visitorCount = analyticsReportingUtils.getNewVisitors(response);
 		
 		System.out.println("Visitor Count: " + visitorCount);
+	}
+	
+	@Test
+	public void getNewUsersMonthOfYearTest() throws Exception {
+		String startDate = "180daysAgo";
+		String endDate = "today";
+		
+		AnalyticsReporting service = analyticsReportingUtils.initializeAnalyticsReporting();
+		GetReportsResponse response = analyticsReportingUtils.getNewUsersMonthOfYearReport(service, startDate, endDate);
+		Map<String, Integer> map = analyticsReportingUtils.getNewUsersMonthOfYear(response);
+		
+		System.out.println(map);
+	}
+	
+	@Test
+	public void printNewUsersMonthOfYearTest() throws Exception {
+		String startDate = "180daysAgo";
+		String endDate = "today";
+		
+		AnalyticsReporting service = analyticsReportingUtils.initializeAnalyticsReporting();
+		GetReportsResponse response = analyticsReportingUtils.getNewUsersMonthOfYearReport(service, startDate, endDate);
+		
+		analyticsReportingUtils.printNewVisitorCountMonthOfYearResponse(response);
 	}
 
 }

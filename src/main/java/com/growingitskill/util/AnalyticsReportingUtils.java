@@ -3,7 +3,9 @@ package com.growingitskill.util;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,7 @@ import com.google.api.services.analyticsreporting.v4.AnalyticsReportingScopes;
 import com.google.api.services.analyticsreporting.v4.model.ColumnHeader;
 import com.google.api.services.analyticsreporting.v4.model.DateRange;
 import com.google.api.services.analyticsreporting.v4.model.DateRangeValues;
+import com.google.api.services.analyticsreporting.v4.model.Dimension;
 import com.google.api.services.analyticsreporting.v4.model.GetReportsRequest;
 import com.google.api.services.analyticsreporting.v4.model.GetReportsResponse;
 import com.google.api.services.analyticsreporting.v4.model.Metric;
@@ -43,7 +46,7 @@ public class AnalyticsReportingUtils {
 	 * Initializes an Analytics Reporting API V4 service object.
 	 *
 	 * @return An authorized Analytics Reporting API V4 service object.
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public AnalyticsReporting initializeAnalyticsReporting() throws Exception {
 
@@ -62,7 +65,7 @@ public class AnalyticsReportingUtils {
 	 * @param service
 	 *            An authorized Analytics Reporting API V4 service object.
 	 * @return GetReportResponse The Analytics Reporting API V4 response.
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public GetReportsResponse getReport(AnalyticsReporting service) throws Exception {
 		// Create the DateRange object.
@@ -95,7 +98,7 @@ public class AnalyticsReportingUtils {
 	 *
 	 * @param response
 	 *            An Analytics Reporting API V4 response.
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public void printResponse(GetReportsResponse response) throws Exception {
 
@@ -151,7 +154,110 @@ public class AnalyticsReportingUtils {
 
 		return result;
 	}
+
+	public GetReportsResponse getNewUsersMonthOfYearReport(AnalyticsReporting service, String startDate, String endDate)
+			throws Exception {
+		// Create the DateRange object.
+		DateRange dateRange = new DateRange();
+		dateRange.setStartDate(startDate);
+		dateRange.setEndDate(endDate);
+
+		// Create the Metrics object.
+		Metric newUsers = new Metric().setExpression("ga:newUsers").setAlias("newUsers");
+
+		Dimension yearMonth = new Dimension().setName("ga:yearMonth");
+
+		// Create the ReportRequest object.
+		ReportRequest request = new ReportRequest().setViewId(getViewId()).setDateRanges(Arrays.asList(dateRange))
+				.setMetrics(Arrays.asList(newUsers)).setDimensions(Arrays.asList(yearMonth));
+
+		ArrayList<ReportRequest> requests = new ArrayList<ReportRequest>();
+		requests.add(request);
+
+		// Create the GetReportsRequest object.
+		GetReportsRequest getReport = new GetReportsRequest().setReportRequests(requests);
+
+		// Call the batchGet method.
+		GetReportsResponse response = service.reports().batchGet(getReport).execute();
+
+		// Return the response.
+		return response;
+	}
 	
+	public Map<String, Integer> getNewUsersMonthOfYear(GetReportsResponse response) throws Exception {
+		Map<String, Integer> map = new LinkedHashMap<>();
+		
+		for (Report report : response.getReports()) {
+			ColumnHeader header = report.getColumnHeader();
+			List<String> dimensionHeaders = header.getDimensions();
+			List<MetricHeaderEntry> metricHeaders = header.getMetricHeader().getMetricHeaderEntries();
+			List<ReportRow> rows = report.getData().getRows();
+
+			if (rows == null) {
+				System.out.println("No data found for " + getViewId());
+				
+				return map;
+			}
+
+			for (ReportRow row : rows) {
+				List<String> dimensions = row.getDimensions();
+				List<DateRangeValues> metrics = row.getMetrics();
+				
+				String key = "";
+				String value = "";
+
+				for (int i = 0; i < dimensionHeaders.size() && i < dimensions.size(); i++) {
+					key = dimensions.get(i);
+				}
+
+				for (int j = 0; j < metrics.size(); j++) {
+					DateRangeValues values = metrics.get(j);
+					
+					for (int k = 0; k < values.getValues().size() && k < metricHeaders.size(); k++) {
+						value = values.getValues().get(k);
+					}
+				}
+				
+				if (!key.isEmpty() && !value.isEmpty()) {
+					map.put(key, Integer.parseInt(value));
+				}
+			}
+		}
+		
+		return map;
+	}
+
+	public void printNewVisitorCountMonthOfYearResponse(GetReportsResponse response) throws Exception {
+		for (Report report : response.getReports()) {
+			ColumnHeader header = report.getColumnHeader();
+			List<String> dimensionHeaders = header.getDimensions();
+			List<MetricHeaderEntry> metricHeaders = header.getMetricHeader().getMetricHeaderEntries();
+			List<ReportRow> rows = report.getData().getRows();
+
+			if (rows == null) {
+				System.out.println("No data found for " + getViewId());
+				return;
+			}
+
+			for (ReportRow row : rows) {
+				List<String> dimensions = row.getDimensions();
+				List<DateRangeValues> metrics = row.getMetrics();
+
+				for (int i = 0; i < dimensionHeaders.size() && i < dimensions.size(); i++) {
+					System.out.println(dimensionHeaders.get(i) + ": " + dimensions.get(i));
+				}
+
+				for (int j = 0; j < metrics.size(); j++) {
+					System.out.print("Date Range (" + j + "): ");
+					DateRangeValues values = metrics.get(j);
+					for (int k = 0; k < values.getValues().size() && k < metricHeaders.size(); k++) {
+						System.out.println(metricHeaders.get(k).getName() + ": " + values.getValues().get(k));
+					}
+				}
+			}
+		}
+	}
+
 	private GoogleAnalyticsReportingAPIVO getGoogleAnalyticsReportingAPIVO(String apiName) throws Exception {
 		return googleAnalyticsReportingAPIService.findGoogleAnalyticsReportingAPI(apiName);
 	}
@@ -161,10 +267,10 @@ public class AnalyticsReportingUtils {
 
 		return WebAppInitializer.appBasePath + keyFileLocation;
 	}
-	
+
 	private String getViewId() throws Exception {
 		String viewId = getGoogleAnalyticsReportingAPIVO(apiName).getViewId();
-		
+
 		return viewId;
 	}
 
